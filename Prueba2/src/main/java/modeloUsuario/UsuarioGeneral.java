@@ -6,21 +6,24 @@ import java.time.format.DateTimeFormatter;
 public class UsuarioGeneral extends Usuario{
     //Atributos:
     private boolean activarSuscripcion = false;
-    private int limiteElementosTareas = 8;
-    private int limiteElementosRecordatorios = 4;
-    private int limiteElementosCompartidos = 1;
+    final private int limiteElementosTareas = 8;
+    final private int limiteElementosRecordatorios = 4;
+    final private int limiteElementosCompartidos = 1;
+    private int contadorElementoTareas = 0;
+    private int contadorElementoRecordatorios = 0;
+    private int contadorElementoCompartidos = 0;
     private LocalDate fechaActual = LocalDate.now();
     private DateTimeFormatter fechaSuscripcion = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private DateTimeFormatter fechaLimiteSuscripcion = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
     //Constructor Parametrizado:
-    public UsuarioGeneral(String nombreCompleto, int edad, String email, String password, boolean activarSuscripcion, int limiteElementosTareas, int limiteElementosRecordatorios, int limiteElementosCompartidos, LocalDate fechaActual, DateTimeFormatter fechaSuscripcion, DateTimeFormatter fechaLimiteSuscripcion) {
+    public UsuarioGeneral(String nombreCompleto, int edad, String email, String password, boolean activarSuscripcion, int contadorElementoTareas, int contadorElementoRecordatorios, int contadorElementoCompartidos, LocalDate fechaActual, DateTimeFormatter fechaSuscripcion, DateTimeFormatter fechaLimiteSuscripcion) {
         super(nombreCompleto,edad,email,password);
         this.activarSuscripcion = activarSuscripcion;
-        this.limiteElementosTareas = limiteElementosTareas;
-        this.limiteElementosRecordatorios = limiteElementosRecordatorios;
-        this.limiteElementosCompartidos = limiteElementosCompartidos;
+        this.contadorElementoTareas = contadorElementoTareas;
+        this.contadorElementoRecordatorios = contadorElementoRecordatorios;
+        this.contadorElementoCompartidos = contadorElementoCompartidos;
         this.fechaActual = fechaActual;
         this.fechaSuscripcion = fechaSuscripcion;
         this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;
@@ -31,15 +34,6 @@ public class UsuarioGeneral extends Usuario{
     public boolean isActivarSuscripcion() {return activarSuscripcion;}
     public void setActivarSuscripcion(boolean activarSuscripcion) {this.activarSuscripcion = activarSuscripcion;}
 
-    public int getLimiteElementosTareas() {return limiteElementosTareas;}
-    public void setLimiteElementosTareas(int limiteElementosTareas) {this.limiteElementosTareas = limiteElementosTareas;}
-
-    public int getLimiteElementosRecordatorios() {return limiteElementosRecordatorios;}
-    public void setLimiteElementosRecordatorios(int limiteElementosRecordatorios) {this.limiteElementosRecordatorios = limiteElementosRecordatorios;}
-
-    public int getLimiteElementosCompartidos() {return limiteElementosCompartidos;}
-    public void setLimiteElementosCompartidos(int limiteElementosCompartidos) {this.limiteElementosCompartidos = limiteElementosCompartidos;}
-
     public LocalDate getFechaActual() {return fechaActual;}
     public void setFechaActual(LocalDate fechaActual) {this.fechaActual = fechaActual;}
 
@@ -49,6 +43,29 @@ public class UsuarioGeneral extends Usuario{
     public DateTimeFormatter getFechaLimiteSuscripcion() {return fechaLimiteSuscripcion;}
     public void setFechaLimiteSuscripcion(DateTimeFormatter fechaLimiteSuscripcion) {this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;}
 
+    public int getContadorElementoTareas() {
+        return contadorElementoTareas;
+    }
+
+    public void setContadorElementoTareas(int contadorElementoTareas) {
+        this.contadorElementoTareas = contadorElementoTareas;
+    }
+
+    public int getContadorElementoRecordatorios() {
+        return contadorElementoRecordatorios;
+    }
+
+    public void setContadorElementoRecordatorios(int contadorElementoRecordatorios) {
+        this.contadorElementoRecordatorios = contadorElementoRecordatorios;
+    }
+
+    public int getContadorElementoCompartidos() {
+        return contadorElementoCompartidos;
+    }
+
+    public void setContadorElementoCompartidos(int contadorElementoCompartidos) {
+        this.contadorElementoCompartidos = contadorElementoCompartidos;
+    }
 
     //Metodos Propios:
     public void activarSuscripcion() {
@@ -58,6 +75,40 @@ public class UsuarioGeneral extends Usuario{
             System.out.println("La Suscripcion ha sido activada");
         }
     }
+
+    public boolean conteoTarea() {
+        if (getContadorElementoTareas() < limiteElementosTareas) {
+            contadorElementoTareas++;
+            System.out.println("Tarea agregada. (" + getContadorElementoTareas() + "/" + limiteElementosTareas + ")");
+            return true;
+        } else {
+            System.out.println("Límite de tareas alcanzado: " + limiteElementosTareas);
+            return false;
+        }
+    }
+
+    public boolean conteoRecordatorio() {
+        if (getContadorElementoRecordatorios() < limiteElementosRecordatorios) {
+            contadorElementoRecordatorios++;
+            System.out.println("Recordatorio agregado. (" + getContadorElementoRecordatorios() + "/" + limiteElementosRecordatorios + ")");
+            return true;
+        } else {
+            System.out.println("Límite de recordatorios alcanzado: " + limiteElementosRecordatorios);
+            return false;
+        }
+    }
+
+    public boolean conteoCompartido() {
+        if (getContadorElementoCompartidos() < limiteElementosCompartidos) {
+            contadorElementoCompartidos++;
+            System.out.println("Elemento compartido agregado. (" + getContadorElementoCompartidos() + "/" + limiteElementosCompartidos + ")");
+            return true;
+        } else {
+            System.out.println("Límite de compartidos alcanzado: " + limiteElementosCompartidos);
+            return false;
+        }
+    }
+
 
 
     //Metodos Heredados:

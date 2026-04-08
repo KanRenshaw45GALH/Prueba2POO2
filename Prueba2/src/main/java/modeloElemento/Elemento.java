@@ -73,7 +73,7 @@ public abstract class Elemento implements AccionesElemento {
         System.out.println("Prioridad: " + prioridad);
         System.out.println("Cantidad Colaboradores: " + cantidadColaboradores);
         System.out.println("Fecha Creacion: " + fechaCreacion);
-        System.out.println("usuario creador: " + usuario);;
+        System.out.println("usuario creador: " + usuario.getNombreCompleto());;
     }
 
 

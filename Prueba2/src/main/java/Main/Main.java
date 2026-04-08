@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 public class Main {
     public static void main(String[] args) {
     //Objeto Uusuario General1 y Tarea1
-        UsuarioGeneral usuariogen1 = new UsuarioGeneral("Rossaline Duran", 23, "Rosaduran@gmail.com", "Rossy23", false, 8, 6, 0, LocalDate.now(), DateTimeFormatter.ofPattern("31/01/2026"), DateTimeFormatter.ofPattern("31/01/2026"));
+        UsuarioGeneral usuariogen1 = new UsuarioGeneral("Rossaline Duran", 23, "Rosaduran@gmail.com", "Rossy23", false, 7, 3, 0, LocalDate.now(), DateTimeFormatter.ofPattern("31/01/2026"), DateTimeFormatter.ofPattern("31/01/2026"));
         System.out.println("====================================================");
         usuariogen1.imprimirUsuario();
         usuariogen1.verificarUsuario();
@@ -33,10 +33,15 @@ public class Main {
         recordatorio1.activarAlerta();
         System.out.println("====================================================");
 
+        usuariogen1.conteoTarea();
+        usuariogen1.conteoRecordatorio();
+        usuariogen1.conteoCompartido();
 
 
 
-    //Objeto Uusuario General1 y Tarea1
+
+
+        //Objeto Uusuario General1 y Tarea1
         UsuarioPremium usuariogen2 = new UsuarioPremium("Diego Perez", 32, "Dogoperron@amail.com", "DOGO001", 20.00f, true, true, true, LocalDate.now(), DateTimeFormatter.ofPattern("31/01/2026"), DateTimeFormatter.ofPattern("31/01/2026"));
         System.out.println("====================================================");
         usuariogen1.imprimirUsuario();
