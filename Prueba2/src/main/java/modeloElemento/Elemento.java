@@ -1,5 +1,7 @@
 package modeloElemento;
 import catalogo.Prioridad;
+import modeloUsuario.Usuario;
+
 import java.time.format.DateTimeFormatter;
 
 
@@ -12,10 +14,11 @@ public abstract class Elemento implements AccionesElemento {
     private DateTimeFormatter fechaCreacion = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private DateTimeFormatter fechaLimite = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private int cantidadColaboradores;
+    private Usuario usuario;
 
 
     //Constructor Prametrizado:
-    Elemento(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, DateTimeFormatter fechaCreacion, DateTimeFormatter fechaLimite) {
+    Elemento(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, DateTimeFormatter fechaCreacion, DateTimeFormatter fechaLimite, Usuario usuario) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -23,6 +26,7 @@ public abstract class Elemento implements AccionesElemento {
         this.cantidadColaboradores = cantidadColaboradores;
         this.fechaCreacion = fechaCreacion;
         this.fechaLimite = fechaLimite;
+        this.usuario = usuario;
     }
 
 
@@ -48,6 +52,13 @@ public abstract class Elemento implements AccionesElemento {
     public int getCantidadColaboradores() {return cantidadColaboradores;}
     public void setCantidadColaboradores(int cantidadColaboradores) {this.cantidadColaboradores = cantidadColaboradores;}
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+
+    }
 
     //Metodos Heredaddos:
     @Override
@@ -62,6 +73,7 @@ public abstract class Elemento implements AccionesElemento {
         System.out.println("Prioridad: " + prioridad);
         System.out.println("Cantidad Colaboradores: " + cantidadColaboradores);
         System.out.println("Fecha Creacion: " + fechaCreacion);
+        System.out.println("usuario creador: " + usuario);;
     }
 
 

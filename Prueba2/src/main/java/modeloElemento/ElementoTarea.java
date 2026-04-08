@@ -1,6 +1,8 @@
 package modeloElemento;
 import catalogo.Estado;
 import catalogo.Prioridad;
+import modeloUsuario.Usuario;
+
 import java.time.format.DateTimeFormatter;
 
 
@@ -10,8 +12,8 @@ public class ElementoTarea extends Elemento {
 
 
     //Constructor Parametrizado:
-    public ElementoTarea(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, Estado estado, DateTimeFormatter fechaCreacion, DateTimeFormatter fechaLimite) {
-        super(id, titulo, descripcion, cantidadColaboradores, prioridad, fechaCreacion, fechaLimite);
+    public ElementoTarea(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, Estado estado, DateTimeFormatter fechaCreacion, DateTimeFormatter fechaLimite, Usuario usuario) {
+        super(id, titulo, descripcion, cantidadColaboradores, prioridad, fechaCreacion, fechaLimite, usuario);
         this.estado = estado;
     }
 

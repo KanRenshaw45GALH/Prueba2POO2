@@ -1,5 +1,7 @@
 package modeloElemento;
 import catalogo.Prioridad;
+import modeloUsuario.Usuario;
+
 import java.time.format.DateTimeFormatter;
 
 public class ElementoRecordatorio extends Elemento {
@@ -10,8 +12,8 @@ public class ElementoRecordatorio extends Elemento {
 
 
     //Constructor Parametrizado:
-    public ElementoRecordatorio(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, DateTimeFormatter fechaCreacion, DateTimeFormatter fechaLimite, DateTimeFormatter fechaRecordatorio) {
-        super(id, titulo, descripcion, cantidadColaboradores, prioridad, fechaCreacion, fechaLimite);
+    public ElementoRecordatorio(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, DateTimeFormatter fechaCreacion, DateTimeFormatter fechaLimite, DateTimeFormatter fechaRecordatorio, Usuario usuario) {
+        super(id, titulo, descripcion, cantidadColaboradores, prioridad, fechaCreacion, fechaLimite,usuario);
         this.fechaRecordatorio = fechaRecordatorio;
         this.fechaActual = fechaCreacion;
     }

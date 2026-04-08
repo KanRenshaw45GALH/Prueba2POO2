@@ -8,7 +8,7 @@ public class UsuarioGeneral extends Usuario{
     private boolean activarSuscripcion = false;
     private int limiteElementosTareas = 8;
     private int limiteElementosRecordatorios = 4;
-    private int limiteElementosCompartidos = 0;
+    private int limiteElementosCompartidos = 1;
     private LocalDate fechaActual = LocalDate.now();
     private DateTimeFormatter fechaSuscripcion = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private DateTimeFormatter fechaLimiteSuscripcion = DateTimeFormatter.ofPattern("dd/MM/yyyy");
