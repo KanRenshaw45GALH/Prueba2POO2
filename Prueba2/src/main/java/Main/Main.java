@@ -50,7 +50,7 @@ public class Main {
         usuarioprem1.imprimirUsuario();
         usuarioprem1.verificarUsuario();
         usuarioprem1.modoSuscripcion();
-        usuarioprem1.PagarSuscripcion();
+        usuarioprem1.pagarSuscripcion();
         usuarioprem1.cancelarSuscripcion();
         usuarioprem1.modoSuscripcion();
 

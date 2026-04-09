@@ -2,9 +2,7 @@ package modeloElemento;
 import catalogo.Estado;
 import catalogo.Prioridad;
 import modeloUsuario.Usuario;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 
 public class ElementoTarea extends Elemento {

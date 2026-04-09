@@ -1,9 +1,7 @@
 package modeloElemento;
 import catalogo.Prioridad;
 import modeloUsuario.Usuario;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 
 public abstract class Elemento implements AccionesElemento {

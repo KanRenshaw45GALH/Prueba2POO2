@@ -61,7 +61,7 @@ public class UsuarioPremium extends Usuario {
         return true;
     }
 
-    public float PagarSuscripcion() {
+    public float pagarSuscripcion() {
         System.out.println(" ");
         System.out.println("Para mantener los beneficios debe pagar suscripcion. ");
         System.out.println("El precio a pagar es de: "+ getPagarSuscripcion() + " antes de la fecha Limite: " + getFechaLimiteSuscripcion());
