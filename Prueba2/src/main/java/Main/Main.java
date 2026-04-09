@@ -58,7 +58,7 @@ public class Main {
         tarea2.crearElemento();
         tarea2.imprimirElementos();
 
-        ElementoRecordatorio recordatorio2 = new ElementoRecordatorio(1, "Alarma de Proyecto", "Recordatorio de proyecto sobre App", 2, Prioridad.ALTA, LocalDate.parse("03/01/2026", fmt), LocalDate.parse("27/02/2026", fmt),LocalDate.parse("27/02/2026", fmt),usuarioprem1);
+        ElementoRecordatorio recordatorio2 = new ElementoRecordatorio(1, "Alarma de Proyecto", "Recordatorio de proyecto sobre App", 2, Prioridad.ALTA, LocalDate.parse("03/01/2026", fmt), LocalDate.parse("27/02/2026", fmt), LocalDate.parse("27/02/2026", fmt),usuarioprem1);
         recordatorio2.crearElemento();
         recordatorio2.imprimirElementos();
         recordatorio2.activarAlerta();

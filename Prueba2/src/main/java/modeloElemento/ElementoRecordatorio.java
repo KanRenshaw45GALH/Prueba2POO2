@@ -28,7 +28,7 @@ public class ElementoRecordatorio extends Elemento {
 
     //Metodos Propios:
     public void activarAlerta(){
-        if(getFechaRecordatorio().equals(getFechaActual()) ){
+        if(fechaRecordatorio.equals(getFechaLimite()) ){
             Alerta = true;
             System.out.println(" ");
             System.out.println("Alerta activada!!!. Trabajo en fecha Limite!!!. ");
