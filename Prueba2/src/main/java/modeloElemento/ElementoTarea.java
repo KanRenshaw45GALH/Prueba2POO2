@@ -3,6 +3,7 @@ import catalogo.Estado;
 import catalogo.Prioridad;
 import modeloUsuario.Usuario;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
@@ -12,7 +13,7 @@ public class ElementoTarea extends Elemento {
 
 
     //Constructor Parametrizado:
-    public ElementoTarea(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, Estado estado, DateTimeFormatter fechaCreacion, DateTimeFormatter fechaLimite, Usuario usuario) {
+    public ElementoTarea(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, Estado estado, LocalDate fechaCreacion, LocalDate fechaLimite, Usuario usuario) {
         super(id, titulo, descripcion, cantidadColaboradores, prioridad, fechaCreacion, fechaLimite, usuario);
         this.estado = estado;
     }

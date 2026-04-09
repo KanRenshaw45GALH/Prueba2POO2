@@ -13,12 +13,12 @@ public class UsuarioGeneral extends Usuario{
     private int contadorElementoRecordatorios = 0;
     private int contadorElementoCompartidos = 0;
     private LocalDate fechaActual = LocalDate.now();
-    private DateTimeFormatter fechaSuscripcion = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private DateTimeFormatter fechaLimiteSuscripcion = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private LocalDate fechaSuscripcion;
+    private LocalDate fechaLimiteSuscripcion;
 
 
     //Constructor Parametrizado:
-    public UsuarioGeneral(String nombreCompleto, int edad, String email, String password, boolean activarSuscripcion, int contadorElementoTareas, int contadorElementoRecordatorios, int contadorElementoCompartidos, LocalDate fechaActual, DateTimeFormatter fechaSuscripcion, DateTimeFormatter fechaLimiteSuscripcion) {
+    public UsuarioGeneral(String nombreCompleto, int edad, String email, String password, boolean activarSuscripcion, int contadorElementoTareas, int contadorElementoRecordatorios, int contadorElementoCompartidos, LocalDate fechaActual, LocalDate fechaSuscripcion, LocalDate fechaLimiteSuscripcion) {
         super(nombreCompleto,edad,email,password);
         this.activarSuscripcion = activarSuscripcion;
         this.contadorElementoTareas = contadorElementoTareas;
@@ -37,11 +37,11 @@ public class UsuarioGeneral extends Usuario{
     public LocalDate getFechaActual() {return fechaActual;}
     public void setFechaActual(LocalDate fechaActual) {this.fechaActual = fechaActual;}
 
-    public DateTimeFormatter getFechaSuscripcion() {return fechaSuscripcion;}
-    public void setFechaSuscripcion(DateTimeFormatter fechaSuscripcion) {this.fechaSuscripcion = fechaSuscripcion;}
+    public LocalDate getFechaSuscripcion() {return fechaSuscripcion;}
+    public void setFechaSuscripcion(LocalDate fechaSuscripcion) {this.fechaSuscripcion = fechaSuscripcion;}
 
-    public DateTimeFormatter getFechaLimiteSuscripcion() {return fechaLimiteSuscripcion;}
-    public void setFechaLimiteSuscripcion(DateTimeFormatter fechaLimiteSuscripcion) {this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;}
+    public LocalDate getFechaLimiteSuscripcion() {return fechaLimiteSuscripcion;}
+    public void setFechaLimiteSuscripcion(LocalDate fechaLimiteSuscripcion) {this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;}
 
     public int getContadorElementoTareas() {
         return contadorElementoTareas;
@@ -75,7 +75,6 @@ public class UsuarioGeneral extends Usuario{
             System.out.println("La Suscripcion ha sido activada");
         }
     }
-
     public boolean conteoTarea() {
         if (getContadorElementoTareas() < limiteElementosTareas) {
             contadorElementoTareas++;
@@ -86,7 +85,6 @@ public class UsuarioGeneral extends Usuario{
             return false;
         }
     }
-
     public boolean conteoRecordatorio() {
         if (getContadorElementoRecordatorios() < limiteElementosRecordatorios) {
             contadorElementoRecordatorios++;
@@ -97,7 +95,6 @@ public class UsuarioGeneral extends Usuario{
             return false;
         }
     }
-
     public boolean conteoCompartido() {
         if (getContadorElementoCompartidos() < limiteElementosCompartidos) {
             contadorElementoCompartidos++;

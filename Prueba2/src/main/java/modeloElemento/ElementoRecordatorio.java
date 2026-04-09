@@ -1,18 +1,17 @@
 package modeloElemento;
 import catalogo.Prioridad;
 import modeloUsuario.Usuario;
-
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 
 public class ElementoRecordatorio extends Elemento {
     //Atributos:
     private boolean Alerta;
-    private DateTimeFormatter fechaRecordatorio;
-    private DateTimeFormatter fechaActual;
+    private LocalDate fechaRecordatorio;
+    private LocalDate fechaActual;
 
 
     //Constructor Parametrizado:
-    public ElementoRecordatorio(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, DateTimeFormatter fechaCreacion, DateTimeFormatter fechaLimite, DateTimeFormatter fechaRecordatorio, Usuario usuario) {
+    public ElementoRecordatorio(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, LocalDate fechaCreacion, LocalDate fechaLimite, LocalDate fechaRecordatorio, Usuario usuario) {
         super(id, titulo, descripcion, cantidadColaboradores, prioridad, fechaCreacion, fechaLimite,usuario);
         this.fechaRecordatorio = fechaRecordatorio;
         this.fechaActual = fechaCreacion;
@@ -20,16 +19,16 @@ public class ElementoRecordatorio extends Elemento {
 
 
     //Getter y Setter:
-    public DateTimeFormatter getFechaRecordatorio() {return fechaRecordatorio; }
-    public void setFechaRecordatorio(DateTimeFormatter fechaRecordatorio) { this.fechaRecordatorio = fechaRecordatorio;}
+    public LocalDate getFechaRecordatorio() {return fechaRecordatorio; }
+    public void setFechaRecordatorio(LocalDate fechaRecordatorio) { this.fechaRecordatorio = fechaRecordatorio;}
 
-    public DateTimeFormatter getFechaActual() {return fechaActual; }
-    public void setFechaActual(DateTimeFormatter fechaActual) { this.fechaActual = fechaActual;}
+    public LocalDate getFechaActual() {return fechaActual; }
+    public void setFechaActual(LocalDate fechaActual) { this.fechaActual = fechaActual;}
 
 
     //Metodos Propios:
     public void activarAlerta(){
-        if(fechaRecordatorio.equals(fechaActual) ){
+        if(getFechaRecordatorio().equals(getFechaActual()) ){
             Alerta = true;
             System.out.println(" ");
             System.out.println("Alerta activada!!!. Trabajo en fecha Limite!!!. ");

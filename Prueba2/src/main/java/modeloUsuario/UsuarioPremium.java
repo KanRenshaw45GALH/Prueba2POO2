@@ -10,12 +10,12 @@ public class UsuarioPremium extends Usuario {
     private boolean accesoCompleto = true;
     private boolean compartirElemento = true;
     private LocalDate fechaActual = LocalDate.now();
-    private DateTimeFormatter fechaSuscripcion = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private DateTimeFormatter fechaLimiteSuscripcion = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private LocalDate fechaSuscripcion;
+    private LocalDate fechaLimiteSuscripcion;
 
 
     //Construtor Parametrizado:
-    public UsuarioPremium(String nombreCompleto, int edad, String email, String password, float pagarSuscripcion, boolean activarSuscripcion, boolean accesoCompleto, boolean compartirElemento, LocalDate fechaActual, DateTimeFormatter fechaSuscripcion, DateTimeFormatter fechaLimiteSuscripcion) {
+    public UsuarioPremium(String nombreCompleto, int edad, String email, String password, float pagarSuscripcion, boolean activarSuscripcion, boolean accesoCompleto, boolean compartirElemento, LocalDate fechaActual, LocalDate fechaSuscripcion, LocalDate fechaLimiteSuscripcion) {
         super(nombreCompleto, edad, email, password);
         this.pagarSuscripcion = pagarSuscripcion;
         this.activarSuscripcion = activarSuscripcion;
@@ -42,11 +42,11 @@ public class UsuarioPremium extends Usuario {
     public LocalDate getFechaActual() {return fechaActual;}
     public void setFechaActual(LocalDate fechaActual) {this.fechaActual = fechaActual;}
 
-    public DateTimeFormatter getFechaSuscripcion() {return fechaSuscripcion;}
-    public void setFechaSuscripcion(DateTimeFormatter fechaSuscripcion) {this.fechaSuscripcion = fechaSuscripcion;}
+    public LocalDate getFechaSuscripcion() {return fechaSuscripcion;}
+    public void setFechaSuscripcion(LocalDate fechaSuscripcion) {this.fechaSuscripcion = fechaSuscripcion;}
 
-    public DateTimeFormatter getFechaLimiteSuscripcion() {return fechaLimiteSuscripcion;}
-    public void setFechaLimiteSuscripcion(DateTimeFormatter fechaLimiteSuscripcion) {this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;}
+    public LocalDate getFechaLimiteSuscripcion() {return fechaLimiteSuscripcion;}
+    public void setFechaLimiteSuscripcion(LocalDate fechaLimiteSuscripcion) {this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;}
 
 
     //Metodos Propios:
@@ -64,7 +64,7 @@ public class UsuarioPremium extends Usuario {
     public float PagarSuscripcion() {
         System.out.println(" ");
         System.out.println("Para mantener los beneficios debe pagar suscripcion. ");
-        System.out.println("El precio a pagar es de: "+ getPagarSuscripcion());
+        System.out.println("El precio a pagar es de: "+ getPagarSuscripcion() + " antes de la fecha Limite: " + getFechaLimiteSuscripcion());
         System.out.println("Suscripcion pagada correctamente. ");
         System.out.println(" ");
         return pagarSuscripcion;

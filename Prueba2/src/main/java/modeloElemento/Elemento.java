@@ -2,6 +2,7 @@ package modeloElemento;
 import catalogo.Prioridad;
 import modeloUsuario.Usuario;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
@@ -11,14 +12,14 @@ public abstract class Elemento implements AccionesElemento {
     private String titulo;
     private String descripcion;
     private Prioridad prioridad;
-    private DateTimeFormatter fechaCreacion = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private DateTimeFormatter fechaLimite = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private LocalDate fechaCreacion;
+    private LocalDate fechaLimite;
     private int cantidadColaboradores;
     private Usuario usuario;
 
 
     //Constructor Prametrizado:
-    Elemento(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, DateTimeFormatter fechaCreacion, DateTimeFormatter fechaLimite, Usuario usuario) {
+    Elemento(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, LocalDate fechaCreacion, LocalDate fechaLimite, Usuario usuario) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -43,11 +44,11 @@ public abstract class Elemento implements AccionesElemento {
     public Prioridad getPrioridad() {return prioridad;}
     public void setPrioridad() {this.prioridad = prioridad;}
 
-    public DateTimeFormatter getFechaCreacion() {return fechaCreacion;}
-    public void setFechaCreacion(DateTimeFormatter fechaCreacion) {this.fechaCreacion = fechaCreacion;}
+    public LocalDate getFechaCreacion() {return fechaCreacion;}
+    public void setFechaCreacion(LocalDate fechaCreacion) {this.fechaCreacion = fechaCreacion;}
 
-    public DateTimeFormatter getFechaLimite() {return fechaLimite;}
-    public void setFechaLimite(DateTimeFormatter fechaLimite) {this.fechaLimite = fechaLimite;}
+    public LocalDate getFechaLimite() {return fechaLimite;}
+    public void setFechaLimite(LocalDate fechaLimite) {this.fechaLimite = fechaLimite;}
 
     public int getCantidadColaboradores() {return cantidadColaboradores;}
     public void setCantidadColaboradores(int cantidadColaboradores) {this.cantidadColaboradores = cantidadColaboradores;}
