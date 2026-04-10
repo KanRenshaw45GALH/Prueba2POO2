@@ -46,26 +46,17 @@ public class UsuarioGeneral extends Usuario{
     public int getContadorElementoTareas() {
         return contadorElementoTareas;
     }
-
-    public void setContadorElementoTareas(int contadorElementoTareas) {
-        this.contadorElementoTareas = contadorElementoTareas;
-    }
+    public void setContadorElementoTareas(int contadorElementoTareas) {this.contadorElementoTareas = contadorElementoTareas;}
 
     public int getContadorElementoRecordatorios() {
         return contadorElementoRecordatorios;
     }
-
-    public void setContadorElementoRecordatorios(int contadorElementoRecordatorios) {
-        this.contadorElementoRecordatorios = contadorElementoRecordatorios;
-    }
+    public void setContadorElementoRecordatorios(int contadorElementoRecordatorios) {this.contadorElementoRecordatorios = contadorElementoRecordatorios;}
 
     public int getContadorElementoCompartidos() {
         return contadorElementoCompartidos;
     }
-
-    public void setContadorElementoCompartidos(int contadorElementoCompartidos) {
-        this.contadorElementoCompartidos = contadorElementoCompartidos;
-    }
+    public void setContadorElementoCompartidos(int contadorElementoCompartidos) {this.contadorElementoCompartidos = contadorElementoCompartidos;}
 
     //Metodos Propios:
     public void activarSuscripcion() {

@@ -4,7 +4,7 @@ import modeloUsuario.Usuario;
 import java.time.LocalDate;
 
 
-public abstract class Elemento implements AccionesElemento {
+public abstract class  Elemento implements AccionesElemento {
     //Atributos:
     private int id;
     private String titulo;
