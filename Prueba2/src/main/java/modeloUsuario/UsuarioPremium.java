@@ -1,4 +1,6 @@
 package modeloUsuario;
+import modeloElemento.Elemento;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -6,41 +8,28 @@ import java.time.format.DateTimeFormatter;
 public class UsuarioPremium extends Usuario {
     //Atributos:
     private float pagarSuscripcion;
-    private boolean activarSuscripcion = true;
-    private boolean accesoCompleto = true;
     private boolean compartirElemento = true;
-    private LocalDate fechaActual = LocalDate.now();
     private LocalDate fechaSuscripcion;
     private LocalDate fechaLimiteSuscripcion;
 
 
     //Construtor Parametrizado:
-    public UsuarioPremium(String nombreCompleto, int edad, String email, String password, float pagarSuscripcion, boolean activarSuscripcion, boolean accesoCompleto, boolean compartirElemento, LocalDate fechaActual, LocalDate fechaSuscripcion, LocalDate fechaLimiteSuscripcion) {
-        super(nombreCompleto, edad, email, password);
+
+
+    public UsuarioPremium(String nombreCompleto, int edad, String email, String password, boolean accesoCompleto, LocalDate fechaActual, Elemento elemento, float pagarSuscripcion, boolean compartirElemento, LocalDate fechaSuscripcion, LocalDate fechaLimiteSuscripcion) {
+        super(nombreCompleto, edad, email, password, accesoCompleto, fechaActual, elemento);
         this.pagarSuscripcion = pagarSuscripcion;
-        this.activarSuscripcion = activarSuscripcion;
-        this.accesoCompleto = accesoCompleto;
-        this.fechaActual = fechaActual;
+        this.compartirElemento = compartirElemento;
         this.fechaSuscripcion = fechaSuscripcion;
         this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;
     }
-
 
     //Getter y Setter
     public float getPagarSuscripcion() {return pagarSuscripcion;}
     public void setPagarSuscripcion(float pagarSuscripcion) {this.pagarSuscripcion = pagarSuscripcion;}
 
-    public boolean isActivarSuscripcion() {return activarSuscripcion;}
-    public void setActivarSuscripcion(boolean activarSuscripcion) {}
-
-    public boolean isAccesoCompleto() {return accesoCompleto;}
-    public void setAccesoCompleto(boolean accesoCompleto) {}
-
     public boolean isCompartirElemento() {return compartirElemento;}
     public void setCompartirElemento(boolean compartirElemento) {}
-
-    public LocalDate getFechaActual() {return fechaActual;}
-    public void setFechaActual(LocalDate fechaActual) {this.fechaActual = fechaActual;}
 
     public LocalDate getFechaSuscripcion() {return fechaSuscripcion;}
     public void setFechaSuscripcion(LocalDate fechaSuscripcion) {this.fechaSuscripcion = fechaSuscripcion;}
@@ -51,9 +40,10 @@ public class UsuarioPremium extends Usuario {
 
     //Metodos Propios:
     public boolean cancelarSuscripcion(){
-        if(activarSuscripcion == true) {
-            activarSuscripcion = false;
-            accesoCompleto = false;
+        Usua
+        if(getAccesoCompleto() == true) {
+            pagarSuscripcion = 0;
+            usuario.setAccesoCompleto();
         }
         System.out.println(" ");
         System.out.println("Suscripcion cancelada correctamente");
@@ -85,7 +75,7 @@ public class UsuarioPremium extends Usuario {
     }
     @Override
     public void modoSuscripcion() {
-        if(activarSuscripcion == true){
+        if(getAccesoCompleto() == true){
             System.out.println(" ");
             System.out.println("Suscripcion esta activada");
             System.out.println("No posees limites para la creacion de Tareas, Recordatorion o Compartidos. ");
