@@ -1,8 +1,6 @@
 package modeloUsuario;
 import modeloElemento.Elemento;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 
 public class UsuarioPremium extends Usuario {
@@ -14,8 +12,6 @@ public class UsuarioPremium extends Usuario {
 
 
     //Construtor Parametrizado:
-
-
     public UsuarioPremium(String nombreCompleto, int edad, String email, String password, boolean accesoCompleto, LocalDate fechaActual, Elemento elemento, float pagarSuscripcion, boolean compartirElemento, LocalDate fechaSuscripcion, LocalDate fechaLimiteSuscripcion) {
         super(nombreCompleto, edad, email, password, accesoCompleto, fechaActual, elemento);
         this.pagarSuscripcion = pagarSuscripcion;
@@ -40,7 +36,7 @@ public class UsuarioPremium extends Usuario {
 
     //Metodos Propios:
     public boolean cancelarSuscripcion(){
-        Usua
+        Usuario usuario = null;
         if(getAccesoCompleto() == true) {
             pagarSuscripcion = 0;
             usuario.setAccesoCompleto();

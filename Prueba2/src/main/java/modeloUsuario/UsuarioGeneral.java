@@ -1,4 +1,6 @@
 package modeloUsuario;
+import modeloElemento.Elemento;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -12,36 +14,20 @@ public class UsuarioGeneral extends Usuario{
     private int contadorElementoTareas = 0;
     private int contadorElementoRecordatorios = 0;
     private int contadorElementoCompartidos = 0;
-    private LocalDate fechaActual = LocalDate.now();
-    private LocalDate fechaSuscripcion;
-    private LocalDate fechaLimiteSuscripcion;
 
 
     //Constructor Parametrizado:
-    public UsuarioGeneral(String nombreCompleto, int edad, String email, String password, boolean activarSuscripcion, int contadorElementoTareas, int contadorElementoRecordatorios, int contadorElementoCompartidos, LocalDate fechaActual, LocalDate fechaSuscripcion, LocalDate fechaLimiteSuscripcion) {
-        super(nombreCompleto,edad,email,password);
+    public UsuarioGeneral(String nombreCompleto, int edad, String email, String password, boolean accesoCompleto, LocalDate fechaActual, Elemento elemento, boolean activarSuscripcion, int contadorElementoTareas, int contadorElementoRecordatorios, int contadorElementoCompartidos) {
+        super(nombreCompleto, edad, email, password, accesoCompleto, fechaActual, elemento);
         this.activarSuscripcion = activarSuscripcion;
         this.contadorElementoTareas = contadorElementoTareas;
         this.contadorElementoRecordatorios = contadorElementoRecordatorios;
         this.contadorElementoCompartidos = contadorElementoCompartidos;
-        this.fechaActual = fechaActual;
-        this.fechaSuscripcion = fechaSuscripcion;
-        this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;
     }
-
 
     //Getter y Setter:
     public boolean isActivarSuscripcion() {return activarSuscripcion;}
     public void setActivarSuscripcion(boolean activarSuscripcion) {this.activarSuscripcion = activarSuscripcion;}
-
-    public LocalDate getFechaActual() {return fechaActual;}
-    public void setFechaActual(LocalDate fechaActual) {this.fechaActual = fechaActual;}
-
-    public LocalDate getFechaSuscripcion() {return fechaSuscripcion;}
-    public void setFechaSuscripcion(LocalDate fechaSuscripcion) {this.fechaSuscripcion = fechaSuscripcion;}
-
-    public LocalDate getFechaLimiteSuscripcion() {return fechaLimiteSuscripcion;}
-    public void setFechaLimiteSuscripcion(LocalDate fechaLimiteSuscripcion) {this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;}
 
     public int getContadorElementoTareas() {
         return contadorElementoTareas;
@@ -60,6 +46,8 @@ public class UsuarioGeneral extends Usuario{
 
     //Metodos Propios:
     public void activarSuscripcion() {
+        System.out.println(" ");
+
         if(activarSuscripcion == false){
             activarSuscripcion = true;
             System.out.println(" ");

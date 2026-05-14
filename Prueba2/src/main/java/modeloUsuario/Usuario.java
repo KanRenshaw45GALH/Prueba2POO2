@@ -1,6 +1,7 @@
 package modeloUsuario;
 import modeloElemento.Elemento;
 import java.time.LocalDate;
+import java.util.List;
 
 public abstract class Usuario implements AccionesUsuario {
     //Atributos:
@@ -10,7 +11,7 @@ public abstract class Usuario implements AccionesUsuario {
     private String password;
     private boolean accesoCompleto;
     private LocalDate fechaActual;
-    private Elemento elemento;
+    List <Elemento> elemento;
 
 
     //Constructor Parametrizado:
@@ -44,14 +45,18 @@ public abstract class Usuario implements AccionesUsuario {
     public LocalDate getFechaActual() {return fechaActual;}
     public void setFechaActual(LocalDate fechaActual) {this.fechaActual = fechaActual;}
 
-    public Elemento getElemento() {return elemento;}
-    public void setElemento(Elemento elemento) {this.elemento = elemento;}
+    public boolean isAccesoCompleto() {return accesoCompleto; }
+    public void setAccesoCompleto(boolean accesoCompleto) {this.accesoCompleto = accesoCompleto;}
+
+    public List<Elemento> getElemento() {return elemento;}
+    public void setElemento(List<Elemento> elemento) {this.elemento = elemento;}
+
 
     //Metodos Implementados:
     @Override
     public void verificarUsuario() {
 
-        System.out.println("\n  ");
+        System.out.println("\n Verifique su usuario  ");
         if (password.equals(this.password)) {
             System.out.println("El Usuario se ha verificado correctamente. ");
         } else {
@@ -61,9 +66,8 @@ public abstract class Usuario implements AccionesUsuario {
     @Override
     public void imprimirUsuario() {
         System.out.println(" ");
-        System.out.println("El Usuario es " + nombreCompleto);
-        System.out.println("El Usuario es " + edad);
-        System.out.println("El Usuario es " + email);
+        System.out.println("El nombre del Usuario es:  " + nombreCompleto + " quien posee el corre electrnico: " + email);
+        System.out.println("La catidad de proyectos que posee el Usuario es " + "c");
     }
 
 

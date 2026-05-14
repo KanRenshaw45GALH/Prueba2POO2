@@ -13,7 +13,7 @@ public abstract class  Elemento implements AccionesElemento {
     private LocalDate fechaCreacion;
     private LocalDate fechaLimite;
     private int cantidadColaboradores;
-    private Usuario usuario;
+    Usuario usuario;
 
 
     //Constructor Prametrizado:
@@ -74,14 +74,6 @@ public abstract class  Elemento implements AccionesElemento {
         System.out.println("Fecha Creacion: " + fechaCreacion);
         System.out.println("usuario creador: " + usuario.getNombreCompleto());;
     }
-
-
-
-
-
-
-
-
 
 
 }
