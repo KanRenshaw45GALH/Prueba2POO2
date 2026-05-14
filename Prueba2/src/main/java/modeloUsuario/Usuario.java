@@ -1,6 +1,7 @@
 package modeloUsuario;
 import modeloElemento.Elemento;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,7 +25,7 @@ public abstract class Usuario implements AccionesUsuario {
         this.password = password;
         this.accesoCompleto = false;
         this.fechaActual = LocalDate.now();
-        this.elemento = null;
+        this.elemento= new ArrayList<Elemento>();
     }
 
     //Getter y Setter:
@@ -65,6 +66,21 @@ public abstract class Usuario implements AccionesUsuario {
         System.out.println(" ");
         System.out.println("El nombre del Usuario es:  " + nombreCompleto + " quien posee el corre electrnico: " + email);
         System.out.println("La catidad de proyectos que posee el Usuario es " + "c");
+    }
+
+    public void crearElemento(Elemento elemento) {
+        this.elemento.add(elemento);
+
+    };
+
+    public void ListarElementos() {
+        for(Elemento elemento: this.elemento){
+            elemento.imprimirElementos();
+        }
+    }
+
+    public void EliminarElemento(Elemento elemento) {
+        this.elemento.remove(elemento);
     }
 
 

@@ -59,7 +59,7 @@ public abstract class  Elemento implements AccionesElemento {
 
 
     //Metodos Heredaddos:
-    @Override
+
     public void crearElemento(){
         System.out.println("Creando nuevo Elemento. ");
         System.out.println("Introduzca el nombre del Elemento: " ); setTitulo();
