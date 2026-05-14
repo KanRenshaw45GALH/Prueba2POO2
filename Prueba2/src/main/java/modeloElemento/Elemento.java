@@ -2,6 +2,7 @@ package modeloElemento;
 import catalogo.Prioridad;
 import modeloUsuario.Usuario;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 
 public abstract class  Elemento implements AccionesElemento {
@@ -37,7 +38,7 @@ public abstract class  Elemento implements AccionesElemento {
     public void setTitulo() {this.titulo = titulo;}
 
     public String getDescripcion() {return descripcion;}
-    public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
+    public void setDescripcion() {this.descripcion = descripcion;}
 
     public Prioridad getPrioridad() {return prioridad;}
     public void setPrioridad() {this.prioridad = prioridad;}
@@ -54,16 +55,36 @@ public abstract class  Elemento implements AccionesElemento {
     public Usuario getUsuario() {
         return usuario;
     }
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(Usuario usuario) {this.usuario = usuario;}
 
-    }
 
     //Metodos Heredaddos:
     @Override
-    public void crearElemento(){};
+    public void crearElemento(){
+        System.out.println("Creando nuevo Elemento. ");
+        System.out.println("Introduzca el nombre del Elemento: " ); setTitulo();
+        System.out.println("Introduzca el descripcion del Elemento: " ); setDescripcion();
+        System.out.println("Introduzca el prioridad del Elemento: " );  setPrioridad();
+        System.out.println("Introduzca la fecha limite del Elemento: "); setFechaLimite(LocalDate. parse(fechaLimite.toString()));
+    };
     @Override
-    public void compartirElemento(){};
+    public synchronized void compartirElemento(){
+            System.out.println("Introduzca el nombre del Elemento: ");
+        try{
+            setTitulo();
+            if (titulo.equals(getTitulo())) {
+                System.out.println("Introduzca el Email del Usuario a quien compartir: ");
+                setUsuario(usuario);
+                System.out.println("Espere a la carga de Datos... ");
+                System.out.println("El Elemento fue compartido con el Usuario: " + getUsuario() + " Correctamente!!! ");
+            } else {
+                System.out.println("El nombre del Elemento no existe. Pruebe otro Nombre: ");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("El Elemento no existe. Pruebe otro Nombre: ");
+        }
+    };
     @Override
     public void imprimirElementos(){
         System.out.println("ID: " + id);
@@ -71,6 +92,7 @@ public abstract class  Elemento implements AccionesElemento {
         System.out.println("Descripcion: " + descripcion);
         System.out.println("Prioridad: " + prioridad);
         System.out.println("Cantidad Colaboradores: " + cantidadColaboradores);
+        System.out.println("Nombre de Colaboradores: " + getUsuario().getNombreCompleto());
         System.out.println("Fecha Creacion: " + fechaCreacion);
         System.out.println("usuario creador: " + usuario.getNombreCompleto());;
     }

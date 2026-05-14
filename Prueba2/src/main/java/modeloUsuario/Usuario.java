@@ -3,6 +3,7 @@ import modeloElemento.Elemento;
 import java.time.LocalDate;
 import java.util.List;
 
+
 public abstract class Usuario implements AccionesUsuario {
     //Atributos:
     private String nombreCompleto;
@@ -45,9 +46,6 @@ public abstract class Usuario implements AccionesUsuario {
     public LocalDate getFechaActual() {return fechaActual;}
     public void setFechaActual(LocalDate fechaActual) {this.fechaActual = fechaActual;}
 
-    public boolean isAccesoCompleto() {return accesoCompleto; }
-    public void setAccesoCompleto(boolean accesoCompleto) {this.accesoCompleto = accesoCompleto;}
-
     public List<Elemento> getElemento() {return elemento;}
     public void setElemento(List<Elemento> elemento) {this.elemento = elemento;}
 
@@ -55,8 +53,7 @@ public abstract class Usuario implements AccionesUsuario {
     //Metodos Implementados:
     @Override
     public void verificarUsuario() {
-
-        System.out.println("\n Verifique su usuario  ");
+        System.out.println("\n Por favor verifique su usuario.  ");
         if (password.equals(this.password)) {
             System.out.println("El Usuario se ha verificado correctamente. ");
         } else {
