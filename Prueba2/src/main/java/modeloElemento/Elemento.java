@@ -35,13 +35,13 @@ public abstract class  Elemento implements AccionesElemento {
     public void setId(int id) {this.id = id;}
 
     public String getTitulo() {return titulo;}
-    public void setTitulo() {this.titulo = titulo;}
+    public void setTitulo(String titulo) {this.titulo = titulo;}
 
     public String getDescripcion() {return descripcion;}
-    public void setDescripcion() {this.descripcion = descripcion;}
+    public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
 
     public Prioridad getPrioridad() {return prioridad;}
-    public void setPrioridad() {this.prioridad = prioridad;}
+    public void setPrioridad(Prioridad prioridad) {this.prioridad = prioridad;}
 
     public LocalDate getFechaCreacion() {return fechaCreacion;}
     public void setFechaCreacion(LocalDate fechaCreacion) {this.fechaCreacion = fechaCreacion;}
@@ -62,16 +62,16 @@ public abstract class  Elemento implements AccionesElemento {
 
     public void crearElemento(){
         System.out.println("Creando nuevo Elemento. ");
-        System.out.println("Introduzca el nombre del Elemento: " ); setTitulo();
-        System.out.println("Introduzca el descripcion del Elemento: " ); setDescripcion();
-        System.out.println("Introduzca el prioridad del Elemento: " );  setPrioridad();
+        System.out.println("Introduzca el nombre del Elemento: " ); setTitulo(titulo);
+        System.out.println("Introduzca el descripcion del Elemento: " ); setDescripcion(descripcion);
+        System.out.println("Introduzca el prioridad del Elemento: " );  setPrioridad(prioridad);
         System.out.println("Introduzca la fecha limite del Elemento: "); setFechaLimite(LocalDate. parse(fechaLimite.toString()));
     };
     @Override
     public synchronized void compartirElemento(){
             System.out.println("Introduzca el nombre del Elemento: ");
         try{
-            setTitulo();
+            setTitulo(titulo);
             if (titulo.equals(getTitulo())) {
                 System.out.println("Introduzca el Email del Usuario a quien compartir: ");
                 setUsuario(usuario);
