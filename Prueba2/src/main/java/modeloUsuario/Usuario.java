@@ -1,7 +1,9 @@
 package modeloUsuario;
 import modeloElemento.Elemento;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
 
 public abstract class Usuario implements AccionesUsuario {
     //Atributos:
@@ -23,7 +25,7 @@ public abstract class Usuario implements AccionesUsuario {
         this.password = password;
         this.accesoCompleto = false;
         this.fechaActual = LocalDate.now();
-        this.elemento = null;
+        this.elemento= new ArrayList<Elemento>();
     }
 
     //Getter y Setter:
@@ -45,9 +47,6 @@ public abstract class Usuario implements AccionesUsuario {
     public LocalDate getFechaActual() {return fechaActual;}
     public void setFechaActual(LocalDate fechaActual) {this.fechaActual = fechaActual;}
 
-    public boolean isAccesoCompleto() {return accesoCompleto; }
-    public void setAccesoCompleto(boolean accesoCompleto) {this.accesoCompleto = accesoCompleto;}
-
     public List<Elemento> getElemento() {return elemento;}
     public void setElemento(List<Elemento> elemento) {this.elemento = elemento;}
 
@@ -55,8 +54,7 @@ public abstract class Usuario implements AccionesUsuario {
     //Metodos Implementados:
     @Override
     public void verificarUsuario() {
-
-        System.out.println("\n Verifique su usuario  ");
+        System.out.println("\n Por favor verifique su usuario.  ");
         if (password.equals(this.password)) {
             System.out.println("El Usuario se ha verificado correctamente. ");
         } else {
@@ -68,6 +66,21 @@ public abstract class Usuario implements AccionesUsuario {
         System.out.println(" ");
         System.out.println("El nombre del Usuario es:  " + nombreCompleto + " quien posee el corre electrnico: " + email);
         System.out.println("La catidad de proyectos que posee el Usuario es " + "c");
+    }
+
+    public void crearElemento(Elemento elemento) {
+        this.elemento.add(elemento);
+
+    };
+
+    public void ListarElementos() {
+        for(Elemento elemento: this.elemento){
+            elemento.imprimirElementos();
+        }
+    }
+
+    public void EliminarElemento(Elemento elemento) {
+        this.elemento.remove(elemento);
     }
 
 

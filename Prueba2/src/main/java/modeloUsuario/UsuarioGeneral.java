@@ -1,8 +1,6 @@
 package modeloUsuario;
 import modeloElemento.Elemento;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 
 public class UsuarioGeneral extends Usuario{
