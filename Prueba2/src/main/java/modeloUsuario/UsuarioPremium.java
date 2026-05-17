@@ -1,24 +1,33 @@
 package modeloUsuario;
-import modeloElemento.Elemento;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 
 public class UsuarioPremium extends Usuario {
     //Atributos:
-    private float pagarSuscripcion;
+    private float pagarSuscripcion = 4.99f;
     private boolean compartirElemento = true;
     private LocalDate fechaSuscripcion;
     private LocalDate fechaLimiteSuscripcion;
 
 
-    //Construtor Parametrizado:
-    public UsuarioPremium(String nombreCompleto, int edad, String email, String password, boolean accesoCompleto, LocalDate fechaActual, Elemento elemento, float pagarSuscripcion, boolean compartirElemento, LocalDate fechaSuscripcion, LocalDate fechaLimiteSuscripcion) {
-        super(nombreCompleto, edad, email, password, accesoCompleto, fechaActual, elemento);
+    //Construtores Parametrizados:
+    public UsuarioPremium(String nombreCompleto, int edad, String email, String password, int cantidadTareas, int cantidadRecordatorios, float pagarSuscripcion, boolean compartirElemento, LocalDate fechaSuscripcion, LocalDate fechaLimiteSuscripcion) {
+        super(nombreCompleto, edad, email, password, cantidadTareas, cantidadRecordatorios);
         this.pagarSuscripcion = pagarSuscripcion;
         this.compartirElemento = compartirElemento;
         this.fechaSuscripcion = fechaSuscripcion;
         this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;
     }
+    public UsuarioPremium(float pagarSuscripcion, boolean compartirElemento, LocalDate fechaSuscripcion, LocalDate fechaLimiteSuscripcion) {
+        this.pagarSuscripcion = pagarSuscripcion;
+        this.compartirElemento = compartirElemento;
+        this.fechaSuscripcion = fechaSuscripcion;
+        this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;
+    }
+    //Construtor Vacio:
+    public UsuarioPremium() {super();}
+
 
     //Getter y Setter
     public float getPagarSuscripcion() {return pagarSuscripcion;}
@@ -34,19 +43,7 @@ public class UsuarioPremium extends Usuario {
     public void setFechaLimiteSuscripcion(LocalDate fechaLimiteSuscripcion) {this.fechaLimiteSuscripcion = fechaLimiteSuscripcion;}
 
 
-    //Metodos Propios:
-    public boolean cancelarSuscripcion(){
-        Usuario usuario = null;
-        if(getAccesoCompleto() == true) {
-            pagarSuscripcion = 0;
-            usuario.setAccesoCompleto();
-        }
-        System.out.println(" ");
-        System.out.println("Suscripcion cancelada correctamente");
-        System.out.println(" ");
-        return true;
-    }
-
+//    //Metodos Propios:
     public float pagarSuscripcion() {
         System.out.println(" ");
         System.out.println("Para mantener los beneficios debe pagar suscripcion. ");
@@ -54,7 +51,6 @@ public class UsuarioPremium extends Usuario {
         System.out.println("Suscripcion pagada correctamente. ");
         System.out.println(" ");
         return pagarSuscripcion;
-
     }
 
 
@@ -62,24 +58,30 @@ public class UsuarioPremium extends Usuario {
     @Override
     public void verificarUsuario() {}
     @Override
+    public void crearElemento() {}
+    @Override
     public void imprimirUsuario() {
         super.imprimirUsuario();
-        System.out.println("Suscripcion: " + getPagarSuscripcion());
+        System.out.println(" Usted posee un servicio Premium. ");
+        System.out.println("Suscripcion actual posee un precio de: " + getPagarSuscripcion());
         System.out.println("Fecha de Suscripcion" + getFechaSuscripcion());
         System.out.println("Fecha Limite: " + getFechaLimiteSuscripcion());
-        System.out.println(" ");
     }
     @Override
     public void modoSuscripcion() {
-        if(getAccesoCompleto() == true){
-            System.out.println(" ");
-            System.out.println("Suscripcion esta activada");
-            System.out.println("No posees limites para la creacion de Tareas, Recordatorion o Compartidos. ");
-            System.out.println(" ");
+        System.out.println(" Desea desactivar la suscripcion?. Ingrese Si o No: ");
+        Scanner sc = new Scanner(System.in);
+        String respuesta = sc.nextLine();
+        if(respuesta.equalsIgnoreCase("Si")){
+            UsuarioGeneral general = new UsuarioGeneral();
+            general.setAccesoCompleto(false);
+            System.out.println("\n La suscripcion esta desactivada. ");
+            System.out.println("Ahorra posees un limite en la creacion de Elementos. \n");
+
         }else{
-            System.out.println(" ");
-            System.out.println("Suscripcion esta desactivada");
-            System.out.println(" ");
+            setAccesoCompleto(false);
+            System.out.println("\n La suscripcion sigue activada");
+            System.out.println("No posees limites para la creacion de Tareas, Recordatorios y Compartidos. \n");
         }
     }
 

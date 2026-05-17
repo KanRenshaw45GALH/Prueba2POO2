@@ -1,6 +1,7 @@
 package modeloUsuario;
 import modeloElemento.Elemento;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 
 public class UsuarioGeneral extends Usuario{
@@ -8,20 +9,25 @@ public class UsuarioGeneral extends Usuario{
     private boolean activarSuscripcion = false;
     final private int limiteElementosTareas = 8;
     final private int limiteElementosRecordatorios = 4;
-    final private int limiteElementosCompartidos = 1;
     private int contadorElementoTareas = 0;
     private int contadorElementoRecordatorios = 0;
-    private int contadorElementoCompartidos = 0;
 
 
-    //Constructor Parametrizado:
-    public UsuarioGeneral(String nombreCompleto, int edad, String email, String password, boolean accesoCompleto, LocalDate fechaActual, Elemento elemento, boolean activarSuscripcion, int contadorElementoTareas, int contadorElementoRecordatorios, int contadorElementoCompartidos) {
-        super(nombreCompleto, edad, email, password, accesoCompleto, fechaActual, elemento);
+    //Constructores Parametrizados:
+    public UsuarioGeneral(String nombreCompleto, int edad, String email, String password, int cantidadTareas, int cantidadRecordatorios, boolean activarSuscripcion, int contadorElementoTareas, int contadorElementoRecordatorios) {
+        super(nombreCompleto, edad, email, password, cantidadTareas, cantidadRecordatorios);
         this.activarSuscripcion = activarSuscripcion;
         this.contadorElementoTareas = contadorElementoTareas;
         this.contadorElementoRecordatorios = contadorElementoRecordatorios;
-        this.contadorElementoCompartidos = contadorElementoCompartidos;
     }
+    public UsuarioGeneral(boolean activarSuscripcion, int contadorElementoTareas, int contadorElementoRecordatorios) {
+        this.activarSuscripcion = activarSuscripcion;
+        this.contadorElementoTareas = contadorElementoTareas;
+        this.contadorElementoRecordatorios = contadorElementoRecordatorios;
+    }
+    //Construtor Vacio:
+    public UsuarioGeneral(){    super();}
+
 
     //Getter y Setter:
     public boolean isActivarSuscripcion() {return activarSuscripcion;}
@@ -37,10 +43,6 @@ public class UsuarioGeneral extends Usuario{
     }
     public void setContadorElementoRecordatorios(int contadorElementoRecordatorios) {this.contadorElementoRecordatorios = contadorElementoRecordatorios;}
 
-    public int getContadorElementoCompartidos() {
-        return contadorElementoCompartidos;
-    }
-    public void setContadorElementoCompartidos(int contadorElementoCompartidos) {this.contadorElementoCompartidos = contadorElementoCompartidos;}
 
     //Metodos Propios:
     public void activarSuscripcion() {
@@ -72,40 +74,32 @@ public class UsuarioGeneral extends Usuario{
             return false;
         }
     }
-    public boolean conteoCompartido() {
-        if (getContadorElementoCompartidos() < limiteElementosCompartidos) {
-            contadorElementoCompartidos++;
-            System.out.println("Elemento compartido agregado. (" + getContadorElementoCompartidos() + "/" + limiteElementosCompartidos + ")");
-            return true;
-        } else {
-            System.out.println("Límite de compartidos alcanzado: " + limiteElementosCompartidos);
-            return false;
-        }
-    }
-
 
 
     //Metodos Heredados:
     @Override
     public void verificarUsuario() {}
     @Override
+    public void crearElemento() {}
+    @Override
     public void imprimirUsuario() {
         super.imprimirUsuario();
-        System.out.println("En tu version actual no gozas de los beneficios completos. ");
+        System.out.println("\n En tu version actual no gozas de los beneficios completos. \n Para ello debes comprar el servicio Premium. ");
     }
     @Override
     public void modoSuscripcion() {
-        if(activarSuscripcion == false){
-            System.out.println(" ");
-            System.out.println("Suscripcion esta desactivada");
-            System.out.println("Posees un limite de Tareas de: " + limiteElementosTareas);
-            System.out.println("Posees un limite de Recordatorios de: " + limiteElementosRecordatorios);
-            System.out.println("Posees un limite de Elementos Compartidos: " + limiteElementosCompartidos);
-            System.out.println(" ");
-        }else{
-            System.out.println(" ");
-            System.out.println("Suscripcion activa");
-            System.out.println(" ");
+        System.out.println(" Desea activar la suscripcion?. Ingrese Si o No: ");
+        Scanner sc = new Scanner(System.in);
+        String respuesta = sc.nextLine();
+        if(respuesta.equalsIgnoreCase("Si")){
+            UsuarioPremium premium = new UsuarioPremium();
+            premium.setAccesoCompleto(true);
+            System.out.println("\n La suscripcion esta activada");
+            System.out.println("No posees limites para la creacion de Tareas, Recordatorios y Compartidos. \n");
+
+        }else {
+            setAccesoCompleto(false);
+            System.out.println(" La suscripcion se mantiene sin una suscripcion. \n");
         }
     }
 

@@ -1,5 +1,4 @@
 package ui;
-
 import catalogo.Estado;
 import catalogo.Prioridad;
 import modeloElemento.ElementoTarea;

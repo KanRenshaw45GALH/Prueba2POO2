@@ -2,6 +2,8 @@ package modeloElemento;
 import catalogo.Prioridad;
 import modeloUsuario.Usuario;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -13,9 +15,9 @@ public abstract class  Elemento implements AccionesElemento {
     private Prioridad prioridad;
     private LocalDate fechaCreacion;
     private LocalDate fechaLimite;
+    private Usuario usuario;
+    private List<Usuario> colaboradores;
     private int cantidadColaboradores;
-    Usuario usuario;
-
 
     //Constructor Prametrizado:
     Elemento(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, LocalDate fechaCreacion, LocalDate fechaLimite, Usuario usuario) {
@@ -23,10 +25,11 @@ public abstract class  Elemento implements AccionesElemento {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.prioridad = prioridad;
-        this.cantidadColaboradores = cantidadColaboradores;
         this.fechaCreacion = fechaCreacion;
         this.fechaLimite = fechaLimite;
         this.usuario = usuario;
+        this.colaboradores = new ArrayList<>();
+        this.cantidadColaboradores = cantidadColaboradores;
     }
 
 
@@ -49,41 +52,23 @@ public abstract class  Elemento implements AccionesElemento {
     public LocalDate getFechaLimite() {return fechaLimite;}
     public void setFechaLimite(LocalDate fechaLimite) {this.fechaLimite = fechaLimite;}
 
+    public Usuario getUsuario() {return usuario;}
+    public void setUsuario(Usuario usuario) {this.usuario = usuario;}
+
     public int getCantidadColaboradores() {return cantidadColaboradores;}
     public void setCantidadColaboradores(int cantidadColaboradores) {this.cantidadColaboradores = cantidadColaboradores;}
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-    public void setUsuario(Usuario usuario) {this.usuario = usuario;}
+    public List<Usuario> getColaboradores() {return colaboradores;}
+    public void setColaboradores(List<Usuario> colaboradores) {this.colaboradores = colaboradores;}
 
 
-    //Metodos Heredaddos:
-
+    //Metodos Heredados:
     public void crearElemento(){
         System.out.println("Creando nuevo Elemento. ");
         System.out.println("Introduzca el nombre del Elemento: " ); setTitulo(titulo);
         System.out.println("Introduzca el descripcion del Elemento: " ); setDescripcion(descripcion);
         System.out.println("Introduzca el prioridad del Elemento: " );  setPrioridad(prioridad);
         System.out.println("Introduzca la fecha limite del Elemento: "); setFechaLimite(LocalDate. parse(fechaLimite.toString()));
-    };
-    @Override
-    public synchronized void compartirElemento(){
-            System.out.println("Introduzca el nombre del Elemento: ");
-        try{
-            setTitulo(titulo);
-            if (titulo.equals(getTitulo())) {
-                System.out.println("Introduzca el Email del Usuario a quien compartir: ");
-                setUsuario(usuario);
-                System.out.println("Espere a la carga de Datos... ");
-                System.out.println("El Elemento fue compartido con el Usuario: " + getUsuario() + " Correctamente!!! ");
-            } else {
-                System.out.println("El nombre del Elemento no existe. Pruebe otro Nombre: ");
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("El Elemento no existe. Pruebe otro Nombre: ");
-        }
     };
     @Override
     public void imprimirElementos(){
