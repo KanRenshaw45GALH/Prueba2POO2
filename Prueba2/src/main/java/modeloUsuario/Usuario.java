@@ -68,7 +68,7 @@ public abstract class Usuario implements AccionesUsuario {
         this.elemento.remove(elemento);
     }
 
-    public synchronized void compartirElemento(List<Usuario> usuarioList){
+    public void compartirElemento(List<Usuario> usuarioList){
         Scanner sc = new Scanner(System.in);
         Elemento elementoEncontrado = null;
         Usuario usuarioEncontrado = null;
