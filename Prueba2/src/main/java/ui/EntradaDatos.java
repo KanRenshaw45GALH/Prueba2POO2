@@ -87,9 +87,7 @@ public class EntradaDatos {
             password = sc.nextLine().trim();
         }
 
-        usuario = new UsuarioGeneral(nombre, edad, email, password,
-                false, LocalDate.now(), null,
-                false, 0, 0, 0);
+        usuario = new UsuarioGeneral();
 
         System.out.println("  Bienvenido/a, " + nombre + "!");
         menuPrincipal();

@@ -1,4 +1,6 @@
 package modeloUsuario;
+import modeloElemento.Elemento;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -58,7 +60,7 @@ public class UsuarioPremium extends Usuario {
     @Override
     public void verificarUsuario() {}
     @Override
-    public void crearElemento() {}
+    public void crearElemento(Elemento elemento) {}
     @Override
     public void imprimirUsuario() {
         super.imprimirUsuario();

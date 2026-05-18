@@ -54,10 +54,6 @@ public abstract class Usuario implements AccionesUsuario {
 
 
     //Metodos Propios:
-    public void crearElemento(Elemento elemento) {
-        this.elemento.add(elemento);
-    };
-
     public void ListarElementos() {
         for(Elemento elemento: this.elemento){
             elemento.imprimirElementos();
@@ -141,6 +137,10 @@ public abstract class Usuario implements AccionesUsuario {
         }
 
     }
+    @Override
+    public void crearElemento(Elemento elemento) {
+        this.elemento.add(elemento);
+    };
     @Override
     public void imprimirUsuario() {
         System.out.println(" ");

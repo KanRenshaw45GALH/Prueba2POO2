@@ -28,9 +28,9 @@ public class ElementoTarea extends Elemento {
     //Metodos Heredados:
     @Override
     public void crearElemento() {
-        System.out.println(" ");
-        System.out.println("Creando Elemento Tarea. ");
-        System.out.println(" ");
+        Elemento elemento = ElementoTarea.this;
+        elemento.crearElemento();
+        System.out.println(" \n Creando Elemento Tarea. ");
     }
     @Override
     public void imprimirElementos() {

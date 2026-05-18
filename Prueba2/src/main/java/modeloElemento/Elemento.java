@@ -63,12 +63,33 @@ public abstract class  Elemento implements AccionesElemento {
 
 
     //Metodos Heredados:
+    @Override
     public void crearElemento(){
+        Scanner sc = new Scanner(System.in);
         System.out.println("Creando nuevo Elemento. ");
-        System.out.println("Introduzca el nombre del Elemento: " ); setTitulo(titulo);
-        System.out.println("Introduzca el descripcion del Elemento: " ); setDescripcion(descripcion);
-        System.out.println("Introduzca el prioridad del Elemento: " );  setPrioridad(prioridad);
-        System.out.println("Introduzca la fecha limite del Elemento: "); setFechaLimite(LocalDate. parse(fechaLimite.toString()));
+        System.out.println("Introduzca el Titulo del Elemento: " );
+        setTitulo(sc.nextLine());
+        System.out.println("Introduzca la Descripcion del Elemento: " );
+        setDescripcion(sc.nextLine());
+        System.out.println("Introduzca la Prioridad del Elemento ingresando el numeral: \n 1. ALTA. \n 2. MEDIA. \n 3. BAJA. " );
+        int opcion = Integer.parseInt(sc.nextLine());
+        switch (opcion) {
+            case 1:
+                setPrioridad(Prioridad.ALTA);
+                break;
+            case 2:
+                setPrioridad(Prioridad.MEDIA);
+                break;
+            case 3:
+                setPrioridad(Prioridad.ALTA);
+                break;
+            default:
+                System.out.println("Opcion no valida. ");
+                setPrioridad(Prioridad.BAJA);
+        }
+        System.out.println("Introduzca la fecha limite del Elemento como el siguiente ejemplo (DD/MM/YYYY): ");
+        setFechaLimite(LocalDate.parse(sc.nextLine()));
+        System.out.println("Elemento creado correctamente.");
     };
     @Override
     public void imprimirElementos(){

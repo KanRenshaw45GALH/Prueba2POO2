@@ -45,9 +45,9 @@ public class ElementoRecordatorio extends Elemento {
     //Metodos Heredados
     @Override
     public void crearElemento() {
-        System.out.println(" ");
-        System.out.println("Creando Elemento Recordatorio. ");
-        System.out.println(" ");
+        Elemento elemento = ElementoRecordatorio.this;
+        elemento.crearElemento();
+        System.out.println("\n Creando Elemento Recordatorio. ");
     }
     @Override
     public void imprimirElementos() {
