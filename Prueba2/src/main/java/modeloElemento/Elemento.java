@@ -2,6 +2,7 @@ package modeloElemento;
 import catalogo.Prioridad;
 import modeloUsuario.Usuario;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,6 +32,7 @@ public abstract class  Elemento implements AccionesElemento {
         this.colaboradores = new ArrayList<>();
         this.cantidadColaboradores = cantidadColaboradores;
     }
+    public Elemento() {}
 
 
     //Getter y Setter:
@@ -81,15 +83,17 @@ public abstract class  Elemento implements AccionesElemento {
                 setPrioridad(Prioridad.MEDIA);
                 break;
             case 3:
-                setPrioridad(Prioridad.ALTA);
+                setPrioridad(Prioridad.BAJA);
                 break;
             default:
                 System.out.println("Opcion no valida. ");
                 setPrioridad(Prioridad.BAJA);
         }
         System.out.println("Introduzca la fecha limite del Elemento como el siguiente ejemplo (DD/MM/YYYY): ");
-        setFechaLimite(LocalDate.parse(sc.nextLine()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        setFechaLimite(LocalDate.parse(sc.nextLine(), formatter));
         System.out.println("Elemento creado correctamente.");
+
     };
     @Override
     public void imprimirElementos(){

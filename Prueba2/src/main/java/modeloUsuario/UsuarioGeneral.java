@@ -45,15 +45,6 @@ public class UsuarioGeneral extends Usuario{
 
 
     //Metodos Propios:
-    public void activarSuscripcion() {
-        System.out.println(" ");
-
-        if(activarSuscripcion == false){
-            activarSuscripcion = true;
-            System.out.println(" ");
-            System.out.println("La Suscripcion ha sido activada");
-        }
-    }
     public boolean conteoTarea() {
         if (getContadorElementoTareas() < limiteElementosTareas) {
             contadorElementoTareas++;

@@ -15,6 +15,7 @@ public class ElementoTarea extends Elemento {
         super(id, titulo, descripcion, cantidadColaboradores, prioridad, fechaCreacion, fechaLimite, usuario);
         this.estado = estado;
     }
+    public ElementoTarea() {super();}
 
 
     //Getter y Setter:
@@ -28,15 +29,12 @@ public class ElementoTarea extends Elemento {
     //Metodos Heredados:
     @Override
     public void crearElemento() {
-        Elemento elemento = ElementoTarea.this;
-        elemento.crearElemento();
-        System.out.println(" \n Creando Elemento Tarea. ");
+        super.crearElemento();
     }
     @Override
     public void imprimirElementos() {
         super.imprimirElementos();
         System.out.println("Estado: " + estado);
-        System.out.println(" ");
     }
 
 

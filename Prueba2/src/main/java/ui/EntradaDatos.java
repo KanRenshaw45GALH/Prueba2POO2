@@ -145,70 +145,16 @@ public class EntradaDatos {
         if (!usuario.conteoTarea()) return;
 
         System.out.println("\n  AGREGAR TAREA");
-
-        // Validar titulo no vacio
-        String titulo = "";
-        while (titulo.isEmpty()) {
-            System.out.print("  Titulo      : ");
-            titulo = sc.nextLine().trim();
-            if (titulo.isEmpty()) System.out.println("  El titulo no puede estar vacio.");
-        }
-
-        // Validar descripcion no vacia
-        String descripcion = "";
-        while (descripcion.isEmpty()) {
-            System.out.print("  Descripcion : ");
-            descripcion = sc.nextLine().trim();
-            if (descripcion.isEmpty()) System.out.println("  La descripcion no puede estar vacia.");
-        }
-
-        // leerFecha() ya tiene su propio try-catch interno
-        LocalDate fechaLimite = leerFecha();
-        Prioridad prioridad   = leerPrioridad();
-        Estado estado         = leerEstado();
-
-        ElementoTarea tarea = new ElementoTarea(
-                nextId++, titulo, descripcion,
-                0, prioridad, estado,
-                LocalDate.now(), fechaLimite, usuario
-        );
-
-        agregarALista(tarea);
-        tarea.crearElemento();
+        ElementoTarea tareas = new ElementoTarea();
+        tareas.crearElemento();
+        agregarALista(tareas);
     }
 
     private void agregarRecordatorio() {
         if (!usuario.conteoRecordatorio()) return;
 
         System.out.println("\n  AGREGAR RECORDATORIO");
-
-        // Validar titulo no vacio
-        String titulo = "";
-        while (titulo.isEmpty()) {
-            System.out.print("  Titulo      : ");
-            titulo = sc.nextLine().trim();
-            if (titulo.isEmpty()) System.out.println("  El titulo no puede estar vacio.");
-        }
-
-        // Validar descripcion no vacia
-        String descripcion = "";
-        while (descripcion.isEmpty()) {
-            System.out.print("  Descripcion : ");
-            descripcion = sc.nextLine().trim();
-            if (descripcion.isEmpty()) System.out.println("  La descripcion no puede estar vacia.");
-        }
-
-        // leerFecha() ya tiene su propio try-catch interno
-        System.out.print("  Fecha limite       : "); LocalDate fechaLimite      = leerFecha();
-        System.out.print("  Fecha recordatorio : "); LocalDate fechaRecordatorio = leerFecha();
-        Prioridad prioridad = leerPrioridad();
-
-        ElementoRecordatorio rec = new ElementoRecordatorio(
-                nextId++, titulo, descripcion,
-                0, prioridad,
-                LocalDate.now(), fechaLimite, fechaRecordatorio, usuario
-        );
-
+        ElementoRecordatorio rec = new ElementoRecordatorio();
         agregarALista(rec);
         rec.crearElemento();
         rec.activarAlerta();

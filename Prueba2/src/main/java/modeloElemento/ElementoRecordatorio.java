@@ -16,6 +16,7 @@ public class ElementoRecordatorio extends Elemento {
         this.fechaRecordatorio = fechaRecordatorio;
         this.fechaActual = fechaCreacion;
     }
+    public ElementoRecordatorio() {}
 
 
     //Getter y Setter:
@@ -45,15 +46,12 @@ public class ElementoRecordatorio extends Elemento {
     //Metodos Heredados
     @Override
     public void crearElemento() {
-        Elemento elemento = ElementoRecordatorio.this;
-        elemento.crearElemento();
-        System.out.println("\n Creando Elemento Recordatorio. ");
+        super.crearElemento();
     }
     @Override
     public void imprimirElementos() {
         super.imprimirElementos();
         System.out.println("Fecha de activacion de Recordatorio: " + getFechaRecordatorio());
         System.out.println("Fecha Actual: " + getFechaActual());
-        System.out.println(" ");
     }
 }
