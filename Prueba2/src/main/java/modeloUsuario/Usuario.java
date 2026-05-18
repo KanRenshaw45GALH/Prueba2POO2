@@ -97,11 +97,38 @@ public abstract class Usuario implements AccionesUsuario {
             return;
         }
 
-        usuarioEncontrado.getElemento().add(elementoEncontrado);
-        elementoEncontrado.getColaboradores().add(usuarioEncontrado);
-        elementoEncontrado.setCantidadColaboradores(elementoEncontrado.getCantidadColaboradores()+1);
-        System.out.println("El Elemento fue compartido Exitosamente al Usuario" + usuarioEncontrado.getNombreCompleto()+ " !!!. ");
+        Elemento finalElemento = elementoEncontrado;
+        Usuario finalUsuario = usuarioEncontrado;
+
+        Thread hilo1 = new Thread(() -> accesoConcurrente(finalElemento, finalUsuario, "Hilo-1"));
+        Thread hilo2 = new Thread(() -> accesoConcurrente(finalElemento, finalUsuario, "Hilo-2"));
+        Thread hilo3 = new Thread(() -> accesoConcurrente(finalElemento, finalUsuario, "Hilo-3"));
+
+        hilo1.start();
+        hilo2.start();
+        hilo3.start();
     };
+    private synchronized void accesoConcurrente(Elemento elemento, Usuario usuario, String hilo){
+
+        System.out.println(hilo + " intentando compartir elemento...");
+
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e){
+            System.out.println("Error en el hilo.");
+        }
+
+        usuario.getElemento().add(elemento);
+
+        elemento.getColaboradores().add(usuario);
+
+        elemento.setCantidadColaboradores(
+                elemento.getCantidadColaboradores() + 1
+        );
+
+        System.out.println(hilo + " compartio el elemento exitosamente a "
+                + usuario.getNombreCompleto());
+    }
 
 
     //Metodos Heredados:
