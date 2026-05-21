@@ -84,9 +84,7 @@ proyecto/
 Contiene las enumeraciones utilizadas por el sistema.
 
 ### `Estado`
-
 Enum que representa el estado de una tarea:
-
 - `EN_PROGRESO`
 - `COMPLETADO`
 - `VENCIDA`
@@ -94,9 +92,7 @@ Enum que representa el estado de una tarea:
 - `PENDIENTE`
 
 ### `Prioridad`
-
 Enum que representa el nivel de prioridad:
-
 - `ALTA`
 - `MEDIA`
 - `BAJA`
@@ -104,24 +100,17 @@ Enum que representa el nivel de prioridad:
 ---
 
 ## Modelo de Elementos (`modeloElemento/`)
-
 Gestiona las tareas y recordatorios del sistema.
 
 ### `AccionesElemento` *(Interfaz)*
-
 Define las acciones principales de cualquier elemento:
-
 - `crearElemento()`
 - `imprimirElementos()`
-
 ---
 
 ### `Elemento` *(Clase Abstracta)*
-
 Clase base para todos los elementos.
-
 #### Atributos principales
-
 - `id`
 - `titulo`
 - `descripcion`
@@ -133,20 +122,15 @@ Clase base para todos los elementos.
 - `cantidadColaboradores`
 
 #### Funcionalidades
-
 - Creación de elementos
 - Validación de datos
 - Gestión de colaboradores
 - Impresión de información
-
 ---
 
 ### `ElementoTarea` *(Extiende Elemento)*
-
 Representa una tarea dentro del sistema.
-
 #### Características
-
 - Posee un estado (`Estado`)
 - Puede cambiar entre:
   - `PENDIENTE`
@@ -157,46 +141,32 @@ Representa una tarea dentro del sistema.
 ---
 
 ### `ElementoRecordatorio` *(Extiende Elemento)*
-
 Representa un recordatorio con activación automática.
-
 #### Atributos adicionales
-
 - `fechaRecordatorio`
 - `fechaActual`
 - `alerta`
-
 #### Método destacado
-
 ```java
 activarAlerta()
 ```
-
 Activa la alerta cuando la fecha actual alcanza o supera la fecha del recordatorio.
-
 ---
 
 ## Modelo de Usuarios (`modeloUsuario/`)
-
 Gestiona toda la lógica relacionada con usuarios y suscripciones.
 
 ### `AccionesUsuario` *(Interfaz)*
-
 Define las acciones principales de cualquier usuario:
-
 - `crearElemento()`
 - `modoSuscripcion()`
 - `verificarUsuario()`
 - `imprimirUsuario()`
-
 ---
 
 ### `Usuario` *(Clase Abstracta)*
-
 Clase base para todos los usuarios.
-
 #### Atributos principales
-
 - `nombreCompleto`
 - `edad`
 - `email`
@@ -204,9 +174,7 @@ Clase base para todos los usuarios.
 - `accesoCompleto`
 - `fechaActual`
 - `elemento`
-
 #### Funcionalidades
-
 - Verificación de usuario
 - Compartir elementos
 - Eliminar elementos
@@ -215,19 +183,14 @@ Clase base para todos los usuarios.
 ---
 
 ### `UsuarioGeneral` *(Extiende Usuario)*
-
 Usuario gratuito del sistema.
-
 #### Restricciones
-
 | Característica | Límite |
 |----------------|---------|
 | Tareas | 8 |
 | Recordatorios | 4 |
 | Compartidos | 1 |
-
 #### Métodos destacados
-
 - `conteoTarea()`
 - `conteoRecordatorio()`
 - `modoSuscripcion()`
@@ -235,18 +198,13 @@ Usuario gratuito del sistema.
 ---
 
 ### `UsuarioPremium` *(Extiende Usuario)*
-
 Usuario con acceso completo.
-
 #### Beneficios
-
 - Tareas ilimitadas
 - Recordatorios ilimitados
 - Compartidos ilimitados
 - Acceso completo habilitado
-
 #### Funcionalidades
-
 - Pago de suscripción
 - Manejo de fechas de suscripción
 - Compartir elementos sin restricciones
@@ -254,14 +212,10 @@ Usuario con acceso completo.
 ---
 
 ### `GestorUsuario`
-
 Clase encargada de transformar usuarios entre:
-
 - `UsuarioGeneral → UsuarioPremium`
 - `UsuarioPremium → UsuarioGeneral`
-
 Conservando:
-
 - Datos personales
 - Lista de elementos
 - Estado del usuario
@@ -269,15 +223,11 @@ Conservando:
 ---
 
 ## Estrategia (`estrategia/`)
-
 Implementación del patrón de diseño **Strategy**.
-
 ---
 
 ### `EstrategiaElemento` *(Interfaz)*
-
 Define el contrato de las estrategias:
-
 ```java
 ejecutar(List<Elemento> elementos, Elemento elemento)
 ```
@@ -285,44 +235,33 @@ ejecutar(List<Elemento> elementos, Elemento elemento)
 ---
 
 ### `EstrategiaGuardar`
-
 Permite:
-
 - Guardar elementos
 - Validar elementos duplicados
 
 ---
 
 ### `EstrategiaEditar`
-
 Permite editar:
-
 - Título
 - Descripción
 - Prioridad
-
 Incluye manejo de errores y validaciones.
 
 ---
 
 ### `EstrategiaEliminar`
-
 Permite eliminar elementos de manera segura.
 
 ---
 
 ### `CompartirHilo`
-
 Clase concurrente que implementa `Runnable`.
-
 #### Funcionalidades
-
 - Compartir elementos usando múltiples hilos
 - Evitar condiciones de carrera
 - Utilizar `ReentrantLock`
-
 #### Validaciones
-
 - Evita compartir elementos duplicados
 - Evita compartir elementos consigo mismo
 
@@ -331,11 +270,8 @@ Clase concurrente que implementa `Runnable`.
 ## Interfaz de Usuario (`ui/`)
 
 ### `EntradaDatos`
-
 Clase principal de interacción con consola.
-
 #### Funcionalidades del menú
-
 - Registro de usuarios
 - Inicio de sesión
 - Crear tareas
@@ -403,40 +339,6 @@ Compartir Elemento de forma segura
 
 ---
 
-## Ejemplo de Uso del Programa
-
-```text
-BIENVENIDO AL SISTEMA:
-RECORDATORIO DE TAREAS
-
-[1] Iniciar sesión
-[2] Registrar nuevo usuario
-[3] Salir
-```
-
----
-
-## Ejecución del Proyecto ▶️
-
-### Compilar el proyecto
-
-```bash
-gradle build
-```
-
-### Ejecutar el proyecto
-
-```bash
-gradle run
-```
-
-O ejecutar directamente:
-
-```bash
-Main.java
-```
-
----
 
 ## Comparativa: Usuario General vs Premium
 
@@ -448,29 +350,6 @@ Main.java
 | Acceso completo | ❌ | ✅ |
 | Costo | Gratis | $4.99 |
 
----
-
-## Características Destacadas ⭐
-
-- Arquitectura orientada a objetos
-- Sistema modular y escalable
-- Uso de concurrencia con hilos
-- Manejo de errores y validaciones
-- Patrón Strategy implementado
-- Gestión de usuarios y suscripciones
-- Compartidos concurrentes seguros
-
----
-
-## Posibles Mejoras Futuras 🚀
-
-- Persistencia en base de datos
-- Interfaz gráfica
-- Notificaciones automáticas
-- API REST
-- Integración con calendario
-- Exportación de tareas
-- Sistema de autenticación avanzada
 
 ---
 
@@ -483,7 +362,3 @@ Main.java
 - RENE EDUARDO GONZALEZ IRAHETA — `#00128624`
 
 ---
-
-## Licencia 📄
-
-Proyecto desarrollado con fines académicos y educativos.
