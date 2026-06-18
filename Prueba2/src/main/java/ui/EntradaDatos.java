@@ -1,6 +1,5 @@
 package ui;
 import catalogo.Estado;
-import estrategia.PagoEfectivo;
 import modeloElemento.ElementoTarea;
 import modeloElemento.ElementoRecordatorio;
 import modeloElemento.Elemento;
@@ -8,7 +7,6 @@ import modeloUsuario.Usuario;
 import modeloUsuario.UsuarioGeneral;
 import modeloUsuario.UsuarioPremium;
 import modeloUsuario.GestorUsuario;
-import estrategia.PagoTarjeta;
 import hilos.CompartirHilo;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -281,7 +279,7 @@ public class EntradaDatos {
     }
 
     //Permite el eliminar un elemento
-    private void eliminar() {
+    private void eliminar(Elemento elemento) {
         if (!listar()) return;
         System.out.print("Numero de ID del Elemento a eliminar (0 cancela): ");
         int idx = leerInt() - 1;
@@ -290,16 +288,15 @@ public class EntradaDatos {
             System.out.println("Cancelado.");
             return;
         }
-
         while (true) {
             Elemento e = lista.get(idx);
-            System.out.print("El Elemento sera eliminado.\nDesea continuar? (s/n): ");
+            System.out.print("El Elemento sera eliminado.\nDesea continuar? (SI / NO): ");
             String resp = sc.nextLine().trim().toLowerCase();
-            if (resp.equals("s")) {
-                new EstrategiaEliminar(e).ejecutar(lista, e);
+            if (resp.equals("SI")) {
+                usuarioActivo.eliminarElemento();
                 break;
             }
-            else if (resp.equals("n")) {
+            else if (resp.equals("NO ")) {
                 System.out.println("Cancelado.");
                 break;
             }

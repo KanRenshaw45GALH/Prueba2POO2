@@ -61,23 +61,26 @@ public abstract class Usuario implements AccionesUsuario {
 
     // Metodos propios:
     public void guardarElemento(List<Elemento> elementos, Elemento elemento) {
-        System.out.println("Elemento a guardar: " + elemento.getTitulo());
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el ID del elemento a Guardar: ");
+        int id = Integer.parseInt(sc.nextLine());
 
-
-        boolean yaExiste = elementos.stream().anyMatch(e -> e.getId() == elemento.getId());
+        boolean yaExiste = elementos.stream().anyMatch(e -> e.getId() == id);
         if (yaExiste) {
             System.out.println("El elemento ya existe en la lista.");
         } else {
+            elemento.setId(id);
             elementos.add(elemento);
             System.out.println("Elemento guardado correctamente.");
         }
     }
 
     public void eliminarElemento(List<Elemento> elementos, Elemento elemento) {
-        System.out.println("Elemento a eliminar: " + elemento.getTitulo());
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el ID del elemento a Eliminar: ");
+        int id = Integer.parseInt(sc.nextLine());
 
-
-        boolean eliminado = elementos.removeIf(e -> e.getId() == elemento.getId());
+        boolean eliminado = elementos.removeIf(e -> e.getId() == id);
         if (!eliminado) {
             System.out.println("El elemento no fue encontrado en la lista.");
         } else {
@@ -86,59 +89,69 @@ public abstract class Usuario implements AccionesUsuario {
     }
 
     private void editarElemento(Elemento elemento) {
-
         Scanner sc = new Scanner(System.in);
-        try {
-            System.out.println("Elemento a editar: " + elemento.getTitulo());
-            System.out.println("Ingrese que opcion desea editar: ");
-            System.out.println("1. Editar titulo del elemento");
-            System.out.println("2. Editar descripcion del elemento");
-            System.out.println("3. Editar prioridad del elemento");
-            System.out.print("Opcion seleccionada: ");
+        System.out.print("Ingrese el ID del elemento a editar: ");
+        int id = Integer.parseInt(sc.nextLine());
 
-            int opcion = Integer.parseInt(sc.nextLine().trim());
-
-            if (opcion == 1) {
-                System.out.print("Nuevo titulo: ");
-                String nuevoTitulo = sc.nextLine().trim();
-                if (nuevoTitulo.isEmpty()) {
-                    throw new IllegalArgumentException("El titulo no puede estar vacio");
-                }
-                elemento.setTitulo(nuevoTitulo);
-                System.out.println("El titulo fue modificado correctamente.");
-
-            } else if (opcion == 2) {
-                System.out.print("Nueva descripcion: ");
-                String nuevaDescripcion = sc.nextLine().trim();
-                elemento.setDescripcion(nuevaDescripcion);
-                System.out.println("La descripcion fue modificada correctamente.");
-
-            } else if (opcion == 3) {
-                System.out.println("Nueva prioridad: 1=ALTA, 2=MEDIA, 3=BAJA");
-                System.out.print("Ingrese la opcion: ");
-                int prioridad = Integer.parseInt(sc.nextLine().trim());
-                if (prioridad == 1) {
-                    elemento.setPrioridad(Prioridad.ALTA);
-                } else if (prioridad == 2) {
-                    elemento.setPrioridad(Prioridad.MEDIA);
-                } else {
-                    elemento.setPrioridad(Prioridad.BAJA);
-                }
-                System.out.println("La prioridad fue modificada correctamente.");
-
-            } else {
-                System.out.println("La opcion ingresada no es valida");
+        Elemento elementoEncontrado = null;
+        for (Elemento e : this.elemento) {
+            if (e.getId() == id) {
+                elementoEncontrado = e;
+                break;
             }
-            System.out.println("La edicion del elemento fue finalizada con exito.");
-
-        } catch (NumberFormatException e) {
-            System.out.println("El valor ingresado no es un numero valido.");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Ocurrio un error inesperado: " + e.getMessage());
         }
+        if (elementoEncontrado == null) {
+            System.out.println("No existe un elemento con ese ID.");
+            return;
+        }
+                try {
+                    System.out.println("Elemento a editar: " + elemento.getTitulo());
+                    System.out.println("Ingrese que opcion desea editar: ");
+                    System.out.println("1. Editar titulo del elemento");
+                    System.out.println("2. Editar descripcion del elemento");
+                    System.out.println("3. Editar prioridad del elemento");
+                    System.out.print("Opcion seleccionada: ");
+
+                    int opcion = Integer.parseInt(sc.nextLine().trim());
+
+                    if (opcion == 1) {
+                        System.out.print("Nuevo titulo: ");
+                        String nuevoTitulo = sc.nextLine().trim();
+                        if (nuevoTitulo.isEmpty()) {
+                            throw new IllegalArgumentException("El titulo no puede estar vacio");
+                        }
+                        elemento.setTitulo(nuevoTitulo);
+                        System.out.println("El titulo fue modificado correctamente.");
+
+                    } else if (opcion == 2) {
+                        System.out.print("Nueva descripcion: ");
+                        String nuevaDescripcion = sc.nextLine().trim();
+                        elemento.setDescripcion(nuevaDescripcion);
+                        System.out.println("La descripcion fue modificada correctamente.");
+
+                    } else if (opcion == 3) {
+                        System.out.println("Nueva prioridad: 1=ALTA, 2=MEDIA, 3=BAJA");
+                        System.out.print("Ingrese la opcion: ");
+                        int prioridad = Integer.parseInt(sc.nextLine().trim());
+                        if (prioridad == 1) {
+                            elemento.setPrioridad(Prioridad.ALTA);
+                        } else if (prioridad == 2) {
+                            elemento.setPrioridad(Prioridad.MEDIA);
+                        } else {
+                            elemento.setPrioridad(Prioridad.BAJA);
+                        }
+                        System.out.println("La prioridad fue modificada correctamente.");
+
+                    } else {
+                        System.out.println("La opcion ingresada no es valida");
+                    }
+                    System.out.println("La edicion del elemento fue finalizada con exito.");
+
+                } catch (NumberFormatException e) {
+                    System.out.println("El valor ingresado no es un numero valido.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
     }
 
     public synchronized void compartirElemento(List<Usuario> usuarioList) {
@@ -219,6 +232,7 @@ public abstract class Usuario implements AccionesUsuario {
                 + " quien posee el correo electrónico: " + email);
         System.out.println("La cantidad de elementos que posee el Usuario es: " + elemento.size());
     }
+
 }
 
 
