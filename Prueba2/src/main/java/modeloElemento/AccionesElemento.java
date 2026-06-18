@@ -5,5 +5,6 @@ public interface AccionesElemento {
     void imprimirElementos();
     boolean esPendiente();
     void imprimirPendiente(int numero);
+    void editar();
 
 }

@@ -66,4 +66,17 @@ public class ElementoTarea extends Elemento {
         System.out.printf("  [%d] TAREA        | %s | %s | %s%n",
                 numero, getTitulo(), estado, getPrioridad());
     }
+    @Override
+    public void editar() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("  [1] Titulo  [2] Descripcion  [3] Prioridad  [4] Estado");
+        System.out.print("  -> ");
+        int op = Integer.parseInt(sc.nextLine().trim());
+        if (op == 4) {
+            System.out.println("  Estado (1=PENDIENTE, 2=EN_PROGRESO, 3=CANCELADA): ");
+            // lógica de estado
+        } else {
+            super.editar(); // delega los campos comunes al padre
+        }
+    }
 }

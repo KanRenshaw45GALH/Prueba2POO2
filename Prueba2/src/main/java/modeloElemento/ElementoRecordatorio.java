@@ -4,6 +4,7 @@ import catalogo.Prioridad;
 import modeloUsuario.Usuario;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class ElementoRecordatorio extends Elemento {
 
@@ -68,6 +69,19 @@ public class ElementoRecordatorio extends Elemento {
         System.out.printf("  [%d] RECORDATORIO | %s | vence %s%n",
                 numero, getTitulo(),
                 getFechaLimite() != null ? getFechaLimite().format(fmt) : "sin fecha");
+    }
+    @Override
+    public void editar() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("  [1] Titulo  [2] Descripcion  [3] Prioridad  [4] Fecha recordatorio");
+        System.out.print("  -> ");
+        int op = Integer.parseInt(sc.nextLine().trim());
+        if (op == 4) {
+            // lógica de fecha recordatorio
+            activarAlerta(); // re-evalúa la alerta con la nueva fecha
+        } else {
+            super.editar(); // delega los campos comunes al padre
+        }
     }
     @Override
     public void imprimirElementos() {

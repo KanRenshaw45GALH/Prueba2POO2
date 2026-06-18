@@ -296,16 +296,13 @@ public class EntradaDatos {
         }
     }
 
-    //Permite el editar un elemento
     private void editarElemento() {
         if (!listar()) return;
-        System.out.print("  Numero de ID del Elemento a editar (0 cancela): ");
+        System.out.print("  Numero a editar (0 cancela): ");
         int idx = leerInt() - 1;
-        List<Elemento> lista = usuarioActivo.getElemento();
-        if (idx < 0 || idx >= lista.size()) { System.out.println("  Cancelado."); return; }
-        Elemento e = lista.get(idx);
+        if (idx < 0 || idx >= usuarioActivo.getElemento().size()) { System.out.println("  Cancelado."); return; }
+        usuarioActivo.getElemento().get(idx).editar(); // lógica en cada Elemento
     }
-
     //Muestra todos los elementos actuales
     private void verTodos() {
         System.out.println("\n  TODOS LOS ELEMENTOS\n" + LIN);

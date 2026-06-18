@@ -133,4 +133,16 @@ public abstract class Elemento implements AccionesElemento {
     public void imprimirPendiente(int numero) {
 
     }
+    @Override
+    public void editar() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("  [1] Titulo  [2] Descripcion  [3] Prioridad");
+        System.out.print("  -> ");
+        switch (Integer.parseInt(sc.nextLine().trim())) {
+            case 1 -> { System.out.print("  Nuevo titulo: "); setTitulo(sc.nextLine().trim()); }
+            case 2 -> { System.out.print("  Nueva descripcion: "); setDescripcion(sc.nextLine().trim()); }
+            case 3 -> { /* lógica de prioridad */ }
+            default -> System.out.println("  Opcion no valida.");
+        }
+    }
 }
