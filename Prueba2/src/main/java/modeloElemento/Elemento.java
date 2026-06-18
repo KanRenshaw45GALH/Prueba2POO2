@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+public abstract class Elemento implements AccionesElemento {
 
-public abstract class  Elemento implements AccionesElemento {
-    //Atributos:
+    // Atributos
     private int id;
     private String titulo;
     private String descripcion;
@@ -20,8 +20,9 @@ public abstract class  Elemento implements AccionesElemento {
     private List<Usuario> colaboradores;
     private int cantidadColaboradores;
 
-    //Constructor Prametrizado:
-    Elemento(int id, String titulo, String descripcion, int cantidadColaboradores, Prioridad prioridad, LocalDate fechaCreacion, LocalDate fechaLimite, Usuario usuario) {
+    // Constructor parametrizado: ahora protected para que subclases de otros paquetes puedan usarlo
+    protected Elemento(int id, String titulo, String descripcion, int cantidadColaboradores,
+                       Prioridad prioridad, LocalDate fechaCreacion, LocalDate fechaLimite, Usuario usuario) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -32,80 +33,99 @@ public abstract class  Elemento implements AccionesElemento {
         this.colaboradores = new ArrayList<>();
         this.cantidadColaboradores = cantidadColaboradores;
     }
-    public Elemento() {}
 
+    public Elemento() {
+        this.colaboradores = new ArrayList<>();
+    }
 
-    //Getter y Setter:
-    public int getId() {return id;}
-    public void setId(int id) {this.id = id;}
+    // Getters y Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public String getTitulo() {return titulo;}
-    public void setTitulo(String titulo) {this.titulo = titulo;}
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
 
-    public String getDescripcion() {return descripcion;}
-    public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public Prioridad getPrioridad() {return prioridad;}
-    public void setPrioridad(Prioridad prioridad) {this.prioridad = prioridad;}
+    public Prioridad getPrioridad() { return prioridad; }
+    public void setPrioridad(Prioridad prioridad) { this.prioridad = prioridad; }
 
-    public LocalDate getFechaCreacion() {return fechaCreacion;}
-    public void setFechaCreacion(LocalDate fechaCreacion) {this.fechaCreacion = fechaCreacion;}
+    public LocalDate getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(LocalDate fechaCreacion) { this.fechaCreacion = fechaCreacion; }
 
-    public LocalDate getFechaLimite() {return fechaLimite;}
-    public void setFechaLimite(LocalDate fechaLimite) {this.fechaLimite = fechaLimite;}
+    public LocalDate getFechaLimite() { return fechaLimite; }
+    public void setFechaLimite(LocalDate fechaLimite) { this.fechaLimite = fechaLimite; }
 
-    public Usuario getUsuario() {return usuario;}
-    public void setUsuario(Usuario usuario) {this.usuario = usuario;}
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 
-    public int getCantidadColaboradores() {return cantidadColaboradores;}
-    public void setCantidadColaboradores(int cantidadColaboradores) {this.cantidadColaboradores = cantidadColaboradores;}
+    public int getCantidadColaboradores() { return cantidadColaboradores; }
+    public void setCantidadColaboradores(int cantidadColaboradores) { this.cantidadColaboradores = cantidadColaboradores; }
 
-    public List<Usuario> getColaboradores() {return colaboradores;}
-    public void setColaboradores(List<Usuario> colaboradores) {this.colaboradores = colaboradores;}
+    public List<Usuario> getColaboradores() { return colaboradores; }
+    public void setColaboradores(List<Usuario> colaboradores) { this.colaboradores = colaboradores; }
 
-
-    //Metodos Heredados:
+    // Metodos heredados
     @Override
-    public void crearElemento(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Creando nuevo Elemento. ");
-        System.out.println("Introduzca el Titulo del Elemento: " );
+    public void crearElemento() {
+        Scanner sc = new Scanner(System.in); //  instancia local, no estática
+        System.out.println("Creando nuevo Elemento.");
+        System.out.print("Introduzca el Titulo del Elemento: ");
         setTitulo(sc.nextLine());
-        System.out.println("Introduzca la Descripcion del Elemento: " );
+        System.out.print("Introduzca la Descripcion del Elemento: ");
         setDescripcion(sc.nextLine());
-        System.out.println("Introduzca la Prioridad del Elemento ingresando el numeral: \n 1. ALTA. \n 2. MEDIA. \n 3. BAJA. " );
-        int opcion = Integer.parseInt(sc.nextLine());
-        switch (opcion) {
-            case 1:
-                setPrioridad(Prioridad.ALTA);
-                break;
-            case 2:
-                setPrioridad(Prioridad.MEDIA);
-                break;
-            case 3:
-                setPrioridad(Prioridad.BAJA);
-                break;
-            default:
-                System.out.println("Opcion no valida. ");
-                setPrioridad(Prioridad.BAJA);
-        }
-        System.out.println("Introduzca la fecha limite del Elemento como el siguiente ejemplo (DD/MM/YYYY): ");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        setFechaLimite(LocalDate.parse(sc.nextLine(), formatter));
-        System.out.println("Elemento creado correctamente.");
 
-    };
+        //  validación con try-catch para entrada no numérica
+        int opcion = -1;
+        while (opcion < 1 || opcion > 3) {
+            System.out.println("Introduzca la Prioridad del Elemento (1=ALTA, 2=MEDIA, 3=BAJA): ");
+            try {
+                opcion = Integer.parseInt(sc.nextLine().trim());
+                if (opcion < 1 || opcion > 3) System.out.println("Opcion no valida, intente de nuevo.");
+            } catch (NumberFormatException e) {
+                System.out.println("Ingrese solo un numero.");
+            }
+        }
+        switch (opcion) {
+            case 1 -> setPrioridad(Prioridad.ALTA);
+            case 2 -> setPrioridad(Prioridad.MEDIA);
+            default -> setPrioridad(Prioridad.BAJA);
+        }
+
+        System.out.println("Introduzca la fecha limite del Elemento (DD/MM/YYYY): ");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        while (true) {
+            try {
+                setFechaLimite(LocalDate.parse(sc.nextLine().trim(), formatter));
+                break;
+            } catch (Exception e) {
+                System.out.println("Formato invalido. Use DD/MM/YYYY.");
+            }
+        }
+        System.out.println("Elemento creado correctamente.");
+    }
+
     @Override
-    public void imprimirElementos(){
+    public void imprimirElementos() {
         System.out.println("ID: " + id);
         System.out.println("Titulo: " + titulo);
         System.out.println("Descripcion: " + descripcion);
         System.out.println("Prioridad: " + prioridad);
-        System.out.println("Cantidad Colaboradores: " + cantidadColaboradores);
-        System.out.println("Nombre de Colaboradores: " + getUsuario().getNombreCompleto());
         System.out.println("Fecha Creacion: " + fechaCreacion);
-        System.out.println("usuario creador: " + usuario.getNombreCompleto());;
+        System.out.println("Fecha Limite: " + fechaLimite);
+
+        if (usuario != null) {
+            System.out.println("Usuario creador: " + usuario.getNombreCompleto());
+        }
+        System.out.println("Cantidad de Colaboradores: " + cantidadColaboradores);
+        if (colaboradores != null && !colaboradores.isEmpty()) {
+            for (Usuario colab : colaboradores) {
+                System.out.println("  Colaborador: " + colab.getNombreCompleto());
+            }
+        }
     }
+
 
 
 }

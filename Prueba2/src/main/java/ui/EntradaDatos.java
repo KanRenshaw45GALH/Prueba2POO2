@@ -1,13 +1,20 @@
 package ui;
 import catalogo.Estado;
-import catalogo.Prioridad;
+import estrategia.PagoEfectivo;
 import modeloElemento.ElementoTarea;
 import modeloElemento.ElementoRecordatorio;
 import modeloElemento.Elemento;
+import modeloUsuario.Usuario;
 import modeloUsuario.UsuarioGeneral;
+import modeloUsuario.UsuarioPremium;
+import modeloUsuario.GestorUsuario;
+import estrategia.PagoTarjeta;
+import hilos.CompartirHilo;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,68 +22,158 @@ import java.time.format.DateTimeFormatter;
 public class EntradaDatos {
 
     private final Scanner sc = new Scanner(System.in);
-    private UsuarioGeneral usuario = null;
+
+    // Usuario con sesion activa actualmente
+    private Usuario usuarioActivo = null;
+
+    // Todos los usuarios registrados en el sistema
+    private final List<Usuario> todosLosUsuarios = new ArrayList<>();
     private int nextId = 1;
     private static final String LIN = "─────────────────────────────────────";
 
-    // ── ARRANQUE ──────────────────────────────────────────────
-
     public void iniciar() {
-        System.out.println("  RECORDATORIO DE TAREAS");
+        System.out.println("  BIENVENIDO AL SISTEMA: ");
+        System.out.println("  RECORDATORIO DE TAREAS ");
         System.out.println(LIN);
 
         boolean salir = false;
         while (!salir) {
-            System.out.println("\n  [ 1 ] Acceder   [ 2 ] Salir");
+            System.out.println("\n  [ 1 ] Iniciar sesion");
+            System.out.println("  [ 2 ] Registrar nuevo usuario");
+            System.out.println("  [ 3 ] Salir");
+            System.out.print("  -> ");
             switch (leerInt()) {
-                case 1 -> acceder();
-                case 2 -> { System.out.println("  Hasta luego!"); salir = true; }
+                case 1  -> iniciarSesion();
+                case 2  -> registrar();
+                case 3  -> { System.out.println("  Hasta luego!"); salir = true; }
                 default -> System.out.println("  Opcion no valida.");
             }
         }
         sc.close();
     }
 
-    // ── ACCESO ────────────────────────────────────────────────
+    // ── MENU PRINCIPAL ────────────────────────────────────────
+    //Es el cuerpo del menu de Interaccion por medio de leerInt().
+    private void menuPrincipal() {
+        boolean salir = false;
+        while (!salir) {
+            String tipoCuenta = (usuarioActivo instanceof UsuarioPremium) ? "PREMIUM ★" : "General";
+            System.out.println("\n" + LIN);
+            System.out.println("  Hola, Bienvenido Nuevamente!!!");
+            System.out.print(" " + usuarioActivo.getNombreCompleto() + " [" + tipoCuenta + "] " );
+            System.out.println("\n  MENU \n");
+            System.out.println(LIN);
+            System.out.println("  [ 1  ] Agregar tarea");
+            System.out.println("  [ 2  ] Agregar recordatorio");
+            System.out.println("  [ 3  ] Ver pendientes");
+            System.out.println("  [ 4  ] Completar tarea");
+            System.out.println("  [ 5  ] Eliminar elemento");
+            System.out.println("  [ 6  ] Ver todos los elementos");
+            System.out.println("  [ 7  ] Editar elemento");
+            System.out.println("  [ 8  ] Compartir elemento");
+            System.out.println("  [ 9  ] Cambiar suscripcion");
+            System.out.println("  [ 10 ] Informacion de usuario");
+            System.out.println("  [ 11 ] Cerrar sesion");
+            System.out.println(LIN);
+            System.out.print("  -> ");
 
-    private void acceder() {
-        if (usuario == null) {
-            System.out.println("\n  No hay usuario registrado.");
-            System.out.println("  [ 1 ] Registrarse   [ 2 ] Volver");
-            if (leerInt() == 1) registrar();
+            switch (leerInt()) {
+                case 1  -> agregarTarea();
+                case 2  -> agregarRecordatorio();
+                case 3  -> verPendientes();
+                case 4  -> completar();
+                case 5  -> eliminar();
+                case 6  -> verTodos();
+                case 7  -> editarElemento();
+                case 8  -> compartirElemento();
+                case 9  -> cambiarSuscripcion();
+                case 10 -> usuarioActivo.imprimirUsuario();
+                case 11 -> {
+                    System.out.println("  La sesion fue cerrada exitosamente. Hasta luego, " + usuarioActivo.getNombreCompleto() + "!");
+                    usuarioActivo = null;
+                    salir = true;
+                }
+                default -> System.out.println("  Opcion no valida.");
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+    //Metodos de Acceso:
+    // ── ACCESO ────────────────────────────────────────────────
+    private void iniciarSesion() {
+        if (todosLosUsuarios.isEmpty()) {
+            System.out.println("  No hay usuarios registrados. Primero debes registrarte.");
+            return;
+        }
+
+        System.out.println("\n INICIO DE SESION \n" + LIN);
+        System.out.print("  Correo          : "); String email    = sc.nextLine().trim();
+        System.out.print("  Contrasena      : "); String password = sc.nextLine().trim();
+
+        // Buscar usuario por correo en la lista global
+        Usuario encontrado = null;
+        for (Usuario u : todosLosUsuarios) {
+            if (u.getEmail().equalsIgnoreCase(email) && u.getPassword().equals(password)) {
+                encontrado = u;
+                break;
+            }
+        }
+        if (encontrado != null) {
+            usuarioActivo = encontrado;
+            String tipo = (usuarioActivo instanceof UsuarioPremium) ? "PREMIUM ★" : "General";
+            System.out.println("  Hola, " + usuarioActivo.getNombreCompleto() + "! [" + tipo + "] Se bienvenido nuevamente. ");
+            menuPrincipal();
         } else {
-            login();
+            System.out.println("ERROR:       El Correo o contrasena son incorrectos.");
+            System.out.println(" Por favor, vuelva a intentarlo... ");
         }
     }
 
     private void registrar() {
         System.out.println("\n  NUEVO USUARIO\n" + LIN);
-        System.out.print("  Nombre    : "); String nombre = sc.nextLine().trim();
 
-        // try-catch con nextInt() para edad
+        //Solicita el ingreso del Nombre, Edad, Correo y Contrasena para registrarlo
+        System.out.print("  Nombre    : ");
+        String nombre = sc.nextLine().trim();
+        while (nombre.isEmpty()) {
+            System.out.println("  El nombre no puede estar vacio.");
+            System.out.print("  Nombre    : ");
+            nombre = sc.nextLine().trim();
+        }
+
         int edad = 0;
         while (true) {
             System.out.print("  Edad      : ");
             try {
-                edad = sc.nextInt();
-                sc.nextLine();
-                if (edad <= 0) {
-                    System.out.println("  La edad debe ser un numero positivo. Intentalo de nuevo.");
-                } else {
-                    break;
-                }
+                edad = sc.nextInt(); sc.nextLine();
+                if (edad <= 0) System.out.println("  La edad debe ser positiva.");
+                else break;
             } catch (InputMismatchException e) {
-                System.out.println("  Ingresa solo numeros. Intentalo de nuevo.");
-                sc.nextLine();
+                System.out.println("  Ingresa solo numeros."); sc.nextLine();
             }
         }
 
         System.out.print("  Correo    : ");
         String email = sc.nextLine().trim();
-        while (email.isEmpty()) {
-            System.out.println("  El correo no puede estar vacio.");
+        while (email.isEmpty() || !email.contains("@")) {
+            System.out.println("  Ingresa un correo valido.");
             System.out.print("  Correo    : ");
             email = sc.nextLine().trim();
+        }
+        // Verificar que el correo no esté ya registrado
+        String emailFinal = email;
+        boolean yaExiste = todosLosUsuarios.stream()
+                .anyMatch(u -> u.getEmail().equalsIgnoreCase(emailFinal));
+        if (yaExiste) {
+            System.out.println("  Ese correo ya esta registrado.");
+            return;
         }
 
         System.out.print("  Contrasena: ");
@@ -87,109 +184,91 @@ public class EntradaDatos {
             password = sc.nextLine().trim();
         }
 
-        usuario = new UsuarioGeneral();
+        Map<String, Integer> contador = new HashMap<>();
+        contador.put("TAREA", 0);
+        contador.put("RECORDATORIO", 0);
+        Map<Integer,Integer> compartidas = new HashMap<>();
 
-        System.out.println("  Bienvenido/a, " + nombre + "!");
-        menuPrincipal();
+        UsuarioGeneral nuevo = new UsuarioGeneral(nombre, edad, email, password, 0, 0, false, contador, compartidas);
+        todosLosUsuarios.add(nuevo);
+
+        System.out.println("  Usuario registrado: " + nombre + " (" + email + ") [General]");
+        System.out.println("  Ya puede iniciar sesion desde el menu principal.");
     }
 
-    private void login() {
-        System.out.println("\n  INICIAR SESION\n" + LIN);
-        System.out.print("  Correo    : "); String email    = sc.nextLine().trim();
-        System.out.print("  Contrasena: "); String password = sc.nextLine().trim();
 
-        if (email.equals(usuario.getEmail()) && password.equals(usuario.getPassword())) {
-            System.out.println("  Hola de nuevo, " + usuario.getNombreCompleto() + "!");
-            menuPrincipal();
-        } else {
-            System.out.println("  Credenciales incorrectas.");
-        }
-    }
 
-    // ── MENU PRINCIPAL ────────────────────────────────────────
+    //Metodos de Accion:
+    private void agregarTarea() {
 
-    private void menuPrincipal() {
-        boolean salir = false;
-        while (!salir) {
-            System.out.println("\n" + LIN);
-            System.out.println("  MENU — " + usuario.getNombreCompleto());
-            System.out.println(LIN);
-            System.out.println("  [ 1 ] Agregar tarea");
-            System.out.println("  [ 2 ] Agregar recordatorio");
-            System.out.println("  [ 3 ] Ver pendientes");
-            System.out.println("  [ 4 ] Completar tarea");
-            System.out.println("  [ 5 ] Eliminar elemento");
-            System.out.println("  [ 6 ] Ver todos");
-            System.out.println("  [ 7 ] Verificar usuario");
-            System.out.println("  [ 8 ] Cerrar sesion");
-            System.out.println(LIN);
-            System.out.print("  -> ");
-
-            switch (leerInt()) {
-                case 1 -> agregarTarea();
-                case 2 -> agregarRecordatorio();
-                case 3 -> verPendientes();
-                case 4 -> completar();
-                case 5 -> eliminar();
-                case 6 -> verTodos();
-                case 7 -> verificar();
-                case 8 -> { System.out.println("  Sesion cerrada."); salir = true; }
-                default -> System.out.println("  Opcion no valida.");
+        if (usuarioActivo instanceof UsuarioGeneral general) {
+            if (!general.limiteTarea()) {
+                return;
             }
         }
+        System.out.println("\n  AGREGAR NUEVA TAREA \n");
+        ElementoTarea tarea = new ElementoTarea();
+        tarea.setId(nextId++);
+        tarea.setFechaCreacion(LocalDate.now());
+        tarea.setUsuario(usuarioActivo);
+        tarea.crearElemento();
+
+        usuarioActivo.crearElemento(tarea);
+        System.out.println("Tarea creada exitosamente. ");
+
     }
-
-    // ── AGREGAR ───────────────────────────────────────────────
-
-    private void agregarTarea() {
-        if (!usuario.conteoTarea()) return;
-
-        System.out.println("\n  AGREGAR TAREA");
-        ElementoTarea tareas = new ElementoTarea();
-        tareas.crearElemento();
-        agregarALista(tareas);
-    }
-
+    //Permite agregar un recordatorio por medio de ElementoRecordatorio
     private void agregarRecordatorio() {
-        if (!usuario.conteoRecordatorio()) return;
 
-        System.out.println("\n  AGREGAR RECORDATORIO");
+        if (usuarioActivo instanceof UsuarioGeneral general) {
+            if (!general.limiteRecordatorio()) return;
+        }
+        System.out.println("\n  AGREGAR NUEVO RECORDATORIO \n");
         ElementoRecordatorio rec = new ElementoRecordatorio();
-        agregarALista(rec);
+        rec.setId(nextId++);
+        rec.setFechaCreacion(LocalDate.now());
+        rec.setUsuario(usuarioActivo);
         rec.crearElemento();
+
+        usuarioActivo.crearElemento(rec);
         rec.activarAlerta();
+        System.out.println("  Recordatorio guardado exitosamente.");
     }
 
-    // ── VER / COMPLETAR / ELIMINAR ────────────────────────────
-
+    // ── VER / COMPLETAR / ELIMINAR / EDITAR ──────────────────
+    //Muestra todos los elementos no terminados.
     private void verPendientes() {
-        System.out.println("\n  PENDIENTES\n" + LIN);
-        List<Elemento> lista = usuario.getElemento();
+        System.out.println("\n  PENDIENTES \n" + LIN);
+        List<Elemento> lista = usuarioActivo.getElemento();
         if (lista == null || lista.isEmpty()) { System.out.println("  Sin elementos."); return; }
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         boolean hay = false;
         for (int i = 0; i < lista.size(); i++) {
             Elemento e = lista.get(i);
-            if (e instanceof ElementoTarea t && t.getEstado() != Estado.COMPLETADO && t.getEstado() != Estado.CANCELADA) {
+            if (e instanceof ElementoTarea t
+                    && t.getEstado() != Estado.COMPLETADO
+                    && t.getEstado() != Estado.CANCELADA) {
                 System.out.printf("  [%d] TAREA        | %s | %s | %s%n",
                         i + 1, t.getTitulo(), t.getEstado(), t.getPrioridad());
                 hay = true;
             } else if (e instanceof ElementoRecordatorio r) {
                 System.out.printf("  [%d] RECORDATORIO | %s | vence %s%n",
-                        i + 1, r.getTitulo(), r.getFechaLimite().format(fmt));
+                        i + 1, r.getTitulo(),
+                        r.getFechaLimite() != null ? r.getFechaLimite().format(fmt) : "sin fecha");
                 hay = true;
             }
         }
         if (!hay) System.out.println("  Sin pendientes.");
     }
 
+    //Permite cambiar el estado de un elemento Tarea
     private void completar() {
-        listar();
-        System.out.print("  Numero a completar (0 cancela): ");
+        if (!listar()) return;
+        System.out.print("  Numero de Elemento a completar (0 cancela): ");
         int idx = leerInt() - 1;
-        List<Elemento> lista = usuario.getElemento();
-        if (lista == null || idx < 0 || idx >= lista.size()) { System.out.println("  Cancelado."); return; }
+        List<Elemento> lista = usuarioActivo.getElemento();
+        if (idx < 0 || idx >= lista.size()) { System.out.println("  Cancelado."); return; }
 
         Elemento e = lista.get(idx);
         if (e instanceof ElementoTarea t) {
@@ -201,32 +280,49 @@ public class EntradaDatos {
         }
     }
 
+    //Permite el eliminar un elemento
     private void eliminar() {
-        listar();
-        System.out.print("  Numero a eliminar (0 cancela): ");
+        if (!listar()) return;
+        System.out.print("Numero de ID del Elemento a eliminar (0 cancela): ");
         int idx = leerInt() - 1;
-        List<Elemento> lista = usuario.getElemento();
-        if (lista == null || idx < 0 || idx >= lista.size()) { System.out.println("  Cancelado."); return; }
+        List<Elemento> lista = usuarioActivo.getElemento();
+        if (idx < 0 || idx >= lista.size()) {
+            System.out.println("Cancelado.");
+            return;
+        }
 
-        // Loop de confirmacion: solo acepta exactamente "s" o "n"
         while (true) {
-            System.out.print("  Confirmar? (s/n): ");
+            Elemento e = lista.get(idx);
+            System.out.print("El Elemento sera eliminado.\nDesea continuar? (s/n): ");
             String resp = sc.nextLine().trim().toLowerCase();
             if (resp.equals("s")) {
-                System.out.println("  Eliminado: " + lista.remove(idx).getTitulo());
+                new EstrategiaEliminar(e).ejecutar(lista, e);
                 break;
-            } else if (resp.equals("n")) {
-                System.out.println("  Cancelado.");
+            }
+            else if (resp.equals("n")) {
+                System.out.println("Cancelado.");
                 break;
-            } else {
-                System.out.println("  Respuesta invalida. Escribe s o n.");
+            }
+            else {
+                System.out.println("Respuesta invalida. Escribe s o n.");
             }
         }
     }
 
+    //Permite el editar un elemento
+    private void editarElemento() {
+        if (!listar()) return;
+        System.out.print("  Numero de ID del Elemento a editar (0 cancela): ");
+        int idx = leerInt() - 1;
+        List<Elemento> lista = usuarioActivo.getElemento();
+        if (idx < 0 || idx >= lista.size()) { System.out.println("  Cancelado."); return; }
+        Elemento e = lista.get(idx);
+    }
+
+    //Muestra todos los elementos actuales
     private void verTodos() {
         System.out.println("\n  TODOS LOS ELEMENTOS\n" + LIN);
-        List<Elemento> lista = usuario.getElemento();
+        List<Elemento> lista = usuarioActivo.getElemento();
         if (lista == null || lista.isEmpty()) { System.out.println("  Sin elementos."); return; }
         for (int i = 0; i < lista.size(); i++) {
             System.out.printf("%n  [%d] ", i + 1);
@@ -234,82 +330,153 @@ public class EntradaDatos {
         }
     }
 
-    private void verificar() {
-        System.out.print("\n  Contrasena para verificar: ");
-        if (sc.nextLine().trim().equals(usuario.getPassword())) {
-            usuario.verificarUsuario();
-        } else {
-            System.out.println("  Contrasena incorrecta.");
+    // ── COMPARTIR CON MULTIHILO ───────────────────────────────
+    private void compartirElemento() {
+        // Mostrar solo elementos propios del usuario activo
+        List<Elemento> lista = usuarioActivo.getElemento();
+        List<Elemento> propios = new ArrayList<>();
+        if (lista != null) {
+            for (Elemento e : lista) {
+                if (e.getUsuario() != null
+                        && e.getUsuario().getEmail().equalsIgnoreCase(usuarioActivo.getEmail())) {
+                    propios.add(e);
+                }
+            }
+        }
+
+        if (propios.isEmpty()) {
+            System.out.println("  No tienes elementos propios para compartir.");
+            return;
+        }
+
+        System.out.println("\n  COMPARTIR ELEMENTO\n" + LIN);
+        for (int i = 0; i < propios.size(); i++) {
+            System.out.printf("  [%d] %s%n", i + 1, propios.get(i).getTitulo());
+        }
+        System.out.print("  Selecciona el ID del Elemento a compartir (0 cancela): ");
+        int idx = leerInt() - 1;
+        if (idx < 0 || idx >= propios.size()) { System.out.println("  Cancelado."); return; }
+        Elemento elementoACompartir = propios.get(idx);
+
+        // Usuarios disponibles distintos al activo
+        List<Usuario> otrosUsuarios = new ArrayList<>();
+        for (Usuario u : todosLosUsuarios) {
+            if (!u.getEmail().equalsIgnoreCase(usuarioActivo.getEmail())) {
+                otrosUsuarios.add(u);
+            }
+        }
+
+        if (otrosUsuarios.isEmpty()) {
+            System.out.println("  No hay otros usuarios registrados.");
+            System.out.println("  Vuelve al menu principal y registra otro usuario primero.");
+            return;
+        }
+
+        // Mostrar usuarios disponibles
+        System.out.println("  Usuarios disponibles:");
+        for (int i = 0; i < otrosUsuarios.size(); i++) {
+            System.out.printf("  [%d] %s (%s)%n",
+                    i + 1,
+                    otrosUsuarios.get(i).getNombreCompleto(),
+                    otrosUsuarios.get(i).getEmail());
+        }
+
+        // Seleccionar con cuántos compartir (uno o varios = multihilo)
+        System.out.print("  Con cuantos usuarios compartir? (1-" + otrosUsuarios.size() + "): ");
+        int cantidad = leerInt();
+        if (cantidad < 1 || cantidad > otrosUsuarios.size()) {
+            System.out.println("  Cantidad invalida. Cancelado.");
+            return;
+        }
+
+        // Un hilo por cada usuario destino, todos arrancan a la vez
+        List<Thread> hilos = new ArrayList<>();
+        for (int i = 0; i < cantidad; i++) {
+            Thread hilo = new Thread(
+                    new CompartirHilo(usuarioActivo, otrosUsuarios.get(i), elementoACompartir),
+                    "Compartir-" + (i + 1)
+            );
+            hilos.add(hilo);
+        }
+
+        System.out.println("\n  Ejecutando ");
+        try {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        for (Thread h : hilos) h.start();
+        for (Thread h : hilos) {
+            try { h.join(); }
+            catch (InterruptedException e) { System.out.println(" interrumpido."); }
+        }
+        System.out.println("  Compartido finalizado .");
+    }
+
+    // ── CAMBIAR SUSCRIPCION ───────────────────────────────────
+    //Cambia el tipo de suscripcion del Usuario.
+    private void cambiarSuscripcion() {
+        if (usuarioActivo instanceof UsuarioGeneral general) {
+            System.out.println("\n  ACTIVAR PLAN PREMIUM \n");
+            System.out.println("  Precio   : $4.99/mes");
+            System.out.println("  Beneficio: Sin limites de tareas ni recordatorios.");
+            System.out.print("  Desea confirmar la activacion? (s/n): ");
+            if (sc.nextLine().trim().equalsIgnoreCase("s")) {
+                UsuarioPremium premium = GestorUsuario.convertirAPremium(general);
+                actualizarUsuarioGlobal(premium);
+                usuarioActivo = premium;
+                System.out.println("  Plan Premium activado! ★");
+            } else {
+                System.out.println("  Sin cambios.");
+            }
+
+        } else if (usuarioActivo instanceof UsuarioPremium premium) {
+            System.out.println("\n  CANCELAR PLAN PREMIUM \n");
+            System.out.println("  Volveras al plan General (limite: 8 tareas, 4 recordatorios).");
+            System.out.print("  Confirmar cancelacion? (s/n): ");
+            if (sc.nextLine().trim().equalsIgnoreCase("s")) {
+                UsuarioGeneral general = GestorUsuario.convertirAGeneral(premium);
+                actualizarUsuarioGlobal(general);
+                usuarioActivo = general;
+                System.out.println("  Plan Premium cancelado. Ahora eres usuario General.");
+            } else {
+                System.out.println("  Sin cambios.");
+            }
         }
     }
 
-    // ── HELPERS ───────────────────────────────────────────────
 
-    private void agregarALista(Elemento e) {
-        List<Elemento> lista = usuario.getElemento();
-        if (lista == null) lista = new ArrayList<>();
-        lista.add(e);
-        usuario.setElemento(lista);
+    //Busca a todos los usuarios registrados
+    private void actualizarUsuarioGlobal(Usuario nuevoUsuario) {
+        for (int i = 0; i < todosLosUsuarios.size(); i++) {
+            if (todosLosUsuarios.get(i).getEmail().equalsIgnoreCase(nuevoUsuario.getEmail())) {
+                todosLosUsuarios.set(i, nuevoUsuario);
+                return;
+            }
+        }
     }
 
-    private void listar() {
-        List<Elemento> lista = usuario.getElemento();
-        if (lista == null || lista.isEmpty()) { System.out.println("  Sin elementos."); return; }
+
+    //Ingresa los elementos nuevos a las listas del Usuario
+    private boolean listar() {
+        List<Elemento> lista = usuarioActivo.getElemento();
+        if (lista == null || lista.isEmpty()) { System.out.println("  Sin elementos registrados."); return false; }
         for (int i = 0; i < lista.size(); i++) {
             Elemento e = lista.get(i);
             String tipo  = (e instanceof ElementoTarea) ? "T" : "R";
             String estado = (e instanceof ElementoTarea t) ? t.getEstado().toString() : "---";
             System.out.printf("  [%d] [%s] %s — %s%n", i + 1, tipo, e.getTitulo(), estado);
         }
+        return true;
     }
 
-    private Prioridad leerPrioridad() {
-        System.out.println("  Prioridad [ 1 ] Alta  [ 2 ] Media  [ 3 ] Baja");
-        System.out.print("  -> ");
-        return switch (leerInt()) { case 1 -> Prioridad.ALTA; case 2 -> Prioridad.MEDIA; default -> Prioridad.BAJA; };
-    }
-
-    private Estado leerEstado() {
-        System.out.println("  Estado [ 1 ] Pendiente  [ 2 ] En progreso  [ 3 ] Cancelada");
-        System.out.print("  -> ");
-        return switch (leerInt()) { case 2 -> Estado.EN_PROGRESO; case 3 -> Estado.CANCELADA; default -> Estado.PENDIENTE; };
-    }
-
+    //Lee el valor de ingrose para el actuar del menu.
     private int leerInt() {
         int numero = -1;
-        try {
-            numero = sc.nextInt();
-            sc.nextLine();
-        } catch (InputMismatchException e) {
-            sc.nextLine();
-        }
+        try { numero = sc.nextInt(); sc.nextLine(); }
+        catch (InputMismatchException e) { sc.nextLine(); }
         return numero;
     }
 
-    // try-catch con nextInt() para dia, mes y anio por separado
-    private LocalDate leerFecha() {
-        while (true) {
-            try {
-                System.out.print("  Fecha (dd/MM/yyyy): ");
-                String entrada = sc.nextLine().trim();
-                String[] partes = entrada.split("/");
-
-                int dia  = Integer.parseInt(partes[0]);
-                int mes  = Integer.parseInt(partes[1]);
-                int anio = Integer.parseInt(partes[2]);
-
-                LocalDate fecha = LocalDate.of(anio, mes, dia);
-
-                if (fecha.isBefore(LocalDate.now())) {
-                    System.out.println("  La fecha debe ser hoy o futura. Intentalo de nuevo.");
-                } else {
-                    return fecha;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("  Ingresa solo numeros. Intentalo de nuevo.");
-            } catch (Exception e) {
-                System.out.println("  Formato invalido. Usa dd/MM/yyyy. Intentalo de nuevo.");
-            }
-        }
-    }
 }

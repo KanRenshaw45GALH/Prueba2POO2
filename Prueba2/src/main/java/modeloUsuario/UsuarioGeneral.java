@@ -1,98 +1,105 @@
 package modeloUsuario;
 import modeloElemento.Elemento;
-import java.time.LocalDate;
-import java.util.Scanner;
+import modeloElemento.ElementoRecordatorio;
+import modeloElemento.ElementoTarea;
+import java.util.HashMap;
+import java.util.Map;
 
+public class UsuarioGeneral extends Usuario {
 
-public class UsuarioGeneral extends Usuario{
-    //Atributos:
+    // Atributos
     private boolean activarSuscripcion = false;
-    final private int limiteElementosTareas = 8;
-    final private int limiteElementosRecordatorios = 4;
-    private int contadorElementoTareas = 0;
-    private int contadorElementoRecordatorios = 0;
+    private Map<String, Integer> contadorElementos;
+    private Map<Integer,Integer> tareasCompartidas;
 
 
-    //Constructores Parametrizados:
-    public UsuarioGeneral(String nombreCompleto, int edad, String email, String password, int cantidadTareas, int cantidadRecordatorios, boolean activarSuscripcion, int contadorElementoTareas, int contadorElementoRecordatorios) {
+    // Constructores
+    public UsuarioGeneral(String nombreCompleto, int edad, String email, String password, int cantidadTareas, int cantidadRecordatorios, boolean activarSuscripcion, Map<String, Integer> contadorElementos, Map<Integer,Integer> tareasCompartidas) {
         super(nombreCompleto, edad, email, password, cantidadTareas, cantidadRecordatorios);
         this.activarSuscripcion = activarSuscripcion;
-        this.contadorElementoTareas = contadorElementoTareas;
-        this.contadorElementoRecordatorios = contadorElementoRecordatorios;
-    }
-    public UsuarioGeneral(boolean activarSuscripcion, int contadorElementoTareas, int contadorElementoRecordatorios) {
-        this.activarSuscripcion = activarSuscripcion;
-        this.contadorElementoTareas = contadorElementoTareas;
-        this.contadorElementoRecordatorios = contadorElementoRecordatorios;
-    }
-    //Construtor Vacio:
-    public UsuarioGeneral(){    super();}
-
-
-    //Getter y Setter:
-    public boolean isActivarSuscripcion() {return activarSuscripcion;}
-    public void setActivarSuscripcion(boolean activarSuscripcion) {this.activarSuscripcion = activarSuscripcion;}
-
-    public int getContadorElementoTareas() {
-        return contadorElementoTareas;
-    }
-    public void setContadorElementoTareas(int contadorElementoTareas) {this.contadorElementoTareas = contadorElementoTareas;}
-
-    public int getContadorElementoRecordatorios() {
-        return contadorElementoRecordatorios;
-    }
-    public void setContadorElementoRecordatorios(int contadorElementoRecordatorios) {this.contadorElementoRecordatorios = contadorElementoRecordatorios;}
-
-
-    //Metodos Propios:
-    public boolean conteoTarea() {
-        if (getContadorElementoTareas() < limiteElementosTareas) {
-            contadorElementoTareas++;
-            System.out.println("Tarea agregada. (" + getContadorElementoTareas() + "/" + limiteElementosTareas + ")");
-            return true;
-        } else {
-            System.out.println("Límite de tareas alcanzado: " + limiteElementosTareas);
-            return false;
+        this.tareasCompartidas = tareasCompartidas;
+        this.contadorElementos = contadorElementos;
+        if (!this.contadorElementos.containsKey("TAREA")) {
+            this.contadorElementos.put("TAREA", 0);
         }
-    }
-    public boolean conteoRecordatorio() {
-        if (getContadorElementoRecordatorios() < limiteElementosRecordatorios) {
-            contadorElementoRecordatorios++;
-            System.out.println("Recordatorio agregado. (" + getContadorElementoRecordatorios() + "/" + limiteElementosRecordatorios + ")");
-            return true;
-        } else {
-            System.out.println("Límite de recordatorios alcanzado: " + limiteElementosRecordatorios);
-            return false;
+        if (!this.contadorElementos.containsKey("RECORDATORIO")) {
+            this.contadorElementos.put("RECORDATORIO", 0);
         }
     }
 
+    public UsuarioGeneral(){
+        super();
+        contadorElementos = new HashMap<>();
+        contadorElementos.put("TAREA", 0);
+        contadorElementos.put("RECORDATORIO", 0);
+        tareasCompartidas = new HashMap<>();
+    }
 
-    //Metodos Heredados:
+    // Getters y Setters
+    public boolean isActivarSuscripcion() { return activarSuscripcion; }
+    public void setActivarSuscripcion(boolean activarSuscripcion) { this.activarSuscripcion = activarSuscripcion; }
+    public Map<String, Integer> getContadorElementos() { return contadorElementos; }
+    public void setContadorElementos(Map<String, Integer> contadorElementos) {this.contadorElementos = contadorElementos;}
+
+    // Metodos propios
+    public boolean limiteTarea() {
+        if(contadorElementos.get("TAREA") >= 8){
+            System.out.println("Limite de TAREAS alcanzado. ");
+            return false;
+        }
+        return true;
+    }
+    public boolean limiteRecordatorio() {
+        if(contadorElementos.get("RECORDATORIO") >= 4){
+            System.out.println("Limite de RECORDATORIOS alcanzado. ");
+            return false;
+        }
+        return true;
+    }
+    public boolean compartirTarea(Elemento elemento) {
+        if (!(elemento instanceof ElementoTarea)) {
+            return true;
+        }
+
+        int vecesCompartida = tareasCompartidas.getOrDefault(elemento.getId(), 0);
+
+        if (vecesCompartida >= 1) {
+            System.out.println("Esta tarea ya fue compartida anteriormente.");
+            return false;
+        }
+
+        tareasCompartidas.put(
+                elemento.getId(),
+                vecesCompartida + 1
+        );
+        return true;
+    }
+
+
+    // Metodos heredados
     @Override
-    public void verificarUsuario() {}
+    public void verificarUsuario() {
+        super.verificarUsuario();
+    }
+
     @Override
-    public void crearElemento(Elemento elemento) {}
+    public void crearElemento(Elemento elemento) {
+        super.crearElemento(elemento);
+
+        if (elemento instanceof ElementoTarea) {
+            contadorElementos.put("TAREA", contadorElementos.get("TAREA") + 1);
+        }else if(elemento instanceof ElementoRecordatorio) {
+            contadorElementos.put("RECORDATORIO", contadorElementos.get("RECORDATORIO") + 1);
+        }
+    }
+
     @Override
     public void imprimirUsuario() {
         super.imprimirUsuario();
-        System.out.println("\n En tu version actual no gozas de los beneficios completos. \n Para ello debes comprar el servicio Premium. ");
+        System.out.println("Cantidad de TAREAS: " + contadorElementos.get("TAREA"));
+        System.out.println("Cantidad de RECORDATORIOS: " + contadorElementos.get("RECORDATORIO"));
+        System.out.println("\nEn tu version actual no gozas de los beneficios completos.");
+        System.out.println("Para ello debes comprar el servicio Premium.");
     }
-    @Override
-    public void modoSuscripcion() {
-        System.out.println(" Desea activar la suscripcion?. Ingrese Si o No: ");
-        Scanner sc = new Scanner(System.in);
-        String respuesta = sc.nextLine();
-        if(respuesta.equalsIgnoreCase("Si")){
-            UsuarioPremium premium = new UsuarioPremium();
-            premium.setAccesoCompleto(true);
-            System.out.println("\n La suscripcion esta activada");
-            System.out.println("No posees limites para la creacion de Tareas, Recordatorios y Compartidos. \n");
-
-        }else {
-            setAccesoCompleto(false);
-            System.out.println(" La suscripcion se mantiene sin una suscripcion. \n");
-        }
-    }
-
 
 }

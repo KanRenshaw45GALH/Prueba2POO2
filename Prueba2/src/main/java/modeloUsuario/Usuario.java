@@ -1,179 +1,224 @@
 package modeloUsuario;
+import catalogo.Prioridad;
 import modeloElemento.Elemento;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
 public abstract class Usuario implements AccionesUsuario {
-    //Atributos:
+
+    // Atributos
     private String nombreCompleto;
     private int edad;
     private String email;
     private String password;
     private boolean accesoCompleto;
     private LocalDate fechaActual;
-    List <Elemento> elemento;
+    private List<Elemento> elemento;
 
-
-    //Constructor Parametrizado:
-    public Usuario(String nombreCompleto, int edad, String email, String password, int cantidadTareas, int cantidadRecordatorios) {
-        super();
+    // Constructor parametrizado
+    public Usuario(String nombreCompleto, int edad, String email, String password,
+                   int cantidadTareas, int cantidadRecordatorios) {
         this.nombreCompleto = nombreCompleto;
         this.edad = edad;
         this.email = email;
         this.password = password;
         this.accesoCompleto = false;
         this.fechaActual = LocalDate.now();
-        this.elemento= new ArrayList<Elemento>();
+        this.elemento = new ArrayList<>();
     }
-    public Usuario() {}
 
-    //Getter y Setter:
-    public String getNombreCompleto() {return nombreCompleto;}
-    public void setNombreCompleto(String s) {this.nombreCompleto = nombreCompleto;}
+    public Usuario() {
+        this.elemento = new ArrayList<>();
+        this.fechaActual = LocalDate.now();
+    }
 
-    public int getEdad() {return edad;}
-    public void setEdad(int edad) {this.edad = edad;}
+    // Getters y Setters
+    public String getNombreCompleto() { return nombreCompleto; }
+    // CORRECCIÓN: el setter ahora asigna el parámetro s correctamente
+    public void setNombreCompleto(String s) { this.nombreCompleto = s; }
 
-    public String getEmail() {return email;}
-    public void setEmail(String email) {this.email = email;}
+    public int getEdad() { return edad; }
+    public void setEdad(int edad) { this.edad = edad; }
 
-    public String getPassword() {return password;}
-    public void setPassword(String password) {this.password = password;}
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public boolean getAccesoCompleto() {return accesoCompleto;}
-    public void setAccesoCompleto(boolean accesoCompleto) {this.accesoCompleto = accesoCompleto;}
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
-    public LocalDate getFechaActual() {return fechaActual;}
-    public void setFechaActual(LocalDate fechaActual) {this.fechaActual = fechaActual;}
+    public boolean getAccesoCompleto() { return accesoCompleto; }
+    public void setAccesoCompleto(boolean accesoCompleto) { this.accesoCompleto = accesoCompleto; }
 
-    public List<Elemento> getElemento() {return elemento;}
-    public void setElemento(List<Elemento> elemento) {this.elemento = elemento;}
+    public LocalDate getFechaActual() { return fechaActual; }
+    public void setFechaActual(LocalDate fechaActual) { this.fechaActual = fechaActual; }
+
+    public List<Elemento> getElemento() { return elemento; }
+    public void setElemento(List<Elemento> elemento) { this.elemento = elemento; }
 
 
-    //Metodos Propios:
-    public void ListarElementos() {
-        for(Elemento elemento: this.elemento){
-            elemento.imprimirElementos();
+
+    // Metodos propios:
+    public void guardarElemento(List<Elemento> elementos, Elemento elemento) {
+        System.out.println("Elemento a guardar: " + elemento.getTitulo());
+
+
+        boolean yaExiste = elementos.stream().anyMatch(e -> e.getId() == elemento.getId());
+        if (yaExiste) {
+            System.out.println("El elemento ya existe en la lista.");
+        } else {
+            elementos.add(elemento);
+            System.out.println("Elemento guardado correctamente.");
         }
     }
 
-    public void EliminarElemento(Elemento elemento) {
-        this.elemento.remove(elemento);
+    public void eliminarElemento(List<Elemento> elementos, Elemento elemento) {
+        System.out.println("Elemento a eliminar: " + elemento.getTitulo());
+
+
+        boolean eliminado = elementos.removeIf(e -> e.getId() == elemento.getId());
+        if (!eliminado) {
+            System.out.println("El elemento no fue encontrado en la lista.");
+        } else {
+            System.out.println("Elemento eliminado correctamente.");
+        }
     }
 
-    public void compartirElemento(List<Usuario> usuarioList){
+    private void editarElemento(Elemento elemento) {
+
+        Scanner sc = new Scanner(System.in);
+        try {
+            System.out.println("Elemento a editar: " + elemento.getTitulo());
+            System.out.println("Ingrese que opcion desea editar: ");
+            System.out.println("1. Editar titulo del elemento");
+            System.out.println("2. Editar descripcion del elemento");
+            System.out.println("3. Editar prioridad del elemento");
+            System.out.print("Opcion seleccionada: ");
+
+            int opcion = Integer.parseInt(sc.nextLine().trim());
+
+            if (opcion == 1) {
+                System.out.print("Nuevo titulo: ");
+                String nuevoTitulo = sc.nextLine().trim();
+                if (nuevoTitulo.isEmpty()) {
+                    throw new IllegalArgumentException("El titulo no puede estar vacio");
+                }
+                elemento.setTitulo(nuevoTitulo);
+                System.out.println("El titulo fue modificado correctamente.");
+
+            } else if (opcion == 2) {
+                System.out.print("Nueva descripcion: ");
+                String nuevaDescripcion = sc.nextLine().trim();
+                elemento.setDescripcion(nuevaDescripcion);
+                System.out.println("La descripcion fue modificada correctamente.");
+
+            } else if (opcion == 3) {
+                System.out.println("Nueva prioridad: 1=ALTA, 2=MEDIA, 3=BAJA");
+                System.out.print("Ingrese la opcion: ");
+                int prioridad = Integer.parseInt(sc.nextLine().trim());
+                if (prioridad == 1) {
+                    elemento.setPrioridad(Prioridad.ALTA);
+                } else if (prioridad == 2) {
+                    elemento.setPrioridad(Prioridad.MEDIA);
+                } else {
+                    elemento.setPrioridad(Prioridad.BAJA);
+                }
+                System.out.println("La prioridad fue modificada correctamente.");
+
+            } else {
+                System.out.println("La opcion ingresada no es valida");
+            }
+            System.out.println("La edicion del elemento fue finalizada con exito.");
+
+        } catch (NumberFormatException e) {
+            System.out.println("El valor ingresado no es un numero valido.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Ocurrio un error inesperado: " + e.getMessage());
+        }
+    }
+
+    public synchronized void compartirElemento(List<Usuario> usuarioList) {
         Scanner sc = new Scanner(System.in);
         Elemento elementoEncontrado = null;
         Usuario usuarioEncontrado = null;
 
-        System.out.println("Introduzca el nombre del Elemento: ");
+        System.out.print("Introduzca el nombre del Elemento: ");
         String nombreElemento = sc.nextLine();
 
-        for(Elemento elemento : this.elemento){
-            if(elemento.getTitulo().equalsIgnoreCase(nombreElemento)){
-                elementoEncontrado = elemento;
+        for (Elemento e : this.elemento) {
+            if (e.getTitulo().equalsIgnoreCase(nombreElemento)) {
+                elementoEncontrado = e;
                 break;
             }
         }
-        if(elementoEncontrado == null){
-            System.out.println("El Elemento no existe");
+        if (elementoEncontrado == null) {
+            System.out.println("El Elemento no existe.");
             return;
         }
 
-        System.out.println("Introduzca el Email del Usuario a Enviar el elemento: ");
+        System.out.print("Introduzca el Email del Usuario a enviar el elemento: ");
         String emailUsuario = sc.nextLine();
 
-        for(Usuario usuario : usuarioList){
-            if(usuario.getEmail().equalsIgnoreCase(emailUsuario)) {
-                usuarioEncontrado = usuario;
+        for (Usuario u : usuarioList) {
+            if (u.getEmail().equalsIgnoreCase(emailUsuario)) {
+                usuarioEncontrado = u;
                 break;
             }
         }
-        if(usuarioEncontrado == null){
-            System.out.println("El Usuario no existe");
+        if (usuarioEncontrado == null) {
+            System.out.println("El Usuario no existe.");
             return;
         }
 
-        Elemento finalElemento = elementoEncontrado;
-        Usuario finalUsuario = usuarioEncontrado;
-
-        Thread hilo1 = new Thread(() -> accesoConcurrente(finalElemento, finalUsuario, "Hilo-1"));
-        Thread hilo2 = new Thread(() -> accesoConcurrente(finalElemento, finalUsuario, "Hilo-2"));
-        Thread hilo3 = new Thread(() -> accesoConcurrente(finalElemento, finalUsuario, "Hilo-3"));
-
-        hilo1.start();
-        hilo2.start();
-        hilo3.start();
-    };
-    private synchronized void accesoConcurrente(Elemento elemento, Usuario usuario, String hilo){
-
-        System.out.println(hilo + " intentando compartir elemento...");
-
-        try{
-            Thread.sleep(2000);
-        } catch (InterruptedException e){
-            System.out.println("Error en el hilo.");
-        }
-
-        usuario.getElemento().add(elemento);
-
-        elemento.getColaboradores().add(usuario);
-
-        elemento.setCantidadColaboradores(
-                elemento.getCantidadColaboradores() + 1
-        );
-
-        System.out.println(hilo + " compartio el elemento exitosamente a "
-                + usuario.getNombreCompleto());
+        usuarioEncontrado.getElemento().add(elementoEncontrado);
+        elementoEncontrado.getColaboradores().add(usuarioEncontrado);
+        elementoEncontrado.setCantidadColaboradores(elementoEncontrado.getCantidadColaboradores() + 1);
+        System.out.println("El Elemento fue compartido exitosamente con " + usuarioEncontrado.getNombreCompleto() + ".");
     }
 
 
-    //Metodos Heredados:
+    // Metodos heredados
     @Override
     public void verificarUsuario() {
-        System.out.println("\n Por favor verifique su usuario.  ");
+        System.out.println("\nPor favor verifique su usuario.");
+        Scanner sc = new Scanner(System.in);
         try {
-            System.out.println("Ingrese su Nombre completo: ");
-            Scanner usuarioIngreso = new Scanner(System.in);
-            setNombreCompleto(usuarioIngreso.nextLine());
-            try {
-                System.out.println("Ingrese su Email: ");
-                setEmail(usuarioIngreso.nextLine());
-                try {
-                    System.out.println("Ingrese su Password: ");
-                    setPassword(usuarioIngreso.nextLine());
-                    if(getPassword().equals(getPassword())) {
-                        System.out.println("El usuario se encuentra verificado.");
-                    }else{
-                        System.out.println("El usuario no se encuentra verificado.");
-                    }
-                }catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("\n Password equivocado o no encontrado.\n Por favor reintroduzca el Password correcto. \n");
-                }
-            }catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("\n Email equivocado o no encontrado.\n Por favor reintroduzca el Email correcto. \n");
-            }
-        }catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("\n Nombre equivocado o no encontrado.\n Por favor reintroduzca el Nombre correcto. \n");
-        }
+            System.out.print("Ingrese su Nombre completo: ");
+            setNombreCompleto(sc.nextLine());
+            System.out.print("Ingrese su Email: ");
+            setEmail(sc.nextLine());
 
+            // CORRECCIÓN: se guarda la password ingresada en variable separada antes de comparar
+            System.out.print("Ingrese su Password: ");
+            String passwordIngresada = sc.nextLine();
+            if (passwordIngresada.equals(getPassword())) {
+                System.out.println("El usuario se encuentra verificado.");
+            } else {
+                System.out.println("El usuario NO se encuentra verificado. Password incorrecto.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error durante la verificacion.");
+        }
     }
+
     @Override
     public void crearElemento(Elemento elemento) {
         this.elemento.add(elemento);
-    };
+    }
+
     @Override
     public void imprimirUsuario() {
         System.out.println(" ");
-        System.out.println("El nombre del Usuario es:  " + nombreCompleto + " quien posee el corre electrnico: " + email);
-        System.out.println("La catidad de proyectos que posee el Usuario es " + "c");
+        // CORRECCIÓN: typos corregidos y se usa elemento.size() en lugar de "c"
+        System.out.println("El nombre del Usuario es: " + nombreCompleto
+                + " quien posee el correo electrónico: " + email);
+        System.out.println("La cantidad de elementos que posee el Usuario es: " + elemento.size());
     }
-
-
 }
+
+
