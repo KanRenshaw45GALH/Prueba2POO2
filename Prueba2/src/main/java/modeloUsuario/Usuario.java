@@ -60,27 +60,28 @@ public abstract class Usuario implements AccionesUsuario {
 
 
     // Metodos propios:
-    public void guardarElemento(List<Elemento> elementos, Elemento elemento) {
+    public void guardarElemento(Elemento elemento) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el ID del elemento a Guardar: ");
         int id = Integer.parseInt(sc.nextLine());
 
-        boolean yaExiste = elementos.stream().anyMatch(e -> e.getId() == id);
+        boolean yaExiste = this.elemento.stream().anyMatch(e -> e.getId() == id);
+
         if (yaExiste) {
             System.out.println("El elemento ya existe en la lista.");
         } else {
             elemento.setId(id);
-            elementos.add(elemento);
+            this.elemento.add(elemento);
             System.out.println("Elemento guardado correctamente.");
         }
     }
 
-    public void eliminarElemento(List<Elemento> elementos, Elemento elemento) {
+    public void eliminarElemento() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el ID del elemento a Eliminar: ");
         int id = Integer.parseInt(sc.nextLine());
 
-        boolean eliminado = elementos.removeIf(e -> e.getId() == id);
+        boolean eliminado = this.elemento.removeIf(e -> e.getId() == id);
         if (!eliminado) {
             System.out.println("El elemento no fue encontrado en la lista.");
         } else {
@@ -88,7 +89,7 @@ public abstract class Usuario implements AccionesUsuario {
         }
     }
 
-    private void editarElemento(Elemento elemento) {
+    public void editarElemento() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Ingrese el ID del elemento a editar: ");
         int id = Integer.parseInt(sc.nextLine());
@@ -105,7 +106,7 @@ public abstract class Usuario implements AccionesUsuario {
             return;
         }
                 try {
-                    System.out.println("Elemento a editar: " + elemento.getTitulo());
+                    System.out.println("Elemento a editar: " + elementoEncontrado.getTitulo());
                     System.out.println("Ingrese que opcion desea editar: ");
                     System.out.println("1. Editar titulo del elemento");
                     System.out.println("2. Editar descripcion del elemento");
@@ -120,13 +121,13 @@ public abstract class Usuario implements AccionesUsuario {
                         if (nuevoTitulo.isEmpty()) {
                             throw new IllegalArgumentException("El titulo no puede estar vacio");
                         }
-                        elemento.setTitulo(nuevoTitulo);
+                        elementoEncontrado.setTitulo(nuevoTitulo);
                         System.out.println("El titulo fue modificado correctamente.");
 
                     } else if (opcion == 2) {
                         System.out.print("Nueva descripcion: ");
                         String nuevaDescripcion = sc.nextLine().trim();
-                        elemento.setDescripcion(nuevaDescripcion);
+                        elementoEncontrado.setDescripcion(nuevaDescripcion);
                         System.out.println("La descripcion fue modificada correctamente.");
 
                     } else if (opcion == 3) {
@@ -134,11 +135,11 @@ public abstract class Usuario implements AccionesUsuario {
                         System.out.print("Ingrese la opcion: ");
                         int prioridad = Integer.parseInt(sc.nextLine().trim());
                         if (prioridad == 1) {
-                            elemento.setPrioridad(Prioridad.ALTA);
+                            elementoEncontrado.setPrioridad(Prioridad.ALTA);
                         } else if (prioridad == 2) {
-                            elemento.setPrioridad(Prioridad.MEDIA);
+                            elementoEncontrado.setPrioridad(Prioridad.MEDIA);
                         } else {
-                            elemento.setPrioridad(Prioridad.BAJA);
+                            elementoEncontrado.setPrioridad(Prioridad.BAJA);
                         }
                         System.out.println("La prioridad fue modificada correctamente.");
 
@@ -159,11 +160,12 @@ public abstract class Usuario implements AccionesUsuario {
         Elemento elementoEncontrado = null;
         Usuario usuarioEncontrado = null;
 
-        System.out.print("Introduzca el nombre del Elemento: ");
-        String nombreElemento = sc.nextLine();
+        System.out.print("Introduzca el ID del Elemento: ");
+        int id = sc.nextInt();
+        sc.nextLine();
 
         for (Elemento e : this.elemento) {
-            if (e.getTitulo().equalsIgnoreCase(nombreElemento)) {
+            if (e.getId() == id) {
                 elementoEncontrado = e;
                 break;
             }
