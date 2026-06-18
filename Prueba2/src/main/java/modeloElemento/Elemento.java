@@ -19,6 +19,7 @@ public abstract class Elemento implements AccionesElemento {
     private Usuario usuario;
     private List<Usuario> colaboradores;
     private int cantidadColaboradores;
+    private Usuario usuarioActivo = null;
 
     // Constructor parametrizado: ahora protected para que subclases de otros paquetes puedan usarlo
     protected Elemento(int id, String titulo, String descripcion, int cantidadColaboradores,
@@ -125,7 +126,11 @@ public abstract class Elemento implements AccionesElemento {
             }
         }
     }
+    // Elemento.java
+    public boolean esPendiente() {
+        return true;
+    }
+    public void imprimirPendiente(int numero) {
 
-
-
+    }
 }

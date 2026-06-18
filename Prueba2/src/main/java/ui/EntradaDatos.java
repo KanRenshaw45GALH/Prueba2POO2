@@ -235,34 +235,21 @@ public class EntradaDatos {
         System.out.println("  Recordatorio guardado exitosamente.");
     }
 
-    // ── VER / COMPLETAR / ELIMINAR / EDITAR ──────────────────
-    //Muestra todos los elementos no terminados.
     private void verPendientes() {
-        System.out.println("\n  PENDIENTES \n" + LIN);
+        System.out.println("\n  PENDIENTES\n" + LIN);
         List<Elemento> lista = usuarioActivo.getElemento();
         if (lista == null || lista.isEmpty()) { System.out.println("  Sin elementos."); return; }
 
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         boolean hay = false;
         for (int i = 0; i < lista.size(); i++) {
-            Elemento e = lista.get(i);
-            if (e instanceof ElementoTarea t
-                    && t.getEstado() != Estado.COMPLETADO
-                    && t.getEstado() != Estado.CANCELADA) {
-                System.out.printf("  [%d] TAREA        | %s | %s | %s%n",
-                        i + 1, t.getTitulo(), t.getEstado(), t.getPrioridad());
-                hay = true;
-            } else if (e instanceof ElementoRecordatorio r) {
-                System.out.printf("  [%d] RECORDATORIO | %s | vence %s%n",
-                        i + 1, r.getTitulo(),
-                        r.getFechaLimite() != null ? r.getFechaLimite().format(fmt) : "sin fecha");
+            if (lista.get(i).esPendiente()) {
+                lista.get(i).imprimirPendiente(i + 1);
                 hay = true;
             }
         }
         if (!hay) System.out.println("  Sin pendientes.");
     }
 
-    //Permite cambiar el estado de un elemento Tarea
     private void completar() {
         if (!listar()) return;
         System.out.print("  Numero de Elemento a completar (0 cancela): ");
@@ -296,7 +283,7 @@ public class EntradaDatos {
             System.out.print("El Elemento sera eliminado.\nDesea continuar? (s/n): ");
             String resp = sc.nextLine().trim().toLowerCase();
             if (resp.equals("s")) {
-                new EstrategiaEliminar(e).ejecutar(lista, e);
+
                 break;
             }
             else if (resp.equals("n")) {
