@@ -281,7 +281,6 @@ public class EntradaDatos {
     }
 
     //Permite el eliminar un elemento
-    //Permite el eliminar un elemento
     private void eliminar() {
         if (!listar()) return;
         System.out.print("Numero de ID del Elemento a eliminar (0 cancela): ");
