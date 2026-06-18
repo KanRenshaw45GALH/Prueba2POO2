@@ -296,7 +296,7 @@ public class EntradaDatos {
             System.out.print("El Elemento sera eliminado.\nDesea continuar? (s/n): ");
             String resp = sc.nextLine().trim().toLowerCase();
             if (resp.equals("s")) {
-                new EstrategiaEliminar(e).ejecutar(lista, e);
+               lista.remove(e);
                 break;
             }
             else if (resp.equals("n")) {
