@@ -67,10 +67,10 @@ public class EntradaDatos {
             System.out.println("  [ 2  ] Agregar recordatorio");
             System.out.println("  [ 3  ] Ver pendientes");
             System.out.println("  [ 4  ] Completar tarea");
-            System.out.println("  [ 5  ] Eliminar elemento");
-            System.out.println("  [ 6  ] Ver todos los elementos");
-            System.out.println("  [ 7  ] Editar elemento");
-            System.out.println("  [ 8  ] Compartir elemento");
+            System.out.println("  [ 5  ] Ver todos los elementos");
+            System.out.println("  [ 6  ] Editar elemento");
+            System.out.println("  [ 7  ] Compartir elemento");
+            System.out.println("  [ 8  ] Eliminar elemento");
             System.out.println("  [ 9  ] Cambiar suscripcion");
             System.out.println("  [ 10 ] Informacion de usuario");
             System.out.println("  [ 11 ] Cerrar sesion");
@@ -82,10 +82,10 @@ public class EntradaDatos {
                 case 2  -> agregarRecordatorio();
                 case 3  -> verPendientes();
                 case 4  -> completar();
-                case 5  -> eliminar();
-                case 6  -> verTodos();
-                case 7  -> editarElemento();
-                case 8  -> compartirElemento();
+                case 5  -> verTodos();
+                case 6  -> editarElemento();
+                case 7  -> compartirElemento();
+                case 8  -> eliminar();
                 case 9  -> cambiarSuscripcion();
                 case 10 -> usuarioActivo.imprimirUsuario();
                 case 11 -> {
@@ -213,7 +213,7 @@ public class EntradaDatos {
         tarea.setUsuario(usuarioActivo);
         tarea.crearElemento();
 
-        usuarioActivo.crearElemento(tarea);
+        usuarioActivo.guardarElemento(tarea);
         System.out.println("Tarea creada exitosamente. ");
 
     }
@@ -230,7 +230,7 @@ public class EntradaDatos {
         rec.setUsuario(usuarioActivo);
         rec.crearElemento();
 
-        usuarioActivo.crearElemento(rec);
+        usuarioActivo.guardarElemento(rec);
         rec.activarAlerta();
         System.out.println("  Recordatorio guardado exitosamente.");
     }
@@ -282,41 +282,18 @@ public class EntradaDatos {
 
     //Permite el eliminar un elemento
     private void eliminar() {
-        if (!listar()) return;
-        System.out.print("Numero de ID del Elemento a eliminar (0 cancela): ");
-        int idx = leerInt() - 1;
-        List<Elemento> lista = usuarioActivo.getElemento();
-        if (idx < 0 || idx >= lista.size()) {
-            System.out.println("Cancelado.");
+        if (!listar()) {
             return;
         }
-
-        while (true) {
-            Elemento e = lista.get(idx);
-            System.out.print("El Elemento sera eliminado.\nDesea continuar? (s/n): ");
-            String resp = sc.nextLine().trim().toLowerCase();
-            if (resp.equals("s")) {
-                lista.remove(e);
-                break;
-            }
-            else if (resp.equals("n")) {
-                System.out.println("Cancelado.");
-                break;
-            }
-            else {
-                System.out.println("Respuesta invalida. Escribe s o n.");
-            }
-        }
+        usuarioActivo.eliminarElemento();
     }
 
     //Permite el editar un elemento
     private void editarElemento() {
-        if (!listar()) return;
-        System.out.print("  Numero de ID del Elemento a editar (0 cancela): ");
-        int idx = leerInt() - 1;
-        List<Elemento> lista = usuarioActivo.getElemento();
-        if (idx < 0 || idx >= lista.size()) { System.out.println("  Cancelado."); return; }
-        Elemento e = lista.get(idx);
+        if (!listar()) {
+            return;
+        }
+        usuarioActivo.editarElemento();
     }
 
     //Muestra todos los elementos actuales
