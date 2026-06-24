@@ -12,6 +12,7 @@
 .titulo {
     -fx-font-size: 28px;
     -fx-font-weight: bold;
+    -fx-text-fill: #1565C0;
 }
 
 .btn-registrar {
@@ -19,4 +20,43 @@
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
+}
+
+.label-campo {
+    -fx-font-weight: bold;
+    -fx-text-fill: #0D47A1;
+    -fx-font-size: 15px;
+}
+
+.subtitulo-bienvenida {
+    -fx-font-size: 15px;
+    -fx-text-fill: #5a6a85;
+}
+
+.btn-bienvenida {
+    -fx-background-color: #1565C0;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-cursor: hand;
+}
+
+.btn-bienvenida:hover {
+    -fx-background-color: #0d47a1;
+}
+
+.btn-bienvenida-secundario {
+    -fx-background-color: #1976D2;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-cursor: hand;
+}
+
+.btn-bienvenida-secundario:hover {
+    -fx-background-color: #1565C0;
 }

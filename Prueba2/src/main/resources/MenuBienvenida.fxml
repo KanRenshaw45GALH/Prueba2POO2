@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controlador.MenuBienvenidaControlador"
+            prefHeight="480.0" prefWidth="640.0"
+            stylesheets="@css/estilos.css"
+            styleClass="root">
+
+    <!-- Tarjeta centrada, igual que los formularios del compañero -->
+    <VBox styleClass="card"
+          prefWidth="420.0"
+          AnchorPane.topAnchor="60.0"
+          AnchorPane.bottomAnchor="60.0"
+          AnchorPane.leftAnchor="110.0"
+          AnchorPane.rightAnchor="110.0"
+          spacing="0"
+          alignment="TOP_CENTER">
+
+        <!-- Título superior igual al estilo "REGISTRAR USUARIO" -->
+        <Label text="GESTOR DE TAREAS"
+               styleClass="titulo"
+               maxWidth="Infinity"
+               alignment="CENTER">
+            <VBox.margin>
+                <Insets top="45.0" bottom="8.0" left="30.0" right="30.0"/>
+            </VBox.margin>
+        </Label>
+
+        <Label text="Y RECORDATORIOS"
+               styleClass="titulo"
+               maxWidth="Infinity"
+               alignment="CENTER">
+            <VBox.margin>
+                <Insets bottom="40.0" left="30.0" right="30.0"/>
+            </VBox.margin>
+        </Label>
+
+        <!-- Subtítulo pequeño -->
+        <Label text="¿Qué deseas hacer?"
+               styleClass="subtitulo-bienvenida"
+               maxWidth="Infinity"
+               alignment="CENTER">
+            <VBox.margin>
+                <Insets bottom="35.0"/>
+            </VBox.margin>
+        </Label>
+
+        <!-- Spacer para empujar botones hacia abajo -->
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <!-- Botón Iniciar Sesión — franja azul igual a "Verificar" / "Guardar" -->
+        <Button text="INICIAR SESIÓN"
+                styleClass="btn-bienvenida"
+                maxWidth="Infinity"
+                prefHeight="52.0"
+                onAction="#irAVerificar">
+            <VBox.margin>
+                <Insets left="30.0" right="30.0" bottom="16.0"/>
+            </VBox.margin>
+        </Button>
+
+        <!-- Botón Crear Cuenta — misma franja, segundo color -->
+        <Button text="CREAR CUENTA"
+                styleClass="btn-bienvenida-secundario"
+                maxWidth="Infinity"
+                prefHeight="52.0"
+                onAction="#irARegistro">
+            <VBox.margin>
+                <Insets left="30.0" right="30.0" bottom="45.0"/>
+            </VBox.margin>
+        </Button>
+
+    </VBox>
+</AnchorPane>
