@@ -67,12 +67,6 @@ public abstract class Elemento implements AccionesElemento {
     public void setColaboradores(List<Usuario> colaboradores) { this.colaboradores = colaboradores; }
 
 
-    // Metodos Propios:
-    public boolean esPendiente() {
-        return true;
-    }
-    public void imprimirPendiente(int numero) {}
-
     // Metodos heredados
     @Override
     public void crearElemento() {
@@ -99,7 +93,6 @@ public abstract class Elemento implements AccionesElemento {
             case 2 -> setPrioridad(Prioridad.MEDIA);
             default -> setPrioridad(Prioridad.BAJA);
         }
-
         System.out.println("Introduzca la fecha limite del Elemento (DD/MM/YYYY): ");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         while (true) {
@@ -133,6 +126,10 @@ public abstract class Elemento implements AccionesElemento {
         }
     }
 
+    public boolean esPendiente() {
+        return true;
+    }
 
+    public void imprimirPendiente(int numero) {}
 
 }

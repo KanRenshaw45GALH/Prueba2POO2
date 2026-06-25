@@ -3,6 +3,7 @@ package modeloElemento;
 import catalogo.Prioridad;
 import modeloUsuario.Usuario;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class ElementoRecordatorio extends Elemento {
 
@@ -64,4 +65,19 @@ public class ElementoRecordatorio extends Elemento {
         System.out.println("Fecha Actual: " + fechaActual);
         System.out.println("Alerta activa: " + alerta);
     }
+
+    @Override
+    public boolean esPendiente() {
+        return true;
+    }
+
+    @Override
+    public void imprimirPendiente(int numero) {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.printf("  [%d] RECORDATORIO | %s | vence %s%n",
+                numero, getTitulo(),
+                getFechaLimite() != null ? getFechaLimite().format(fmt) : "sin fecha");
+    }
+
+
 }

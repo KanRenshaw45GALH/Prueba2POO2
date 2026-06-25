@@ -200,7 +200,6 @@ public class EntradaDatos {
 
     //Metodos de Accion:
     private void agregarTarea() {
-
         if (usuarioActivo instanceof UsuarioGeneral general) {
             if (!general.limiteTarea()) {
                 return;
@@ -214,12 +213,17 @@ public class EntradaDatos {
         tarea.crearElemento();
 
         usuarioActivo.guardarElemento(tarea);
+        if (usuarioActivo instanceof UsuarioGeneral general) {
+            general.getContadorElementos().put(
+                    "TAREA",
+                    general.getContadorElementos().get("TAREA") + 1
+            );
+        }
         System.out.println("Tarea creada exitosamente. ");
 
     }
     //Permite agregar un recordatorio por medio de ElementoRecordatorio
     private void agregarRecordatorio() {
-
         if (usuarioActivo instanceof UsuarioGeneral general) {
             if (!general.limiteRecordatorio()) return;
         }
@@ -231,6 +235,12 @@ public class EntradaDatos {
         rec.crearElemento();
 
         usuarioActivo.guardarElemento(rec);
+        if (usuarioActivo instanceof UsuarioGeneral general) {
+            general.getContadorElementos().put(
+                    "RECORDATORIO",
+                    general.getContadorElementos().get("RECORDATORIO") + 1
+            );
+        }
         rec.activarAlerta();
         System.out.println("  Recordatorio guardado exitosamente.");
     }
@@ -240,16 +250,18 @@ public class EntradaDatos {
     private void verPendientes() {
         System.out.println("\n  PENDIENTES\n" + LIN);
         List<Elemento> lista = usuarioActivo.getElemento();
-        if (lista == null || lista.isEmpty()) { System.out.println("  Sin elementos."); return; }
-
-        boolean hay = false;
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).esPendiente()) {
-                lista.get(i).imprimirPendiente(i + 1);
-                hay = true;
+        if (lista == null || lista.isEmpty()) {
+            System.out.println("  Sin elementos."); return;
+        }else {
+            boolean hay = false;
+            for (int i = 0; i < lista.size(); i++) {
+                if (lista.get(i).esPendiente()) {
+                    lista.get(i).imprimirPendiente(i + 1);
+                    hay = true;
+                }
             }
+            if (!hay) System.out.println("  Sin pendientes.");
         }
-        if (!hay) System.out.println("  Sin pendientes.");
     }
 
     //Permite cambiar el estado de un elemento Tarea

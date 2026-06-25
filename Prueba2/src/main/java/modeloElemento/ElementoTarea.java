@@ -56,4 +56,17 @@ public class ElementoTarea extends Elemento {
         super.imprimirElementos();
         System.out.println("Estado: " + estado);
     }
+
+    @Override
+    public boolean esPendiente() {
+        return estado != Estado.COMPLETADO && estado != Estado.CANCELADA;
+    }
+
+    @Override
+    public void imprimirPendiente(int numero) {
+        System.out.printf("  [%d] TAREA        | %s | %s | %s%n",
+                numero, getTitulo(), estado, getPrioridad());
+    }
+
+
 }

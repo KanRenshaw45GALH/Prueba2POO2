@@ -63,13 +63,13 @@ public abstract class Usuario implements AccionesUsuario {
     //Metodos propios:
     public void guardarElemento(Elemento elemento) {
         boolean yaExiste = this.elemento.stream().anyMatch(e -> e.getId() == elemento.getId());
-
         if (yaExiste) {
             System.out.println("El elemento ya existe en la lista.");
             return;
         } else {
             this.elemento.add(elemento);
             System.out.println("Elemento guardado correctamente.");
+            System.out.println("Elementos guardados: " + this.elemento.size());
         }
     }
 
@@ -256,8 +256,7 @@ public abstract class Usuario implements AccionesUsuario {
     public void imprimirUsuario() {
         System.out.println(" ");
         // CORRECCIÓN: typos corregidos y se usa elemento.size() en lugar de "c"
-        System.out.println("El nombre del Usuario es: " + nombreCompleto
-                + " quien posee el correo electrónico: " + email);
+        System.out.println("El nombre del Usuario es: " + nombreCompleto + " quien posee el correo electrónico: " + email);
         System.out.println("La cantidad de elementos que posee el Usuario es: " + elemento.size());
     }
 
