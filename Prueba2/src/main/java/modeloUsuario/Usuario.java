@@ -2,6 +2,7 @@ package modeloUsuario;
 import catalogo.Prioridad;
 import modeloElemento.Elemento;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -139,7 +140,9 @@ public abstract class Usuario implements AccionesUsuario {
                         System.out.println("Opcion no valida.");
                     } else if (opcion == 4) {
                         System.out.print("Ingrese la fecha: ");
-                        elementoEncontrado.setFechaLimite(LocalDate.now());
+
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        elementoEncontrado.setFechaLimite(LocalDate.parse(sc.nextLine().trim(), formatter));
                     }
                     System.out.println("La prioridad fue modificada correctamente.");
                     System.out.println("La edicion del elemento fue finalizada con exito.");
