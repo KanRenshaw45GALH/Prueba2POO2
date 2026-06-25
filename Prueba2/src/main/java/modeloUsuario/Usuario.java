@@ -104,9 +104,7 @@ public abstract class Usuario implements AccionesUsuario {
                 try {
                     System.out.println("Elemento a encontrado: " + elementoEncontrado.getTitulo());
                     System.out.println("Ingrese que opcion desea editar: ");
-                    System.out.println("1. Editar titulo del elemento");
-                    System.out.println("2. Editar descripcion del elemento");
-                    System.out.println("3. Editar prioridad del elemento");
+                    System.out.println("1. [TITULO], 2.[DESCRIPCION], 3.[PRIORIDAD], 4.[FECHA ELEMENTO]");
                     System.out.print("Opcion seleccionada: ");
 
                     int opcion = Integer.parseInt(sc.nextLine().trim());
@@ -139,6 +137,9 @@ public abstract class Usuario implements AccionesUsuario {
                                 System.out.println("Opcion no valida.");
                         }
                         System.out.println("Opcion no valida.");
+                    } else if (opcion == 4) {
+                        System.out.print("Ingrese la fecha: ");
+                        elementoEncontrado.setFechaLimite(LocalDate.now());
                     }
                     System.out.println("La prioridad fue modificada correctamente.");
                     System.out.println("La edicion del elemento fue finalizada con exito.");
