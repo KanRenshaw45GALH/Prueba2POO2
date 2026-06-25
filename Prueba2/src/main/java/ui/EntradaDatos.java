@@ -238,24 +238,14 @@ public class EntradaDatos {
     // ── VER / COMPLETAR / ELIMINAR / EDITAR ──────────────────
     //Muestra todos los elementos no terminados.
     private void verPendientes() {
-        System.out.println("\n  PENDIENTES \n" + LIN);
+        System.out.println("\n  PENDIENTES\n" + LIN);
         List<Elemento> lista = usuarioActivo.getElemento();
         if (lista == null || lista.isEmpty()) { System.out.println("  Sin elementos."); return; }
 
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         boolean hay = false;
         for (int i = 0; i < lista.size(); i++) {
-            Elemento e = lista.get(i);
-            if (e instanceof ElementoTarea t
-                    && t.getEstado() != Estado.COMPLETADO
-                    && t.getEstado() != Estado.CANCELADA) {
-                System.out.printf("  [%d] TAREA        | %s | %s | %s%n",
-                        i + 1, t.getTitulo(), t.getEstado(), t.getPrioridad());
-                hay = true;
-            } else if (e instanceof ElementoRecordatorio r) {
-                System.out.printf("  [%d] RECORDATORIO | %s | vence %s%n",
-                        i + 1, r.getTitulo(),
-                        r.getFechaLimite() != null ? r.getFechaLimite().format(fmt) : "sin fecha");
+            if (lista.get(i).esPendiente()) {
+                lista.get(i).imprimirPendiente(i + 1);
                 hay = true;
             }
         }

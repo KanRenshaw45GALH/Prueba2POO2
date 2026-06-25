@@ -66,6 +66,13 @@ public abstract class Elemento implements AccionesElemento {
     public List<Usuario> getColaboradores() { return colaboradores; }
     public void setColaboradores(List<Usuario> colaboradores) { this.colaboradores = colaboradores; }
 
+
+    // Metodos Propios:
+    public boolean esPendiente() {
+        return true;
+    }
+    public void imprimirPendiente(int numero) {}
+
     // Metodos heredados
     @Override
     public void crearElemento() {
