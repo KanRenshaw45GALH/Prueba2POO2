@@ -158,6 +158,17 @@ public abstract class Usuario implements AccionesUsuario {
         Elemento elementoEncontrado = null;
         Usuario usuarioEncontrado = null;
 
+        if (this.elemento.isEmpty()) {
+            System.out.println("No tienes elementos para compartir.");
+            return;
+        }
+
+        System.out.println("\n  TUS ELEMENTOS DISPONIBLES");
+        for (int i = 0; i < this.elemento.size(); i++) {
+            Elemento e = this.elemento.get(i);
+            System.out.println("  [ID " + e.getId() + "] " + e.getTitulo());
+        }
+
         System.out.print("Introduzca el ID del Elemento: ");
         int id = sc.nextInt();
         sc.nextLine();
@@ -184,6 +195,23 @@ public abstract class Usuario implements AccionesUsuario {
         }
         if (usuarioEncontrado == null) {
             System.out.println("El Usuario no existe.");
+            return;
+        }
+
+        // Verificar que el destino no sea el mismo dueño del elemento
+        if (elementoEncontrado.getUsuario() != null &&
+                elementoEncontrado.getUsuario().getEmail().equalsIgnoreCase(usuarioEncontrado.getEmail())) {
+            System.out.println("No puedes compartir un elemento contigo mismo.");
+            return;
+        }
+
+        // Verificar que el elemento no ha sido compartido previamente con este usuario
+        final Usuario destinoFinal = usuarioEncontrado;
+        boolean yaCompartido = elementoEncontrado.getColaboradores().stream()
+                .anyMatch(u -> u.getEmail().equalsIgnoreCase(destinoFinal.getEmail()));
+
+        if (yaCompartido) {
+            System.out.println("El elemento ya fue compartido con " + usuarioEncontrado.getNombreCompleto() + ".");
             return;
         }
 
