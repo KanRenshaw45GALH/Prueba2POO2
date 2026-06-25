@@ -272,7 +272,7 @@ public class EntradaDatos {
 
     //Permite el eliminar un elemento
     private void eliminar() {
-        if (!listar()) {
+        if (!listar()) {           //prueba
             return;
         }
         usuarioActivo.eliminarElemento();
