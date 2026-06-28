@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" styleClass="root" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.CerrarSesionControlador">
+   <children>
+      <VBox alignment="CENTER" prefHeight="250.0" prefWidth="400.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <Label styleClass="titulo" text="¿Cerrar Sesión?" />
+            <Label styleClass="label-campo" text="¿Estás seguro que deseas cerrar sesión?" />
+            <HBox alignment="CENTER" maxWidth="20000.0" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
+               <children>
+                  <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#confirmarCerrar" styleClass="btn-registrar" text="Sí, cerrar sesión" />
+                  <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#cancelar" styleClass="btn-registrar" text="No, volver" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
