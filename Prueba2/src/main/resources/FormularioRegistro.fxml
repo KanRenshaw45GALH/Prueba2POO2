@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.RegistroUsuarioControlador">
+   <children>
+      <HBox layoutX="441.0" layoutY="92.0" spacing="30.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="480.0" spacing="15.0" styleClass="card">
+               <children>
+                  <Label prefHeight="70.0" prefWidth="377.0" styleClass="titulo" text="         REGISTRAR USUARIO" />
+                  <GridPane prefHeight="281.0" prefWidth="474.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.2" minWidth="10.0" prefWidth="308.000048828125" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.39998779296872" minWidth="10.0" prefWidth="172.79995117187497" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label prefHeight="18.0" prefWidth="97.0" styleClass="label-campo" text="Usuario">
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin></Label>
+                        <Label prefHeight="22.0" prefWidth="146.0" styleClass="label-campo" text="Email" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="40.0" right="20.0" />
+                           </GridPane.margin></Label>
+                        <Label prefHeight="22.0" prefWidth="172.0" styleClass="label-campo" text="Password" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="40.0" right="20.0" />
+                           </GridPane.margin></Label>
+                        <Label prefHeight="23.0" prefWidth="299.0" styleClass="label-campo" text="   Fecha de nacimiento (DD / MM / AAAA)" GridPane.rowIndex="3" />
+                        <TextField fx:id="tfUsuario" prefHeight="26.0" prefWidth="110.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="tfEmail" prefHeight="26.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <PasswordField fx:id="pfPassword" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="tfFechaNacimiento" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </GridPane>
+                  <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#guardarUsuario" prefHeight="46.0" prefWidth="159.0" styleClass="btn-registrar" text="Guardar" />
+                  <Button mnemonicParsing="false" onAction="#abrirVerificar" prefHeight="47.0" prefWidth="480.0" styleClass="btn-registrar" text="¿Ya tienes cuenta? Verificar" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

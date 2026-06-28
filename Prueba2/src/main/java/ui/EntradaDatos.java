@@ -282,12 +282,34 @@ public class EntradaDatos {
         }
     }
 
-    //Permite el eliminar un elemento
     private void eliminar() {
-        if (!listar()) {           //prueba
+        if (!listar()) return;
+
+        System.out.print("Numero de ID del Elemento a eliminar (0 cancela): ");
+        int idx = leerInt() - 1;
+
+        List<Elemento> lista = usuarioActivo.getElemento();
+
+        if (idx < 0 || idx >= lista.size()) {
+            System.out.println("Cancelado.");
             return;
         }
-        usuarioActivo.eliminarElemento();
+
+        while (true) {
+            System.out.print("El Elemento sera eliminado.\nDesea continuar? (s/n): ");
+            String resp = sc.nextLine().trim().toLowerCase();
+
+            if (resp.equals("s")) {
+                lista.remove(idx); // Elimina el elemento
+                System.out.println("Elemento eliminado correctamente.");
+                break;
+            } else if (resp.equals("n")) {
+                System.out.println("Cancelado.");
+                break;
+            } else {
+                System.out.println("Respuesta invalida. Escribe s o n.");
+            }
+        }
     }
 
     //Permite el editar un elemento
