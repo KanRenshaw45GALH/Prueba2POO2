@@ -67,10 +67,10 @@ public class EntradaDatos {
             System.out.println("  [ 2  ] Agregar recordatorio");
             System.out.println("  [ 3  ] Ver pendientes");
             System.out.println("  [ 4  ] Completar tarea");
-            System.out.println("  [ 5  ] Eliminar elemento");
-            System.out.println("  [ 6  ] Ver todos los elementos");
-            System.out.println("  [ 7  ] Editar elemento");
-            System.out.println("  [ 8  ] Compartir elemento");
+            System.out.println("  [ 5  ] Ver todos los elementos");
+            System.out.println("  [ 6  ] Editar elemento");
+            System.out.println("  [ 7  ] Compartir elemento");
+            System.out.println("  [ 8  ] Eliminar elemento");
             System.out.println("  [ 9  ] Cambiar suscripcion");
             System.out.println("  [ 10 ] Informacion de usuario");
             System.out.println("  [ 11 ] Cerrar sesion");
@@ -82,10 +82,10 @@ public class EntradaDatos {
                 case 2  -> agregarRecordatorio();
                 case 3  -> verPendientes();
                 case 4  -> completar();
-                case 5  -> eliminar();
-                case 6  -> verTodos();
-                case 7  -> editarElemento();
-                case 8  -> compartirElemento();
+                case 5  -> verTodos();
+                case 6  -> editarElemento();
+                case 7  -> compartirElemento();
+                case 8  -> eliminar();
                 case 9  -> cambiarSuscripcion();
                 case 10 -> usuarioActivo.imprimirUsuario();
                 case 11 -> {
@@ -200,7 +200,6 @@ public class EntradaDatos {
 
     //Metodos de Accion:
     private void agregarTarea() {
-
         if (usuarioActivo instanceof UsuarioGeneral general) {
             if (!general.limiteTarea()) {
                 return;
@@ -213,13 +212,18 @@ public class EntradaDatos {
         tarea.setUsuario(usuarioActivo);
         tarea.crearElemento();
 
-        usuarioActivo.crearElemento(tarea);
+        usuarioActivo.guardarElemento(tarea);
+        if (usuarioActivo instanceof UsuarioGeneral general) {
+            general.getContadorElementos().put(
+                    "TAREA",
+                    general.getContadorElementos().get("TAREA") + 1
+            );
+        }
         System.out.println("Tarea creada exitosamente. ");
 
     }
     //Permite agregar un recordatorio por medio de ElementoRecordatorio
     private void agregarRecordatorio() {
-
         if (usuarioActivo instanceof UsuarioGeneral general) {
             if (!general.limiteRecordatorio()) return;
         }
@@ -230,7 +234,13 @@ public class EntradaDatos {
         rec.setUsuario(usuarioActivo);
         rec.crearElemento();
 
-        usuarioActivo.crearElemento(rec);
+        usuarioActivo.guardarElemento(rec);
+        if (usuarioActivo instanceof UsuarioGeneral general) {
+            general.getContadorElementos().put(
+                    "RECORDATORIO",
+                    general.getContadorElementos().get("RECORDATORIO") + 1
+            );
+        }
         rec.activarAlerta();
         System.out.println("  Recordatorio guardado exitosamente.");
     }
@@ -238,28 +248,20 @@ public class EntradaDatos {
     // ── VER / COMPLETAR / ELIMINAR / EDITAR ──────────────────
     //Muestra todos los elementos no terminados.
     private void verPendientes() {
-        System.out.println("\n  PENDIENTES \n" + LIN);
+        System.out.println("\n  PENDIENTES\n" + LIN);
         List<Elemento> lista = usuarioActivo.getElemento();
-        if (lista == null || lista.isEmpty()) { System.out.println("  Sin elementos."); return; }
-
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        boolean hay = false;
-        for (int i = 0; i < lista.size(); i++) {
-            Elemento e = lista.get(i);
-            if (e instanceof ElementoTarea t
-                    && t.getEstado() != Estado.COMPLETADO
-                    && t.getEstado() != Estado.CANCELADA) {
-                System.out.printf("  [%d] TAREA        | %s | %s | %s%n",
-                        i + 1, t.getTitulo(), t.getEstado(), t.getPrioridad());
-                hay = true;
-            } else if (e instanceof ElementoRecordatorio r) {
-                System.out.printf("  [%d] RECORDATORIO | %s | vence %s%n",
-                        i + 1, r.getTitulo(),
-                        r.getFechaLimite() != null ? r.getFechaLimite().format(fmt) : "sin fecha");
-                hay = true;
+        if (lista == null || lista.isEmpty()) {
+            System.out.println("  Sin elementos."); return;
+        }else {
+            boolean hay = false;
+            for (int i = 0; i < lista.size(); i++) {
+                if (lista.get(i).esPendiente()) {
+                    lista.get(i).imprimirPendiente(i + 1);
+                    hay = true;
+                }
             }
+            if (!hay) System.out.println("  Sin pendientes.");
         }
-        if (!hay) System.out.println("  Sin pendientes.");
     }
 
     //Permite cambiar el estado de un elemento Tarea
@@ -312,12 +314,10 @@ public class EntradaDatos {
 
     //Permite el editar un elemento
     private void editarElemento() {
-        if (!listar()) return;
-        System.out.print("  Numero de ID del Elemento a editar (0 cancela): ");
-        int idx = leerInt() - 1;
-        List<Elemento> lista = usuarioActivo.getElemento();
-        if (idx < 0 || idx >= lista.size()) { System.out.println("  Cancelado."); return; }
-        Elemento e = lista.get(idx);
+        if (!listar()) {
+            return;
+        }
+        usuarioActivo.editarElemento();
     }
 
     //Muestra todos los elementos actuales
@@ -331,88 +331,9 @@ public class EntradaDatos {
         }
     }
 
-    // ── COMPARTIR CON MULTIHILO ───────────────────────────────
+    // ── COMPARTIR ELEMENTO (sincronizado) ─────────────────────
     private void compartirElemento() {
-        // Mostrar solo elementos propios del usuario activo
-        List<Elemento> lista = usuarioActivo.getElemento();
-        List<Elemento> propios = new ArrayList<>();
-        if (lista != null) {
-            for (Elemento e : lista) {
-                if (e.getUsuario() != null
-                        && e.getUsuario().getEmail().equalsIgnoreCase(usuarioActivo.getEmail())) {
-                    propios.add(e);
-                }
-            }
-        }
-
-        if (propios.isEmpty()) {
-            System.out.println("  No tienes elementos propios para compartir.");
-            return;
-        }
-
-        System.out.println("\n  COMPARTIR ELEMENTO\n" + LIN);
-        for (int i = 0; i < propios.size(); i++) {
-            System.out.printf("  [%d] %s%n", i + 1, propios.get(i).getTitulo());
-        }
-        System.out.print("  Selecciona el ID del Elemento a compartir (0 cancela): ");
-        int idx = leerInt() - 1;
-        if (idx < 0 || idx >= propios.size()) { System.out.println("  Cancelado."); return; }
-        Elemento elementoACompartir = propios.get(idx);
-
-        // Usuarios disponibles distintos al activo
-        List<Usuario> otrosUsuarios = new ArrayList<>();
-        for (Usuario u : todosLosUsuarios) {
-            if (!u.getEmail().equalsIgnoreCase(usuarioActivo.getEmail())) {
-                otrosUsuarios.add(u);
-            }
-        }
-
-        if (otrosUsuarios.isEmpty()) {
-            System.out.println("  No hay otros usuarios registrados.");
-            System.out.println("  Vuelve al menu principal y registra otro usuario primero.");
-            return;
-        }
-
-        // Mostrar usuarios disponibles
-        System.out.println("  Usuarios disponibles:");
-        for (int i = 0; i < otrosUsuarios.size(); i++) {
-            System.out.printf("  [%d] %s (%s)%n",
-                    i + 1,
-                    otrosUsuarios.get(i).getNombreCompleto(),
-                    otrosUsuarios.get(i).getEmail());
-        }
-
-        // Seleccionar con cuántos compartir (uno o varios = multihilo)
-        System.out.print("  Con cuantos usuarios compartir? (1-" + otrosUsuarios.size() + "): ");
-        int cantidad = leerInt();
-        if (cantidad < 1 || cantidad > otrosUsuarios.size()) {
-            System.out.println("  Cantidad invalida. Cancelado.");
-            return;
-        }
-
-        // Un hilo por cada usuario destino, todos arrancan a la vez
-        List<Thread> hilos = new ArrayList<>();
-        for (int i = 0; i < cantidad; i++) {
-            Thread hilo = new Thread(
-                    new CompartirHilo(usuarioActivo, otrosUsuarios.get(i), elementoACompartir),
-                    "Compartir-" + (i + 1)
-            );
-            hilos.add(hilo);
-        }
-
-        System.out.println("\n  Ejecutando ");
-        try {
-            Thread.sleep(2000);
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        for (Thread h : hilos) h.start();
-        for (Thread h : hilos) {
-            try { h.join(); }
-            catch (InterruptedException e) { System.out.println(" interrumpido."); }
-        }
-        System.out.println("  Compartido finalizado .");
+        usuarioActivo.compartirElemento(todosLosUsuarios);
     }
 
     // ── CAMBIAR SUSCRIPCION ───────────────────────────────────

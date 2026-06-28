@@ -2,6 +2,7 @@ package modeloUsuario;
 import catalogo.Prioridad;
 import modeloElemento.Elemento;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -59,86 +60,97 @@ public abstract class Usuario implements AccionesUsuario {
 
 
 
-    // Metodos propios:
-    public void guardarElemento(List<Elemento> elementos, Elemento elemento) {
-        System.out.println("Elemento a guardar: " + elemento.getTitulo());
-
-
-        boolean yaExiste = elementos.stream().anyMatch(e -> e.getId() == elemento.getId());
+    //Metodos propios:
+    public void guardarElemento(Elemento elemento) {
+        boolean yaExiste = this.elemento.stream().anyMatch(e -> e.getId() == elemento.getId());
         if (yaExiste) {
             System.out.println("El elemento ya existe en la lista.");
+            return;
         } else {
-            elementos.add(elemento);
+            this.elemento.add(elemento);
             System.out.println("Elemento guardado correctamente.");
+            System.out.println("Elementos guardados: " + this.elemento.size());
         }
     }
 
-    public void eliminarElemento(List<Elemento> elementos, Elemento elemento) {
-        System.out.println("Elemento a eliminar: " + elemento.getTitulo());
-
-
-        boolean eliminado = elementos.removeIf(e -> e.getId() == elemento.getId());
-        if (!eliminado) {
-            System.out.println("El elemento no fue encontrado en la lista.");
-        } else {
-            System.out.println("Elemento eliminado correctamente.");
-        }
-    }
-
-    private void editarElemento(Elemento elemento) {
-
+    public void eliminarElemento() {
         Scanner sc = new Scanner(System.in);
-        try {
-            System.out.println("Elemento a editar: " + elemento.getTitulo());
-            System.out.println("Ingrese que opcion desea editar: ");
-            System.out.println("1. Editar titulo del elemento");
-            System.out.println("2. Editar descripcion del elemento");
-            System.out.println("3. Editar prioridad del elemento");
-            System.out.print("Opcion seleccionada: ");
+        System.out.println("Ingrese el ID del elemento a Eliminar: ");
+        int id = Integer.parseInt(sc.nextLine());
 
-            int opcion = Integer.parseInt(sc.nextLine().trim());
-
-            if (opcion == 1) {
-                System.out.print("Nuevo titulo: ");
-                String nuevoTitulo = sc.nextLine().trim();
-                if (nuevoTitulo.isEmpty()) {
-                    throw new IllegalArgumentException("El titulo no puede estar vacio");
-                }
-                elemento.setTitulo(nuevoTitulo);
-                System.out.println("El titulo fue modificado correctamente.");
-
-            } else if (opcion == 2) {
-                System.out.print("Nueva descripcion: ");
-                String nuevaDescripcion = sc.nextLine().trim();
-                elemento.setDescripcion(nuevaDescripcion);
-                System.out.println("La descripcion fue modificada correctamente.");
-
-            } else if (opcion == 3) {
-                System.out.println("Nueva prioridad: 1=ALTA, 2=MEDIA, 3=BAJA");
-                System.out.print("Ingrese la opcion: ");
-                int prioridad = Integer.parseInt(sc.nextLine().trim());
-                if (prioridad == 1) {
-                    elemento.setPrioridad(Prioridad.ALTA);
-                } else if (prioridad == 2) {
-                    elemento.setPrioridad(Prioridad.MEDIA);
-                } else {
-                    elemento.setPrioridad(Prioridad.BAJA);
-                }
-                System.out.println("La prioridad fue modificada correctamente.");
-
-            } else {
-                System.out.println("La opcion ingresada no es valida");
-            }
-            System.out.println("La edicion del elemento fue finalizada con exito.");
-
-        } catch (NumberFormatException e) {
-            System.out.println("El valor ingresado no es un numero valido.");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Ocurrio un error inesperado: " + e.getMessage());
+        boolean eliminado = this.elemento.removeIf(e -> e.getId() == id);
+        if (eliminado) {
+            System.out.println("Elemento eliminado correctamente.");
+        } else {
+            System.out.println("El elemento no fue encontrado en la lista.");
         }
+    }
+
+    public void editarElemento() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingrese el ID del elemento a editar: ");
+        int id = Integer.parseInt(sc.nextLine());
+
+        Elemento elementoEncontrado = null;
+        for (Elemento e : this.elemento) {
+            if (e.getId() == id) {
+                elementoEncontrado = e;
+                break;
+            }
+        }
+        if (elementoEncontrado == null) {
+            System.out.println("No existe un elemento con ese ID.");
+            return;
+        }
+                try {
+                    System.out.println("Elemento a encontrado: " + elementoEncontrado.getTitulo());
+                    System.out.println("Ingrese que opcion desea editar: ");
+                    System.out.println("1. [TITULO], 2.[DESCRIPCION], 3.[PRIORIDAD], 4.[FECHA ELEMENTO]");
+                    System.out.print("Opcion seleccionada: ");
+
+                    int opcion = Integer.parseInt(sc.nextLine().trim());
+
+                    if (opcion == 1) {
+                        System.out.print("Nuevo titulo: ");
+                        elementoEncontrado.setTitulo(sc.nextLine());
+                        System.out.println("El titulo fue modificado correctamente.");
+
+                    } else if (opcion == 2) {
+                        System.out.print("Nueva descripcion: ");
+                        elementoEncontrado.setDescripcion(sc.nextLine());
+                        System.out.println("La descripcion fue modificada correctamente.");
+
+                    } else if (opcion == 3) {
+                        System.out.println("Nueva prioridad: 1=ALTA, 2=MEDIA, 3=BAJA");
+                        System.out.print("Ingrese la opcion: ");
+                        int prioridad = Integer.parseInt(sc.nextLine());
+                        switch (prioridad) {
+                            case 1:
+                                elementoEncontrado.setPrioridad(Prioridad.ALTA);
+                                break;
+                            case 2:
+                                elementoEncontrado.setPrioridad(Prioridad.MEDIA);
+                                break;
+                            case 3:
+                                elementoEncontrado.setPrioridad(Prioridad.BAJA);
+                                break;
+                            default:
+                                System.out.println("Opcion no valida.");
+                        }
+                        System.out.println("Opcion no valida.");
+                    } else if (opcion == 4) {
+                        System.out.print("Ingrese la fecha: ");
+
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        elementoEncontrado.setFechaLimite(LocalDate.parse(sc.nextLine().trim(), formatter));
+                    }
+                    System.out.println("La prioridad fue modificada correctamente.");
+                    System.out.println("La edicion del elemento fue finalizada con exito.");
+                } catch (NumberFormatException e) {
+                    System.out.println("El valor ingresado no es un numero valido.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
     }
 
     public synchronized void compartirElemento(List<Usuario> usuarioList) {
@@ -146,11 +158,23 @@ public abstract class Usuario implements AccionesUsuario {
         Elemento elementoEncontrado = null;
         Usuario usuarioEncontrado = null;
 
-        System.out.print("Introduzca el nombre del Elemento: ");
-        String nombreElemento = sc.nextLine();
+        if (this.elemento.isEmpty()) {
+            System.out.println("No tienes elementos para compartir.");
+            return;
+        }
+
+        System.out.println("\n  TUS ELEMENTOS DISPONIBLES");
+        for (int i = 0; i < this.elemento.size(); i++) {
+            Elemento e = this.elemento.get(i);
+            System.out.println("  [ID " + e.getId() + "] " + e.getTitulo());
+        }
+
+        System.out.print("Introduzca el ID del Elemento: ");
+        int id = sc.nextInt();
+        sc.nextLine();
 
         for (Elemento e : this.elemento) {
-            if (e.getTitulo().equalsIgnoreCase(nombreElemento)) {
+            if (e.getId() == id) {
                 elementoEncontrado = e;
                 break;
             }
@@ -171,6 +195,23 @@ public abstract class Usuario implements AccionesUsuario {
         }
         if (usuarioEncontrado == null) {
             System.out.println("El Usuario no existe.");
+            return;
+        }
+
+        // Verificar que el destino no sea el mismo dueño del elemento
+        if (elementoEncontrado.getUsuario() != null &&
+                elementoEncontrado.getUsuario().getEmail().equalsIgnoreCase(usuarioEncontrado.getEmail())) {
+            System.out.println("No puedes compartir un elemento contigo mismo.");
+            return;
+        }
+
+        // Verificar que el elemento no ha sido compartido previamente con este usuario
+        final Usuario destinoFinal = usuarioEncontrado;
+        boolean yaCompartido = elementoEncontrado.getColaboradores().stream()
+                .anyMatch(u -> u.getEmail().equalsIgnoreCase(destinoFinal.getEmail()));
+
+        if (yaCompartido) {
+            System.out.println("El elemento ya fue compartido con " + usuarioEncontrado.getNombreCompleto() + ".");
             return;
         }
 
@@ -215,10 +256,10 @@ public abstract class Usuario implements AccionesUsuario {
     public void imprimirUsuario() {
         System.out.println(" ");
         // CORRECCIÓN: typos corregidos y se usa elemento.size() en lugar de "c"
-        System.out.println("El nombre del Usuario es: " + nombreCompleto
-                + " quien posee el correo electrónico: " + email);
+        System.out.println("El nombre del Usuario es: " + nombreCompleto + " quien posee el correo electrónico: " + email);
         System.out.println("La cantidad de elementos que posee el Usuario es: " + elemento.size());
     }
+
 }
 
 
