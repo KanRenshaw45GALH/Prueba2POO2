@@ -24,12 +24,17 @@ public class RegistroUsuarioControlador {
 
     @FXML
     private void guardarUsuario() {
+        try{
         UsuarioGeneral usuario = new UsuarioGeneral();
         usuario.setNombreCompleto(tfUsuario.getText());
         usuario.setEmail(tfEmail.getText());
         usuario.setPassword(pfPassword.getText());
         usuario.setEdad(Integer.parseInt(tfFechaNacimiento.getText()));
         listadoUsuarios.agregarUsuario(usuario);
+        System.out.println("Usuario agregado correctamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
