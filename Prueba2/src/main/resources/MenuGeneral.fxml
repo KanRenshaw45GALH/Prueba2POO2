@@ -104,7 +104,7 @@
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font></Button>
             <Region prefHeight="100.0" prefWidth="47.0" />
-            <Button fx:id="BtnSuscripcion" mnemonicParsing="false" onAction="#cambiarSuscripcion" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: #ffffff;" text="CAMBIAR SUSCRIPCION" accessibleHelp="#cambiarSuscripcion">
+            <Button fx:id="BtnSuscripcion" mnemonicParsing="false" onAction="#cambiarSuscripcion" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: #ffffff;" text="CAMBIAR SUSCRIPCION" >
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font></Button>

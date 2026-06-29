@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#ffffff,#626873);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:controller="Controlador.AgregarRecordatorioControlador" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#ffffff,#626873);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Region layoutY="16.0" prefHeight="358.0" prefWidth="600.0" style="-fx-background-color: linear-gradient( #5C2173,#A900F2); -fx-background-radius: 30;" />
        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" prefHeight="61.0" prefWidth="608.0" style="-fx-border-color: #ffffff; -fx-background-color: #ffffff;" text="CREANDO RECORDATORIO" textAlignment="CENTER">
@@ -41,13 +41,13 @@
       </Label>
       <DatePicker fx:id="DatePickerFechaLimite" layoutX="240.0" layoutY="291.0" prefHeight="36.0" prefWidth="224.0" />
 
-      <Button fx:id="BtnGuardar" alignment="CENTER" layoutX="105.0" layoutY="394.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="167.0" style="-fx-background-radius: 30;" text="Guardar">
+      <Button fx:id="BtnGuardar" onAction="#guardar" alignment="CENTER" layoutX="105.0" layoutY="394.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="167.0" style="-fx-background-radius: 30;" text="Guardar">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="28.0" />
          </font>
       </Button>
 
-      <Button fx:id="BtnVolver" alignment="CENTER" layoutX="334.0" layoutY="394.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="167.0" style="-fx-background-radius: 30;" text="Volver">
+      <Button fx:id="BtnVolver" onAction="#volver" alignment="CENTER" layoutX="334.0" layoutY="394.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="167.0" style="-fx-background-radius: 30;" text="Volver">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="28.0" />
          </font>
