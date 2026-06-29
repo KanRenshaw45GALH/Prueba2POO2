@@ -38,7 +38,7 @@
                         <Insets right="40.0" />
                      </padding>
                   </GridPane>
-                  <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#verificarUsuario" prefHeight="46.0" prefWidth="159.0" styleClass="btn-registrar" text="Verificar" />
+                  <Button fx:id="BtnVerificar" maxWidth="20000.0" mnemonicParsing="false" onAction="#verificarUsuario" prefHeight="46.0" prefWidth="159.0" styleClass="btn-registrar" text="Verificar" />
                </children>
             </VBox>
          </children>

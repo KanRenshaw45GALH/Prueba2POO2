@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#ffffff,#626873);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Region layoutY="16.0" prefHeight="358.0" prefWidth="600.0" style="-fx-background-color: linear-gradient( #5C2173,#A900F2); -fx-background-radius: 30;" />
+       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" prefHeight="61.0" prefWidth="608.0" style="-fx-border-color: #ffffff; -fx-background-color: #ffffff;" text="CREANDO RECORDATORIO" textAlignment="CENTER">
+           <font>
+               <Font name="Berlin Sans FB Demi Bold" size="28.0" />
+           </font>
+       </Label>
+
+       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="82.0" prefHeight="44.0" prefWidth="197.0" style="-fx-border-color: #ffffff; -fx-border-radius: 60;" text="Titulo:" textAlignment="CENTER" textFill="WHITE">
+           <font>
+               <Font name="Berlin Sans FB Demi Bold" size="28.0" />
+           </font>
+       </Label>
+       <TextField fx:id="TextTitulo" layoutX="240.0" layoutY="86.0" prefHeight="36.0" prefWidth="159.0" />
+
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="136.0" prefHeight="44.0" prefWidth="197.0" style="-fx-border-color: #ffffff; -fx-border-radius: 20;" text="Descripcion:" textAlignment="CENTER" textFill="WHITE">
+             <font>
+                <Font name="Berlin Sans FB Demi Bold" size="28.0" />
+            </font>
+        </Label>
+        <TextArea fx:id="TextDescripcion" layoutX="240.0" layoutY="136.0" prefHeight="92.0" prefWidth="324.0" />
+
+       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="235.0" prefHeight="44.0" prefWidth="197.0" style="-fx-border-color: #ffffff; -fx-border-radius: 60;" text="Prioridad:" textAlignment="CENTER" textFill="WHITE">
+           <font>
+               <Font name="Berlin Sans FB Demi Bold" size="28.0" />
+           </font>
+       </Label>
+       <ComboBox fx:id="ComboBoxPrioridad" layoutX="240.0" layoutY="244.0" prefWidth="150.0" />
+
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="287.0" prefHeight="44.0" prefWidth="197.0" style="-fx-border-color: #ffffff; -fx-border-radius: 30;" text="Fecha Limite:" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="28.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="DatePickerFechaLimite" layoutX="240.0" layoutY="291.0" prefHeight="36.0" prefWidth="224.0" />
+
+      <Button fx:id="BtnGuardar" alignment="CENTER" layoutX="105.0" layoutY="394.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="167.0" style="-fx-background-radius: 30;" text="Guardar">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="28.0" />
+         </font>
+      </Button>
+
+      <Button fx:id="BtnVolver" alignment="CENTER" layoutX="334.0" layoutY="394.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="167.0" style="-fx-background-radius: 30;" text="Volver">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="28.0" />
+         </font>
+      </Button>
+
+
+   </children>
+</Pane>

@@ -224,30 +224,6 @@ public abstract class Usuario implements AccionesUsuario {
 
     // Metodos heredados
     @Override
-    public void verificarUsuario() {
-        System.out.println("\nPor favor verifique su usuario.");
-        Scanner sc = new Scanner(System.in);
-        try {
-            System.out.print("Ingrese su Nombre completo: ");
-            setNombreCompleto(sc.nextLine());
-            System.out.print("Ingrese su Email: ");
-            setEmail(sc.nextLine());
-
-            // CORRECCIÓN: se guarda la password ingresada en variable separada antes de comparar
-            System.out.print("Ingrese su Password: ");
-            String passwordIngresada = sc.nextLine();
-            if (passwordIngresada.equals(getPassword())) {
-                System.out.println("El usuario se encuentra verificado.");
-            } else {
-                System.out.println("El usuario NO se encuentra verificado. Password incorrecto.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error durante la verificacion.");
-        }
-    }
-
-    @Override
     public void crearElemento(Elemento elemento) {
         this.elemento.add(elemento);
     }

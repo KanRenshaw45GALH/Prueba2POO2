@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:controller="Controlador.MenuGeneralControlador" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="584.0" style="-fx-background-color: linear-gradient(#39D353,#ffffff);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Region layoutY="128.0" prefHeight="331.0" prefWidth="584.0" style="-fx-background-radius: 45; -fx-background-color: linear-gradient(#0B2D5C, #1C72B3);">
+         <effect>
+            <InnerShadow />
+         </effect></Region>
+
+      <Label alignment="CENTER" layoutX="-3.0" maxWidth="1.7976931348623157E308" prefHeight="79.0" prefWidth="588.0" text="MENU DE REGISTRO" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Berlin Sans FB Bold" size="41.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="-3.0" layoutY="66.0" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="588.0" text="DE ELEMENTOS" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Berlin Sans FB Bold" size="41.0" />
+         </font>
+      </Label>
+
+      <Button fx:id="BtnSalir" alignment="CENTER" layoutX="152.0" layoutY="485.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="286.0" style="-fx-background-color: linear-gradient(#0E7490, #39D353); -fx-background-radius: 20;" text="SALIR" textAlignment="CENTER" textFill="WHITE" onAction="#salir">
+         <font>
+            <Font name="Bookman Old Style Bold Italic" size="40.0" />
+         </font>
+         <effect>
+            <DropShadow blurType="TWO_PASS_BOX" radius="33.980000000000004" spread="0.04" width="116.92">
+               <color>
+                  <Color opacity="0.6291793584823608" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
+
+
+      <HBox alignment="CENTER" layoutX="20.0" layoutY="158.0" prefHeight="63.0" prefWidth="550.0">
+         <children>
+            <Button fx:id="BtnTarea" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="AGREGAR TAREA" onAction="#agregarTarea">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+               </font></Button>
+
+            <Region prefHeight="100.0" prefWidth="47.0" />
+
+            <Button fx:id="BtnRecordatorio" mnemonicParsing="false" prefHeight="38.0" prefWidth="235.0" style="-fx-background-color: #ffffff;" text="AGREGAR RECORDATORIO" onAction="#agregarRecordatorio">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+               </font></Button>
+
+            <Region prefHeight="100.0" prefWidth="47.0" />
+
+            <Button fx:id="BtnElementosCreados" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" text="ELEMENTOS CREADOS" onAction="#verTodos">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+               </font></Button>
+         </children>
+      </HBox>
+
+      <HBox alignment="CENTER" layoutX="95.0" layoutY="228.0" prefHeight="53.0" prefWidth="400.0">
+         <children>
+            <Button fx:id="BtnPendientes" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="VER PENDIENTES" onAction="#verPendientes">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+               </font></Button>
+
+            <Region prefHeight="100.0" prefWidth="47.0" />
+
+            <Button fx:id="BtnCompletarTarea" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="COMPLETAR TAREA" onAction="#completarTareas">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+               </font></Button>
+         </children>
+      </HBox>
+
+      <HBox alignment="CENTER" layoutX="27.0" layoutY="298.0" prefHeight="53.0" prefWidth="536.0">
+         <children>
+            <Button fx:id="BtnEditar" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="EDITAR ELEMENTO" onAction="#editarElemento">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+               </font></Button>
+            <Region prefHeight="100.0" prefWidth="47.0" />
+            <Button fx:id="BtnCompartir" mnemonicParsing="false" prefHeight="38.0" prefWidth="215.0" style="-fx-background-color: #ffffff;" text="COMPARTIR ELEMENTO" onAction="#compartirElemento">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+               </font></Button>
+            <Region prefHeight="100.0" prefWidth="47.0" />
+            <Button fx:id="BtnEliminar" mnemonicParsing="false" prefHeight="38.0" prefWidth="217.0" style="-fx-background-color: #ffffff;" text="ELIMINAR ELEMENTO" onAction="#eliminarElemento">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+               </font></Button>
+         </children>
+      </HBox>
+
+      <HBox alignment="CENTER" layoutX="38.0" layoutY="363.0" prefHeight="53.0" prefWidth="494.0">
+         <children>
+            <Region prefHeight="100.0" prefWidth="47.0" />
+            <Button fx:id="BtnInformacionUsuario" mnemonicParsing="false" prefHeight="38.0" prefWidth="211.0" style="-fx-background-color: #ffffff;" text="INFORMACION DE USUARIO" onAction="#imprimirUsuario">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+               </font></Button>
+            <Region prefHeight="100.0" prefWidth="47.0" />
+            <Button fx:id="BtnSuscripcion" mnemonicParsing="false" onAction="#cambiarSuscripcion" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: #ffffff;" text="CAMBIAR SUSCRIPCION" accessibleHelp="#cambiarSuscripcion">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+               </font></Button>
+            <Region prefHeight="100.0" prefWidth="47.0" />
+         </children>
+      </HBox>
+
+
+   </children>
+</Pane>
