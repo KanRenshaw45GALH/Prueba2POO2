@@ -132,4 +132,10 @@ public abstract class Elemento implements AccionesElemento {
 
     public void imprimirPendiente(int numero) {}
 
+    @Override
+    public String toString() {
+        return "[" + getClass().getSimpleName() + "] " + getTitulo();
+    }
+
+
 }
