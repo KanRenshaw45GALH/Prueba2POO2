@@ -1,0 +1,67 @@
+package Controlador;
+
+import estrategia.PagoEfectivo;
+import estrategia.PagoTarjeta;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import modeloUsuario.Usuario;
+import modeloUsuario.UsuarioPremium;
+
+public class CambiarSuscripcionControlador {
+
+    @FXML private Label lblMonto;
+    @FXML private Label lblFechaSuscripcion;
+    @FXML private Label lblFechaLimite;
+    @FXML private Label lblMensaje;
+
+    private UsuarioPremium usuarioPremium;
+
+    public void setUsuario(Usuario usuario) {
+        if (usuario instanceof UsuarioPremium) {
+            this.usuarioPremium = (UsuarioPremium) usuario;
+            cargarDatos();
+        } else {
+            lblMensaje.setText("Esta opcion solo esta disponible para usuarios Premium");
+            lblMensaje.setStyle("-fx-text-fill: #e53935;");
+        }
+    }
+
+    private void cargarDatos() {
+        lblMonto.setText("$" + usuarioPremium.getPagarSuscripcion());
+        lblFechaSuscripcion.setText(String.valueOf(usuarioPremium.getFechaSuscripcion()));
+        lblFechaLimite.setText(String.valueOf(usuarioPremium.getFechaLimiteSuscripcion()));
+    }
+
+    @FXML
+    private void pagarConTarjeta() {
+        if (usuarioPremium == null) {
+            return;
+        }
+        usuarioPremium.setEstrategiaPago(new PagoTarjeta());
+        confirmarPago();
+    }
+
+    @FXML
+    private void pagarConEfectivo() {
+        if (usuarioPremium == null) {
+            return;
+        }
+        usuarioPremium.setEstrategiaPago(new PagoEfectivo());
+        confirmarPago();
+    }
+
+    private void confirmarPago() {
+        usuarioPremium.getEstrategiaPago().pagar(usuarioPremium.getPagarSuscripcion());
+        lblMensaje.setText("Suscripcion pagada correctamente.");
+        lblMensaje.setStyle("-fx-text-fill: #2e7d32;");
+    }
+
+    @FXML
+    private void volver(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+}

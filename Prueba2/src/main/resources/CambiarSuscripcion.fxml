@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="500.0" styleClass="root" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.CambiarSuscripcionControlador">
+    <children>
+        <VBox prefHeight="550.0" prefWidth="500.0" spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <Label styleClass="titulo" text="Cambiar Suscripcion" />
+
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" styleClass="card">
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                    <children>
+                        <Label styleClass="label-campo" text="Monto a Pagar" />
+                        <Label fx:id="lblMonto" />
+                    </children>
+                </VBox>
+
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" styleClass="card">
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                    <children>
+                        <Label styleClass="label-campo" text="Fecha de Suscripcion" />
+                        <Label fx:id="lblFechaSuscripcion" />
+                    </children>
+                </VBox>
+
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" styleClass="card">
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                    <children>
+                        <Label styleClass="label-campo" text="Fecha Limite" />
+                        <Label fx:id="lblFechaLimite" />
+                    </children>
+                </VBox>
+
+                <Label styleClass="label-campo" text="Seleccione su metodo de pago:" />
+                <HBox alignment="CENTER" maxWidth="20000.0" spacing="16.0">
+                    <children>
+                        <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#pagarConTarjeta" styleClass="btn-registrar" text="Pagar con Tarjeta" HBox.hgrow="ALWAYS" />
+                        <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#pagarConEfectivo" styleClass="btn-registrar" text="Pagar con Efectivo" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+
+                <Label fx:id="lblMensaje" styleClass="label-campo" />
+
+                <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#volver" styleClass="btn-registrar" text="Volver" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
