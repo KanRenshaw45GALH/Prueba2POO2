@@ -14,7 +14,10 @@ public class ListadoUsuarios {
             }
         }
         return null;
+    }
 
+    public void agregarUsuario(Usuario usuario) {
+        usuarios.add(usuario);
     }
 
 

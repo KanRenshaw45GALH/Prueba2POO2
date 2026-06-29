@@ -7,8 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import modeloUsuario.ListadoUsuarios;
 import modeloUsuario.Usuario;
-
 import java.io.IOException;
 
 public class MenuGeneralControlador {
@@ -31,14 +31,37 @@ public class MenuGeneralControlador {
         this.usuarioActivo = usuario;
     }
 
+    ListadoUsuarios listadoUsuarios;
+    public void setListadoUsuarios(ListadoUsuarios listadoUsuarios){
+        this.listadoUsuarios = listadoUsuarios;
+    }
+
 
 
     @FXML
-    private void agregarTarea(ActionEvent event) {
+    private void agregarTarea(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AgregarTarea.fxml"));
+        Parent root = loader.load();
+
+        AgregarTareaControlador controlador = loader.getController();
+        controlador.setUsuarioActivo(usuarioActivo);
+
+        Stage stage = (Stage) BtnTarea.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
 
     }
     @FXML
-    private void agregarRecordatorio(ActionEvent event) {
+    private void agregarRecordatorio(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AgregarRecordatorio.fxml"));
+        Parent root = loader.load();
+
+        AgregarRecordatorioControlador controlador = loader.getController();
+        controlador.setUsuarioActivo(usuarioActivo);
+
+        Stage stage = (Stage) BtnRecordatorio.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
 
     }
     @FXML
@@ -63,7 +86,16 @@ public class MenuGeneralControlador {
 
     }
     @FXML
-    private void editarElemento(ActionEvent event) {
+    private void editarElemento(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditarElemento.fxml"));
+        Parent root = loader.load();
+
+        EditarElementoControlador controlador = loader.getController();
+        controlador.setUsuarioActivo(usuarioActivo);
+
+        Stage stage = (Stage) BtnEditar.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
 
     }
     @FXML

@@ -78,11 +78,6 @@ public class UsuarioGeneral extends Usuario {
 
     // Metodos heredados
     @Override
-    public void verificarUsuario() {
-        super.verificarUsuario();
-    }
-
-    @Override
     public void crearElemento(Elemento elemento) {
         super.crearElemento(elemento);
 

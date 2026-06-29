@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -18,13 +19,28 @@ public class VerificarUsuarioControlador {
 
     @FXML private TextField tfUsuarioVerificar;
     @FXML private PasswordField pfPasswordVerificar;
-    Usuario usuario;
-    ListadoUsuarios listadoUsuarios = new ListadoUsuarios();
+    private Usuario usuario;
+    private ListadoUsuarios listadoUsuarios;
+
+
+    //Metodos:
+    public void setListadoUsuarios(ListadoUsuarios listadoUsuarios){
+        this.listadoUsuarios = listadoUsuarios;
+    }
 
     @FXML
     private void verificarUsuario(ActionEvent event) throws IOException {
         String correo = tfUsuarioVerificar.getText();
         String password = pfPasswordVerificar.getText();
+
+        if(correo.isBlank() || password.isBlank()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Debe completar todos los campos.");
+            alert.showAndWait();
+            return;
+        }
 
          usuario = listadoUsuarios.iniciarSesion(correo, password);
 
@@ -33,12 +49,18 @@ public class VerificarUsuarioControlador {
             Parent root = loader.load();
             MenuGeneralControlador controlador = loader.getController();
             controlador.setUsuario(usuario);
+            controlador.setListadoUsuarios(listadoUsuarios);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
 
         }else{
             //Lanza error
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setHeaderText(null);
+            alerta.setTitle("Error");
+            alerta.setContentText("Correo o contraseña incorrectos.");
+            alerta.showAndWait();
 
         }
 
