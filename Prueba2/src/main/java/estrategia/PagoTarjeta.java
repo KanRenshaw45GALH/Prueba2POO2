@@ -1,6 +1,6 @@
 package estrategia;
 
-public class PagoEfectivo implements EstrategiaPago {
+public class PagoTarjeta implements EstrategiaPago {
 
     private String numeroTarjeta;
     private String cvv;

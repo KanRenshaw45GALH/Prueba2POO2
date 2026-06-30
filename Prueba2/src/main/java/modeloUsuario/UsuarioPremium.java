@@ -1,6 +1,6 @@
 package modeloUsuario;
 import estrategia.EstrategiaPago;
-import estrategia.PagoEfectivo;
+import estrategia.PagoTarjeta;
 import estrategia.PagoBitcoin;
 import modeloElemento.Elemento;
 import java.time.LocalDate;
@@ -59,7 +59,7 @@ public class UsuarioPremium extends Usuario {
                 setEstrategiaPago(new PagoBitcoin());
                 break;
             case 2:
-                setEstrategiaPago(new PagoEfectivo());
+                setEstrategiaPago(new PagoTarjeta());
                 break;
             default:
                 System.out.println("Metodo de pago invalido.");

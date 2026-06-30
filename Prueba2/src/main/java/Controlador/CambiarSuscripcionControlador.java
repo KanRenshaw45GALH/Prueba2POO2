@@ -1,6 +1,6 @@
 package Controlador;
 
-import estrategia.PagoEfectivo;
+import estrategia.PagoTarjeta;
 import estrategia.PagoBitcoin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -62,7 +62,7 @@ public class CambiarSuscripcionControlador {
         if (usuarioPremium == null) {
             return;
         }
-        usuarioPremium.setEstrategiaPago(new PagoEfectivo());
+        usuarioPremium.setEstrategiaPago(new PagoTarjeta());
         confirmarPago();
     }
 
