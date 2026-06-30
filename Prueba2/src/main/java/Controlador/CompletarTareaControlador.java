@@ -46,7 +46,6 @@ public class CompletarTareaControlador {
         for (int i = 0; i < lista.size(); i++) {
             Elemento e = lista.get(i);
             if (e instanceof ElementoTarea tarea) {
-                // Solo mostrar tareas que NO estén completadas ni canceladas
                 if (tarea.getEstado() != Estado.COMPLETADO && tarea.getEstado() != Estado.CANCELADA) {
                     items.add((i + 1) + ". [" + tarea.getEstado() + "] " + tarea.getTitulo());
                     hayTareas = true;
@@ -74,15 +73,15 @@ public class CompletarTareaControlador {
             return;
         }
 
-        // Extraer el índice real de la lista original (número al inicio - 1)
+
         int indiceReal = Integer.parseInt(seleccionada.split("\\.")[0]) - 1;
         Elemento elemento = lista.get(indiceReal);
 
         if (elemento instanceof ElementoTarea tarea) {
             tarea.setEstado(Estado.COMPLETADO);
-            lblMensaje.setText("✔ Tarea completada: " + tarea.getTitulo());
+            lblMensaje.setText("Tarea completada: " + tarea.getTitulo());
             lblMensaje.setStyle("-fx-text-fill: #2e7d32;");
-            cargarLista(); // Refrescar la lista
+            cargarLista();
         }
     }
 
@@ -93,7 +92,7 @@ public class CompletarTareaControlador {
 
         MenuGeneralControlador controlador = loader.getController();
         controlador.setUsuario(usuarioActivo);
-        controlador.setListadoUsuarios(null); // Si no tenés listado aquí, se pasa null
+        controlador.setListadoUsuarios(null);
 
         Stage stage = (Stage) BtnVolver.getScene().getWindow();
         stage.setScene(new Scene(root));

@@ -82,8 +82,16 @@ public class MenuGeneralControlador {
 
     }
     @FXML
-    private void completarTareas(ActionEvent event) {
+    private void completarTareas(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CompletarTarea.fxml"));
+        Parent root = loader.load();
 
+        CompletarTareaControlador controlador = loader.getController();
+        controlador.setUsuario(usuarioActivo);
+
+        Stage stage = (Stage) BtnCompletarTarea.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
     @FXML
     private void editarElemento(ActionEvent event) throws IOException {
@@ -99,9 +107,18 @@ public class MenuGeneralControlador {
 
     }
     @FXML
-    private void compartirElemento(ActionEvent event) {
+    private void compartirElemento(ActionEvent event) throws IOException {
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CompartirElemento.fxml"));
+        Parent root = loader.load();
 
+        CompartirElementoControlador controlador = loader.getController();
+        controlador.setUsuario(usuarioActivo);
+        controlador.setListadoUsuarios(listadoUsuarios);
+
+        Stage stage = (Stage) BtnCompartir.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
     @FXML
     private void eliminarElemento(ActionEvent event) throws IOException {
