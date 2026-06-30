@@ -1,0 +1,42 @@
+package DAOs;
+import conexionDB.Conexion;
+import modeloUsuario.UsuarioPremium;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class UsuarioPremiumDAO {
+
+    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+    public boolean insertar(UsuarioPremium usuario) {
+
+        int idGenerado = usuarioDAO.insertarUsuarioBase(usuario);
+
+        if (idGenerado == -1) {
+            return false;
+        }
+
+        String sql = """
+                INSERT INTO UsuarioPremium
+                (Id_Usuario, Fecha_Suscripcion, Fecha_Limite)
+                VALUES (?, ?, ?)
+                """;
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idGenerado);
+            ps.setDate(2, java.sql.Date.valueOf(usuario.getFechaSuscripcion()));
+            ps.setDate(3, java.sql.Date.valueOf(usuario.getFechaLimiteSuscripcion()));
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+}
