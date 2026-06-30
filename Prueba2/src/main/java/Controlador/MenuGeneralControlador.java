@@ -149,6 +149,7 @@ public class MenuGeneralControlador {
         Parent root = loader.load();
 
         CerrarSesionControlador controlador = loader.getController();
+        controlador.setUsuario(usuarioActivo);
 
         Stage stage = (Stage) BtnSalir.getScene().getWindow();
         stage.setScene(new Scene(root));

@@ -15,7 +15,11 @@ import java.io.IOException;
 public class CerrarSesionControlador {
 
     @FXML private Button BtnVolver;
-    Usuario usuarioActivo;
+    private Usuario usuarioActivo;
+    public void setUsuario(Usuario usuario) {
+        this.usuarioActivo = usuario;
+    }
+
 
     @FXML
     private void confirmarCerrar(ActionEvent event) {

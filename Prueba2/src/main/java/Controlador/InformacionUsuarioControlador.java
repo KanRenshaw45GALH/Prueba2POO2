@@ -22,6 +22,8 @@ public class InformacionUsuarioControlador {
     Usuario usuarioActivo;
 
     public void setUsuario(Usuario usuario) {
+        this.usuarioActivo = usuario;
+
         lblNombre.setText(usuario.getNombreCompleto());
         lblEdad.setText(String.valueOf(usuario.getEdad()));
         lblCorreo.setText(usuario.getEmail());

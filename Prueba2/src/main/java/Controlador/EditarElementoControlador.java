@@ -42,7 +42,7 @@ public class EditarElementoControlador {
     @FXML
     private void cargarElementosAlmacenados(ActionEvent event) {
         Elemento elemento = ComboBoxElementosAlmacenados.getValue();
-        if (elemento != null) {
+        if (elemento == null) {
             return;
         }
 

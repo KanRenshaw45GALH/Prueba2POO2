@@ -24,11 +24,10 @@ public class AgregarRecordatorioControlador {
     @FXML private Button BtnVolver;
 
     private Usuario usuarioActivo;
-
-    //Metodos:
     public void setUsuarioActivo(Usuario usuario) {
         this.usuarioActivo = usuario;
     }
+
     @FXML
     public void initialize(){
         ComboBoxPrioridad.getItems().setAll(Prioridad.values());

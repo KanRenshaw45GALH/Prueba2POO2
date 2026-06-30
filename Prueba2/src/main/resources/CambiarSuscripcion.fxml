@@ -47,8 +47,8 @@
                 <Label styleClass="label-campo" text="Seleccione su metodo de pago:" />
                 <HBox alignment="CENTER" maxWidth="20000.0" spacing="16.0">
                     <children>
-                        <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#pagarConTarjeta" styleClass="btn-registrar" text="Pagar con Tarjeta" HBox.hgrow="ALWAYS" />
-                        <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#pagarConEfectivo" styleClass="btn-registrar" text="Pagar con Efectivo" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnTarjeta" maxWidth="20000.0" mnemonicParsing="false" onAction="#pagarConTarjeta" styleClass="btn-registrar" text="Pagar con Tarjeta" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnEfectivo" maxWidth="20000.0" mnemonicParsing="false" onAction="#pagarConEfectivo" styleClass="btn-registrar" text="Pagar con Efectivo" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
 
