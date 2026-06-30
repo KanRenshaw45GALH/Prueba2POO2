@@ -1,6 +1,5 @@
 package ui;
 import catalogo.Estado;
-import estrategia.PagoEfectivo;
 import modeloElemento.ElementoTarea;
 import modeloElemento.ElementoRecordatorio;
 import modeloElemento.Elemento;
@@ -8,8 +7,7 @@ import modeloUsuario.Usuario;
 import modeloUsuario.UsuarioGeneral;
 import modeloUsuario.UsuarioPremium;
 import modeloUsuario.GestorUsuario;
-import estrategia.PagoTarjeta;
-import hilos.CompartirHilo;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.List;
@@ -17,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class EntradaDatos {
 

@@ -1,7 +1,7 @@
 package modeloUsuario;
 import estrategia.EstrategiaPago;
 import estrategia.PagoEfectivo;
-import estrategia.PagoTarjeta;
+import estrategia.PagoBitcoin;
 import modeloElemento.Elemento;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -56,7 +56,7 @@ public class UsuarioPremium extends Usuario {
         int opcion = Integer.parseInt(sc.nextLine());
         switch (opcion) {
             case 1:
-                setEstrategiaPago(new PagoTarjeta());
+                setEstrategiaPago(new PagoBitcoin());
                 break;
             case 2:
                 setEstrategiaPago(new PagoEfectivo());
