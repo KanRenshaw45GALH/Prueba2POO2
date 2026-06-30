@@ -4,19 +4,27 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import modeloElemento.Elemento;
 import modeloElemento.ElementoTarea;
 import modeloUsuario.Usuario;
+
+import java.io.IOException;
 import java.util.List;
 
 public class EliminarElementoControlador {
 
     @FXML private ListView<String> listaElementos;
     @FXML private Label lblMensaje;
+    @FXML private Button BtnEliminar;
+    @FXML private Button BtnVolver;
 
     private Usuario usuarioActivo;
     private List<Elemento> lista;
@@ -61,8 +69,15 @@ public class EliminarElementoControlador {
     }
 
     @FXML
-    private void volver(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+    private void volver(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuGeneral.fxml"));
+        Parent root = loader.load();
+
+        MenuGeneralControlador controlador = loader.getController();
+        controlador.setUsuario(usuarioActivo);
+
+        Stage stage = (Stage) BtnVolver.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

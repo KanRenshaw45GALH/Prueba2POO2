@@ -6,9 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import modeloUsuario.Usuario;
+
+import java.io.IOException;
 
 public class CerrarSesionControlador {
+
+    @FXML private Button BtnVolver;
+    Usuario usuarioActivo;
 
     @FXML
     private void confirmarCerrar(ActionEvent event) {
@@ -20,6 +27,7 @@ public class CerrarSesionControlador {
             // Abre el MenuBienvenida
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuBienvenida.fxml"));
             Parent root = loader.load();
+
             Stage stageBienvenida = new Stage();
             stageBienvenida.setTitle("Gestor de Tareas y Recordatorios");
             stageBienvenida.setScene(new Scene(root, 640, 480));
@@ -30,8 +38,16 @@ public class CerrarSesionControlador {
     }
 
     @FXML
-    private void cancelar(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+    private void cancelar(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuGeneral.fxml"));
+        Parent root = loader.load();
+
+        MenuGeneralControlador controlador = loader.getController();
+        controlador.setUsuario(usuarioActivo);
+
+        Stage stage = (Stage) BtnVolver.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
+
 }

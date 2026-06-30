@@ -101,6 +101,7 @@ public class MenuGeneralControlador {
     @FXML
     private void compartirElemento(ActionEvent event) {
 
+
     }
     @FXML
     private void eliminarElemento(ActionEvent event) throws IOException {
@@ -116,15 +117,43 @@ public class MenuGeneralControlador {
 
     }
     @FXML
-    private void imprimirUsuario(ActionEvent event) {
+    private void imprimirUsuario(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/InformacionUsuario.fxml"));
+        Parent root = loader.load();
+
+        InformacionUsuarioControlador controlador = loader.getController();
+        controlador.setUsuario(usuarioActivo);
+
+        Stage stage = (Stage) BtnInformacionUsuario.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+
 
     }
     @FXML
-    private void cambiarSuscripcion(ActionEvent event) {
+    private void cambiarSuscripcion(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CambiarSuscripcion.fxml"));
+        Parent root = loader.load();
+
+        CambiarSuscripcionControlador controlador = loader.getController();
+        controlador.setUsuario(usuarioActivo);
+
+        Stage stage = (Stage) BtnSuscripcion.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
 
     }
     @FXML
-    private void salir(ActionEvent event) {
+    private void salir(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CerrarSesion.fxml"));
+        Parent root = loader.load();
+
+        CerrarSesionControlador controlador = loader.getController();
+
+        Stage stage = (Stage) BtnSalir.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+
 
     }
 

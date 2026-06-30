@@ -4,11 +4,16 @@ import estrategia.PagoEfectivo;
 import estrategia.PagoTarjeta;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import modeloUsuario.Usuario;
 import modeloUsuario.UsuarioPremium;
+
+import java.io.IOException;
 
 public class CambiarSuscripcionControlador {
 
@@ -16,6 +21,7 @@ public class CambiarSuscripcionControlador {
     @FXML private Label lblFechaSuscripcion;
     @FXML private Label lblFechaLimite;
     @FXML private Label lblMensaje;
+    Usuario usuarioActivo;
 
     private UsuarioPremium usuarioPremium;
 
@@ -60,8 +66,15 @@ public class CambiarSuscripcionControlador {
     }
 
     @FXML
-    private void volver(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+    private void volver(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuGeneral.fxml"));
+        Parent root = loader.load();
+
+        MenuGeneralControlador controlador = loader.getController();
+        controlador.setUsuario(usuarioActivo);
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

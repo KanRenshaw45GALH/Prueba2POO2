@@ -30,10 +30,10 @@ public class VerificarUsuarioControlador {
 
     @FXML
     private void verificarUsuario(ActionEvent event) throws IOException {
-        String correo = tfUsuarioVerificar.getText();
+        String nombre = tfUsuarioVerificar.getText();
         String password = pfPasswordVerificar.getText();
 
-        if(correo.isBlank() || password.isBlank()){
+        if(nombre.isBlank() || password.isBlank()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
@@ -42,7 +42,13 @@ public class VerificarUsuarioControlador {
             return;
         }
 
-         usuario = listadoUsuarios.iniciarSesion(correo, password);
+         usuario = listadoUsuarios.iniciarSesion(nombre, password);
+
+        if (usuario != null) {
+            System.out.println("Usuario encontrado");
+        } else {
+            System.out.println("Usuario NO encontrado");
+        }
 
         if(usuario != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuGeneral.fxml"));

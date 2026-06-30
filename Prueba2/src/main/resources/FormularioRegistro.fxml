@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.RegistroUsuarioControlador">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="560.0" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.RegistroUsuarioControlador">
    <children>
       <HBox layoutX="441.0" layoutY="92.0" spacing="30.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
          <children>
@@ -43,7 +35,7 @@
                            <GridPane.margin>
                               <Insets left="40.0" right="20.0" />
                            </GridPane.margin></Label>
-                        <Label prefHeight="23.0" prefWidth="299.0" styleClass="label-campo" text="   Fecha de nacimiento (DD / MM / AAAA)" GridPane.rowIndex="3" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="299.0" styleClass="label-campo" text="Edad                                           " GridPane.rowIndex="3" />
                         <TextField fx:id="tfUsuario" prefHeight="26.0" prefWidth="110.0" GridPane.columnIndex="1" />
                         <TextField fx:id="tfEmail" prefHeight="26.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <PasswordField fx:id="pfPassword" GridPane.columnIndex="1" GridPane.rowIndex="2" />

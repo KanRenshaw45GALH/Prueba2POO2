@@ -1,6 +1,9 @@
 package Controlador;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -12,12 +15,14 @@ import modeloElemento.Elemento;
 import modeloElemento.ElementoTarea;
 import modeloElemento.ElementoRecordatorio;
 import catalogo.Estado;
+
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class VerPendientesControlador {
 
-    @FXML private VBox contenedorPendientes;
+    @FXML private VBox BtnPendientes;
 
     private Usuario usuarioActivo;
 
@@ -27,13 +32,13 @@ public class VerPendientesControlador {
     }
 
     private void cargarPendientes() {
-        contenedorPendientes.getChildren().clear();
+        BtnPendientes.getChildren().clear();
         List<Elemento> lista = usuarioActivo.getElemento();
 
         if (lista == null || lista.isEmpty()) {
             Label vacio = new Label("Sin elementos pendientes.");
             vacio.setStyle("-fx-font-size: 14px; -fx-text-fill: #888;");
-            contenedorPendientes.getChildren().add(vacio);
+            BtnPendientes.getChildren().add(vacio);
             return;
         }
 
@@ -50,7 +55,7 @@ public class VerPendientesControlador {
                         t.getTitulo(),
                         "Estado: " + t.getEstado() + " | Prioridad: " + t.getPrioridad()
                 );
-                contenedorPendientes.getChildren().add(card);
+                BtnPendientes.getChildren().add(card);
                 hay = true;
 
             } else if (e instanceof ElementoRecordatorio r) {
@@ -61,7 +66,7 @@ public class VerPendientesControlador {
                         r.getTitulo(),
                         "Vence: " + fecha
                 );
-                contenedorPendientes.getChildren().add(card);
+                BtnPendientes.getChildren().add(card);
                 hay = true;
             }
         }
@@ -69,7 +74,7 @@ public class VerPendientesControlador {
         if (!hay) {
             Label vacio = new Label("No tienes pendientes.");
             vacio.setStyle("-fx-font-size: 14px; -fx-text-fill: #888;");
-            contenedorPendientes.getChildren().add(vacio);
+            BtnPendientes.getChildren().add(vacio);
         }
     }
 
@@ -97,8 +102,15 @@ public class VerPendientesControlador {
     }
 
     @FXML
-    private void volver(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+    private void volver(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuGeneral.fxml"));
+        Parent root = loader.load();
+
+        MenuGeneralControlador controlador = loader.getController();
+        controlador.setUsuario(usuarioActivo);
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

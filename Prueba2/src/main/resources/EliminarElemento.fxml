@@ -14,8 +14,8 @@
             <Label styleClass="titulo" text="Eliminar elemento" />
             <ListView fx:id="listaElementos" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
             <Label fx:id="lblMensaje" styleClass="label-campo" />
-            <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#eliminarSeleccionado" styleClass="btn-registrar" text="Eliminar Seleccionado" />
-            <Button mnemonicParsing="false" onAction="#volver" prefWidth="20000.0" styleClass="btn-registrar" text="Volver" />
+            <Button fx:id="BtnEliminar" maxWidth="20000.0" mnemonicParsing="false" onAction="#eliminarSeleccionado" styleClass="btn-registrar" text="Eliminar Seleccionado" />
+            <Button fx:id="BtnVolver" mnemonicParsing="false" onAction="#volver" prefWidth="20000.0" styleClass="btn-registrar" text="Volver" />
          </children>
       </VBox>
    </children>

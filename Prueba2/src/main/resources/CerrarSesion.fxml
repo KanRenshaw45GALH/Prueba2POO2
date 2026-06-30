@@ -15,8 +15,8 @@
             <Label styleClass="label-campo" text="¿Estás seguro que deseas cerrar sesión?" />
             <HBox alignment="CENTER" maxWidth="20000.0" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
                <children>
-                  <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#confirmarCerrar" styleClass="btn-registrar" text="Sí, cerrar sesión" />
-                  <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#cancelar" styleClass="btn-registrar" text="No, volver" />
+                  <Button fx:id="BtnSalir" maxWidth="20000.0" mnemonicParsing="false" onAction="#confirmarCerrar" styleClass="btn-registrar" text="Sí, cerrar sesión" />
+                  <Button fx:id="BtnVolver" maxWidth="20000.0" mnemonicParsing="false" onAction="#cancelar" styleClass="btn-registrar" text="No, volver" />
                </children>
             </HBox>
          </children>
