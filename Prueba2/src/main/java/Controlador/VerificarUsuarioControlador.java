@@ -42,7 +42,7 @@ public class VerificarUsuarioControlador {
             return;
         }
 
-         usuario = listadoUsuarios.iniciarSesion(nombre, password);
+        usuario = listadoUsuarios.iniciarSesion(nombre, password);
 
         if (usuario != null) {
             System.out.println("Usuario encontrado");
@@ -70,5 +70,19 @@ public class VerificarUsuarioControlador {
 
         }
 
+    }
+
+    @FXML
+    private void abrirRegistro(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FormularioRegistro.fxml"));
+        Parent root = loader.load();
+
+        RegistroUsuarioControlador controlador = loader.getController();
+        controlador.setListadoUsuarios(listadoUsuarios);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Registrar Usuario");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
