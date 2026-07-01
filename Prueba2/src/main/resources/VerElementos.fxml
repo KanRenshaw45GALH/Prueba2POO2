@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="550.0" styleClass="root" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VerElementosControlador">
+    <children>
+        <VBox spacing="6.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="14.0">
+            <children>
+                <Label styleClass="titulo" text="Elementos Creados" />
+                <ListView fx:id="listaElementos" prefHeight="100.0" VBox.vgrow="NEVER" />
+                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-background: transparent;">
+                    <content>
+                        <VBox spacing="4.0">
+                            <padding>
+                                <Insets bottom="4.0" left="2.0" right="2.0" top="4.0" />
+                            </padding>
+                            <children>
+                                <VBox fx:id="panelDetalle" spacing="3.0" visible="false" managed="false">
+                                    <children>
+                                        <Label style="-fx-font-size: 11px;" styleClass="label-campo" text="Detalle del elemento:" />
+                                        <VBox spacing="0.0" styleClass="card">
+                                            <padding>
+                                                <Insets bottom="3.0" left="6.0" right="6.0" top="3.0" />
+                                            </padding>
+                                            <children>
+                                                <Label style="-fx-font-size: 9px;" styleClass="label-campo" text="Titulo" />
+                                                <Label fx:id="lblTitulo" style="-fx-text-fill: #222222; -fx-font-size: 11px;" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="0.0" styleClass="card">
+                                            <padding>
+                                                <Insets bottom="3.0" left="6.0" right="6.0" top="3.0" />
+                                            </padding>
+                                            <children>
+                                                <Label style="-fx-font-size: 9px;" styleClass="label-campo" text="Descripcion" />
+                                                <Label fx:id="lblDescripcion" style="-fx-text-fill: #222222; -fx-font-size: 11px;" wrapText="true" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="0.0" styleClass="card">
+                                            <padding>
+                                                <Insets bottom="3.0" left="6.0" right="6.0" top="3.0" />
+                                            </padding>
+                                            <children>
+                                                <Label style="-fx-font-size: 9px;" styleClass="label-campo" text="Prioridad" />
+                                                <Label fx:id="lblPrioridad" style="-fx-text-fill: #222222; -fx-font-size: 11px;" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="0.0" styleClass="card">
+                                            <padding>
+                                                <Insets bottom="3.0" left="6.0" right="6.0" top="3.0" />
+                                            </padding>
+                                            <children>
+                                                <Label style="-fx-font-size: 9px;" styleClass="label-campo" text="Fecha Creacion" />
+                                                <Label fx:id="lblFechaCreacion" style="-fx-text-fill: #222222; -fx-font-size: 11px;" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="0.0" styleClass="card">
+                                            <padding>
+                                                <Insets bottom="3.0" left="6.0" right="6.0" top="3.0" />
+                                            </padding>
+                                            <children>
+                                                <Label style="-fx-font-size: 9px;" styleClass="label-campo" text="Fecha Limite" />
+                                                <Label fx:id="lblFechaLimite" style="-fx-text-fill: #222222; -fx-font-size: 11px;" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="0.0" styleClass="card">
+                                            <padding>
+                                                <Insets bottom="3.0" left="6.0" right="6.0" top="3.0" />
+                                            </padding>
+                                            <children>
+                                                <Label style="-fx-font-size: 9px;" styleClass="label-campo" text="Colaboradores" />
+                                                <Label fx:id="lblColaboradores" style="-fx-text-fill: #222222; -fx-font-size: 11px;" wrapText="true" />
+                                            </children>
+                                        </VBox>
+                                        <VBox fx:id="cardEstado" spacing="0.0" styleClass="card" visible="false" managed="false">
+                                            <padding>
+                                                <Insets bottom="3.0" left="6.0" right="6.0" top="3.0" />
+                                            </padding>
+                                            <children>
+                                                <Label style="-fx-font-size: 9px;" styleClass="label-campo" text="Estado" />
+                                                <Label fx:id="lblEstado" style="-fx-text-fill: #222222; -fx-font-size: 11px;" />
+                                            </children>
+                                        </VBox>
+                                        <VBox fx:id="cardFechaRecordatorio" spacing="0.0" styleClass="card" visible="false" managed="false">
+                                            <padding>
+                                                <Insets bottom="3.0" left="6.0" right="6.0" top="3.0" />
+                                            </padding>
+                                            <children>
+                                                <Label style="-fx-font-size: 9px;" styleClass="label-campo" text="Fecha de Recordatorio" />
+                                                <Label fx:id="lblFechaRecordatorio" style="-fx-text-fill: #222222; -fx-font-size: 11px;" />
+                                            </children>
+                                        </VBox>
+                                        <VBox fx:id="cardAlerta" spacing="0.0" styleClass="card" visible="false" managed="false">
+                                            <padding>
+                                                <Insets bottom="3.0" left="6.0" right="6.0" top="3.0" />
+                                            </padding>
+                                            <children>
+                                                <Label style="-fx-font-size: 9px;" styleClass="label-campo" text="Alerta activa" />
+                                                <Label fx:id="lblAlerta" style="-fx-text-fill: #222222; -fx-font-size: 11px;" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+                <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#volver" styleClass="btn-registrar" text="Volver" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
