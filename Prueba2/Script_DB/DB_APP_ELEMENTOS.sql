@@ -76,5 +76,26 @@ CREATE TABLE Elementos_Compartidos(
 
 
 
-SELECT * FROM Elemento;
-SELECT * FROM Elemento_Tarea;
+/**Elimicacion de Limpieza */
+DELETE FROM Elementos_Compartidos;
+DELETE FROM Pagos;
+DELETE FROM Bitcoin;
+DELETE FROM Tarjeta;
+DELETE FROM Elemento_Tarea;
+DELETE FROM Elemento_Recordatorio;
+DELETE FROM Elemento;
+DELETE FROM UsuarioPremium;
+DELETE FROM UsuarioGeneral;
+DELETE FROM Usuario;
+
+/**Revision de Eliminados*/
+SELECT * FROM Elementos_Compartidos;
+SELECT * FROM Pagos;
+SELECT *  FROM Bitcoin;
+SELECT *  FROM Tarjeta;
+SELECT *  FROM Elemento_Tarea;
+SELECT *  FROM Elemento_Recordatorio;
+SELECT *  FROM Elemento;
+SELECT *  FROM UsuarioPremium;
+SELECT *  FROM UsuarioGeneral;
+SELECT *  FROM Usuario;
