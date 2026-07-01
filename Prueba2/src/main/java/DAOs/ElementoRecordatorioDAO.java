@@ -1,0 +1,54 @@
+package DAOs;
+
+
+import conexionDB.Conexion;
+import modeloElemento.ElementoRecordatorio;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class ElementoRecordatorioDAO {
+
+    private final ElementoDAO elementoDAO = new ElementoDAO();
+
+    public boolean insertar(int idUsuario,
+                            ElementoRecordatorio recordatorio){
+
+        int idElemento =
+                elementoDAO.insertarElementoBase(
+                        idUsuario,
+                        recordatorio);
+
+        if(idElemento==-1){
+            return false;
+        }
+
+        String sql = """
+                INSERT INTO Elemento_Recordatorio
+                (Id_Elemento,
+                 Fecha_Recordatorio)
+                VALUES (?,?)
+                """;
+
+        try(Connection con = Conexion.conectar();
+            PreparedStatement ps = con.prepareStatement(sql)){
+
+            ps.setInt(1,idElemento);
+
+            ps.setDate(2,
+                    java.sql.Date.valueOf(
+                            recordatorio.getFechaRecordatorio()));
+
+            return ps.executeUpdate()>0;
+
+        }catch(SQLException e){
+
+            e.printStackTrace();
+            return false;
+
+        }
+
+    }
+
+}

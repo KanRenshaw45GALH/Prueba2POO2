@@ -65,9 +65,19 @@ public class MenuGeneralControlador {
 
     }
     @FXML
-    private void verTodos(ActionEvent event) {
+    private void verTodos(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/VerElementos.fxml"));
+        Parent root = loader.load();
 
+        VerElementosControlador controlador = loader.getController();
+        controlador.setListadoUsuarios(listadoUsuarios);
+        controlador.setUsuario(usuarioActivo);
+
+        Stage stage = (Stage) BtnElementosCreados.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
+
     @FXML
     private void verPendientes(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/VerPendientes.fxml"));
