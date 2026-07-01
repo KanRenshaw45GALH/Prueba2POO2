@@ -9,6 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import modeloUsuario.ListadoUsuarios;
 import modeloUsuario.UsuarioGeneral;
+import DAOs.UsuarioDAO;
+import DAOs.UsuarioGeneralDAO;
 
 public class RegistroUsuarioControlador {
 
@@ -24,18 +26,28 @@ public class RegistroUsuarioControlador {
 
     @FXML
     private void guardarUsuario() {
-        try{
-        UsuarioGeneral usuario = new UsuarioGeneral();
-        usuario.setNombreCompleto(tfUsuario.getText());
-        usuario.setEmail(tfEmail.getText());
-        usuario.setPassword(pfPassword.getText());
-        usuario.setEdad(Integer.parseInt(tfFechaNacimiento.getText()));
-        listadoUsuarios.agregarUsuario(usuario);
-        System.out.println("Usuario agregado correctamente");
+
+        try {
+
+            UsuarioGeneral usuario = new UsuarioGeneral();
+
+            usuario.setNombreCompleto(tfUsuario.getText());
+            usuario.setEmail(tfEmail.getText());
+            usuario.setPassword(pfPassword.getText());
+            usuario.setEdad(Integer.parseInt(tfFechaNacimiento.getText()));
+
+            UsuarioGeneralDAO dao = new UsuarioGeneralDAO();
+
+            if(dao.insertar(usuario)){
+                listadoUsuarios.agregarUsuario(usuario);
+                System.out.println("Guardado correctamente.");
+            }else{
+                System.out.println("Error al guardar.");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML

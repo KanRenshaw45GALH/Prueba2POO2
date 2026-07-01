@@ -2,6 +2,9 @@ package DAOs;
 
 import modeloUsuario.Usuario;
 import conexionDB.Conexion;
+import modeloUsuario.UsuarioGeneral;
+import modeloUsuario.UsuarioPremium;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +50,64 @@ public class UsuarioDAO {
 
         return -1;
     }
+    public Usuario buscarPorCredenciales(String nombre, String password) {
 
-    /**
-     * Actualiza los datos básicos de un usuario.
-     * Se recibe el ID como parámetro porque el objeto Usuario no lo almacena.
-     */
+        String sql = """
+            SELECT U.*,
+                   UP.Fecha_Suscripcion,
+                   UP.Fecha_Limite
+            FROM Usuario U
+            LEFT JOIN UsuarioPremium UP
+                ON U.Id_Usuario = UP.Id_Usuario
+            WHERE U.Nombre_Usuario = ?
+            AND U.Password_Usuario = ?
+            """;
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, nombre);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                Usuario usuario;
+
+                // Si tiene fecha de suscripción, es Premium
+                if (rs.getDate("Fecha_Suscripcion") != null) {
+
+                    UsuarioPremium premium = new UsuarioPremium();
+
+                    premium.setFechaSuscripcion(
+                            rs.getDate("Fecha_Suscripcion").toLocalDate());
+
+                    premium.setFechaLimiteSuscripcion(
+                            rs.getDate("Fecha_Limite").toLocalDate());
+
+                    usuario = premium;
+
+                } else {
+
+                    usuario = new UsuarioGeneral();
+                }
+
+                usuario.setNombreCompleto(rs.getString("Nombre_Usuario"));
+                usuario.setEmail(rs.getString("Email_Usuario"));
+                usuario.setPassword(rs.getString("Password_Usuario"));
+                usuario.setEdad(rs.getInt("Edad_Usuario"));
+
+                return usuario;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public boolean actualizarDatosBasicos(int idUsuario, Usuario usuario) {
 
         String sql = """

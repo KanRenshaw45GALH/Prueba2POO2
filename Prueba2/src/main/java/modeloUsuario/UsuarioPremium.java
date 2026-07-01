@@ -15,6 +15,7 @@ public class UsuarioPremium extends Usuario {
     private LocalDate fechaLimiteSuscripcion;
     private EstrategiaPago estrategiaPago;
 
+    public UsuarioPremium() {}
     // Constructores
     public UsuarioPremium(String nombreCompleto, int edad, String email, String password,
                           int cantidadTareas, int cantidadRecordatorios, float pagarSuscripcion,
