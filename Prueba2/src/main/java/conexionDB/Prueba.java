@@ -9,7 +9,6 @@ public class Prueba {
         try {
 
             Connection con = Conexion.conectar();
-
             System.out.println("Conectado correctamente.");
 
             con.close();
