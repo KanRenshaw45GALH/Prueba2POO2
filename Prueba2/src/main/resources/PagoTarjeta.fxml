@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="450.0" styleClass="root" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.PagoTarjetaControlador">
+    <children>
+        <VBox spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
+            <children>
+                <Label styleClass="titulo" text="Pagar con Tarjeta" />
+
+                <VBox spacing="5.0" styleClass="card">
+                    <padding>
+                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                    </padding>
+                    <children>
+                        <Label styleClass="label-campo" text="Monto a Pagar" />
+                        <Label fx:id="lblMonto" style="-fx-font-weight: bold; -fx-font-size: 16px;" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="2.0">
+                    <children>
+                        <Label styleClass="label-campo" text="Nombre del Titular" />
+                        <TextField fx:id="txtTitular" promptText="Juan Pérez" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="2.0">
+                    <children>
+                        <Label styleClass="label-campo" text="Número de Tarjeta" />
+                        <TextField fx:id="txtNumeroTarjeta" promptText="0000111122223333" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="2.0">
+                    <children>
+                        <Label styleClass="label-campo" text="CVV" />
+                        <PasswordField fx:id="txtCvv" maxWidth="120.0" promptText="123" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="2.0">
+                    <children>
+                        <Label styleClass="label-campo" text="Fecha de Vencimiento (MM/AA)" />
+                        <TextField fx:id="txtFechaVencimiento" maxWidth="150.0" promptText="12/29" />
+                    </children>
+                </VBox>
+
+                <Label fx:id="lblMensaje" styleClass="label-campo" wrapText="true" />
+
+                <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#pagar" styleClass="btn-registrar" text="Confirmar Pago" />
+                <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#cancelar" styleClass="btn-registrar" style="-fx-background-color: #777;" text="Cancelar" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

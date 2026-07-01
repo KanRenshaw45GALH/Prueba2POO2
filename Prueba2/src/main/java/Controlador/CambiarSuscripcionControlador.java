@@ -1,75 +1,85 @@
 package Controlador;
 
-import estrategia.PagoTarjeta;
-import estrategia.PagoBitcoin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modeloUsuario.Usuario;
-import modeloUsuario.UsuarioPremium;
-
 import java.io.IOException;
 
 public class CambiarSuscripcionControlador {
 
-    @FXML private Button btnTarjeta;
-    @FXML private Button btnEfectivo;
     @FXML private Label lblMonto;
     @FXML private Label lblFechaSuscripcion;
     @FXML private Label lblFechaLimite;
     @FXML private Label lblMensaje;
-    Usuario usuarioActivo;
+    @FXML private Button BtnVolver;
 
-    private UsuarioPremium usuarioPremium;
+    private float montoAPagar = 4.99f;
+    private Usuario usuarioActivo;
+
+    @FXML
+    public void initialize() {
+        lblMonto.setText("$" + montoAPagar);
+        lblFechaSuscripcion.setText("-");
+        lblFechaLimite.setText("-");
+    }
 
     public void setUsuario(Usuario usuario) {
-        this.usuarioActivo  = usuario;
-
-        if (usuario instanceof UsuarioPremium) {
-            this.usuarioPremium = (UsuarioPremium) usuario;
-            cargarDatos();
-        } else {
-            btnTarjeta.setDisable(true);
-            btnEfectivo.setDisable(true);
-            lblMensaje.setText("Esta opcion solo esta disponible para usuarios Premium");
-            lblMensaje.setStyle("-fx-text-fill: #e53935;");
-        }
+        this.usuarioActivo = usuario;
     }
 
-    private void cargarDatos() {
-        lblMonto.setText("$" + usuarioPremium.getPagarSuscripcion());
-        lblFechaSuscripcion.setText(String.valueOf(usuarioPremium.getFechaSuscripcion()));
-        lblFechaLimite.setText(String.valueOf(usuarioPremium.getFechaLimiteSuscripcion()));
+    public Usuario getUsuarioActivo() {
+        return this.usuarioActivo;
     }
 
     @FXML
-    private void pagarConTarjeta() {
-        if (usuarioPremium == null) {
-            return;
-        }
-        usuarioPremium.setEstrategiaPago(new PagoBitcoin());
-        confirmarPago();
+    void pagarConTarjeta(ActionEvent event) {
+        abrirVentanaPago("/PagoTarjeta.fxml", "Pago con Tarjeta", true);
     }
 
     @FXML
-    private void pagarConEfectivo() {
-        if (usuarioPremium == null) {
-            return;
-        }
-        usuarioPremium.setEstrategiaPago(new PagoTarjeta());
-        confirmarPago();
+    void pagarConBitcoin(ActionEvent event) {
+        abrirVentanaPago("/PagoBitcoin.fxml", "Pago con Bitcoin", false);
     }
 
-    private void confirmarPago() {
-        usuarioPremium.getEstrategiaPago().pagar(usuarioPremium.getPagarSuscripcion());
-        lblMensaje.setText("Suscripcion pagada correctamente.");
-        lblMensaje.setStyle("-fx-text-fill: #2e7d32;");
+    private void abrirVentanaPago(String fxmlPath, String titulo, boolean esTarjeta) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle(titulo);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+
+            if (esTarjeta) {
+                PagoTarjetaControlador controlador = loader.getController();
+                controlador.setMonto(montoAPagar, this);
+            } else {
+                PagoBitcoinControlador controlador = loader.getController();
+                controlador.setMonto(montoAPagar, this);
+            }
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            lblMensaje.setText("Error al abrir la ventana de pago: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void registrarPagoExitoso() {
+        lblMensaje.setText("Pago realizado con exito");
+    }
+
+    @FXML
+    void cancelarSuscripcion(ActionEvent event) {
+        lblMensaje.setText("Suscripción cancelada. Eres usuario general de nuevo");
     }
 
     @FXML
@@ -80,7 +90,7 @@ public class CambiarSuscripcionControlador {
         MenuGeneralControlador controlador = loader.getController();
         controlador.setUsuario(usuarioActivo);
 
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) BtnVolver.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
     }

@@ -9,6 +9,7 @@ public class Conexion {
     private static final String URL =
             "jdbc:sqlserver://localhost:1433;databaseName=DB_APP_ELEMENTOS;encrypt=true;trustServerCertificate=true";
 
+    //LAPTOP-MCM80K0V: esta es la laptop de Gerardo, coloquen la suya porque da error
     private static final String USER = "sa";
     private static final String PASSWORD = "123456";
 

@@ -73,3 +73,9 @@ CREATE TABLE Elementos_Compartidos(
 	Id_Elemento INT FOREIGN KEY (Id_Elemento) REFERENCES Elemento(Id_Elemento),
 	Fecha_Compartido DATE NOT NULL
 	);
+
+	SELECT @@SERVERNAME;
+GO
+
+SELECT @@SERVICENAME;
+GO

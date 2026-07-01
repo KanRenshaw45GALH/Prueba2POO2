@@ -3,9 +3,9 @@ package Controlador;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import modeloUsuario.Usuario;
@@ -19,7 +19,9 @@ public class InformacionUsuarioControlador {
     @FXML private Label lblEdad;
     @FXML private Label lblCorreo;
     @FXML private Label lblTipoCuenta;
-    Usuario usuarioActivo;
+    @FXML private Button BtnVolver;
+
+    private Usuario usuarioActivo;
 
     public void setUsuario(Usuario usuario) {
         this.usuarioActivo = usuario;
@@ -34,14 +36,13 @@ public class InformacionUsuarioControlador {
 
     @FXML
     private void volver(ActionEvent event) throws IOException {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuGeneral.fxml"));
         Parent root = loader.load();
 
         MenuGeneralControlador controlador = loader.getController();
         controlador.setUsuario(usuarioActivo);
 
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) BtnVolver.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
     }
