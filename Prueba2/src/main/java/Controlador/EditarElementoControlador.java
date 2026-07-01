@@ -1,5 +1,7 @@
 package Controlador;
 
+import DAOs.ElementoRecordatorioDAO;
+import DAOs.ElementoTareaDAO;
 import catalogo.Estado;
 import catalogo.Prioridad;
 import javafx.event.ActionEvent;
@@ -10,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import modeloElemento.Elemento;
+import modeloElemento.ElementoRecordatorio;
 import modeloElemento.ElementoTarea;
 import modeloUsuario.Usuario;
 import java.io.IOException;
@@ -53,6 +56,7 @@ public class EditarElementoControlador {
         //En caso sea Tarea o recordatorio:
             if (elemento instanceof ElementoTarea tarea) {
                 ComboBoxEstado.setValue(tarea.getEstado());
+                ComboBoxEstado.setDisable(false);
             }
             else {
                 ComboBoxEstado.getSelectionModel().clearSelection();
@@ -78,23 +82,31 @@ public class EditarElementoControlador {
         elemento.setDescripcion(TextDescripcion.getText());
         elemento.setPrioridad(ComboBoxPrioridad.getValue());
         elemento.setFechaLimite(DatePickerFechaLimite.getValue());
+
         //Verifica si es Tarea o Recordatorio:
+        boolean actualizado;
         if (elemento instanceof ElementoTarea tarea) {
             tarea.setEstado(ComboBoxEstado.getValue());
+            ElementoTareaDAO dao = new ElementoTareaDAO();
+            actualizado = dao.actualizar(tarea);
+        } else {
+            ElementoRecordatorioDAO dao = new ElementoRecordatorioDAO();
+            actualizado = dao.actualizar((ElementoRecordatorio) elemento);
         }
+        if (actualizado) {
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setHeaderText(null);
+            alerta.setTitle("Éxito");
+            alerta.setContentText("El elemento se editó correctamente.");
+            alerta.showAndWait();
+        } else {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setHeaderText(null);
+            alerta.setTitle("Error");
+            alerta.setContentText("No fue posible actualizar el elemento.");
+            alerta.showAndWait();
 
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setHeaderText(null);
-        alerta.setTitle("Éxito");
-        alerta.setContentText("El elemento se edito correctamente.");
-        alerta.showAndWait();
-
-        TextTitulo.clear();
-        TextDescripcion.clear();
-        ComboBoxPrioridad.getSelectionModel().clearSelection();
-        ComboBoxEstado.getSelectionModel().clearSelection();
-        DatePickerFechaLimite.setValue(null);
-
+        }
     }
     @FXML
     private void volver(ActionEvent event) throws IOException {

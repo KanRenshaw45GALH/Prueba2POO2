@@ -92,23 +92,19 @@ public class ElementoDAO {
 
 
     public boolean eliminarElemento(int idElemento){
-
         try (Connection con = Conexion.conectar()) {
-
             String sqlTarea = "DELETE FROM Elemento_Tarea WHERE Id_Elemento=?";
 
             try (PreparedStatement ps = con.prepareStatement(sqlTarea)) {
                 ps.setInt(1, idElemento);
                 int filas = ps.executeUpdate();
             }
-
             String sqlRecordatorio = "DELETE FROM Elemento_Recordatorio WHERE Id_Elemento=?";
 
             try (PreparedStatement ps = con.prepareStatement(sqlRecordatorio)) {
                 ps.setInt(1, idElemento);
                 int filas = ps.executeUpdate();
             }
-
             String sqlElemento = "DELETE FROM Elemento WHERE Id_Elemento=?";
 
             try (PreparedStatement ps = con.prepareStatement(sqlElemento)) {
@@ -116,7 +112,6 @@ public class ElementoDAO {
                 int filas = ps.executeUpdate();
                 return filas > 0;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -126,9 +121,7 @@ public class ElementoDAO {
 
 
     public List<Elemento> listarElementos(int idUsuario) {
-
         List<Elemento> elementos = new ArrayList<>();
-
         String sql = """
         SELECT *
         FROM Elemento
@@ -137,58 +130,55 @@ public class ElementoDAO {
 
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, idUsuario);
+                ResultSet rs = ps.executeQuery();
 
-            ps.setInt(1, idUsuario);
+                while (rs.next()) {
 
-            ResultSet rs = ps.executeQuery();
+                    int idElemento = rs.getInt("Id_Elemento");
+                    Elemento elemento = null;
 
-            while (rs.next()) {
-
-                int idElemento = rs.getInt("Id_Elemento");
-                Elemento elemento = null;
-
-                String sqlTarea = """
-                                SELECT Estado_Elemento
-                                FROM Elemento_Tarea
-                                WHERE Id_Elemento = ?
-                                """;
-
-                PreparedStatement psTarea = con.prepareStatement(sqlTarea);
-                psTarea.setInt(1, idElemento);
-                ResultSet rsTarea = psTarea.executeQuery();
-
-
-                if (rsTarea.next()) {
-                    ElementoTarea tarea = new ElementoTarea();
-                    tarea.setEstado(Estado.valueOf(rsTarea.getString("Estado_Elemento")));
-                    elemento = tarea;
-                }else{
-                    String sqlRecordatorio = """
-                                    SELECT Fecha_Recordatorio
-                                    FROM Elemento_Recordatorio
+                    String sqlTarea = """
+                                    SELECT Estado_Elemento
+                                    FROM Elemento_Tarea
                                     WHERE Id_Elemento = ?
                                     """;
 
-                    PreparedStatement psRecordatorio = con.prepareStatement(sqlRecordatorio);
-                    psRecordatorio.setInt(1, idElemento);
+                    PreparedStatement psTarea = con.prepareStatement(sqlTarea);
+                    psTarea.setInt(1, idElemento);
+                    ResultSet rsTarea = psTarea.executeQuery();
 
-                    ResultSet rsRecordatorio = psRecordatorio.executeQuery();
-                    if (rsRecordatorio.next()) {
-                        ElementoRecordatorio recordatorio = new ElementoRecordatorio();
-                        recordatorio.setFechaRecordatorio(rsRecordatorio.getDate("Fecha_Recordatorio").toLocalDate());
-                        elemento = recordatorio;
+                    if (rsTarea.next()) {
+                        ElementoTarea tarea = new ElementoTarea();
+                        tarea.setEstado(Estado.valueOf(rsTarea.getString("Estado_Elemento")));
+                        elemento = tarea;
+                    }else{
+                        String sqlRecordatorio = """
+                                        SELECT Fecha_Recordatorio
+                                        FROM Elemento_Recordatorio
+                                        WHERE Id_Elemento = ?
+                                        """;
+
+                        PreparedStatement psRecordatorio = con.prepareStatement(sqlRecordatorio);
+                        psRecordatorio.setInt(1, idElemento);
+
+                        ResultSet rsRecordatorio = psRecordatorio.executeQuery();
+                        if (rsRecordatorio.next()) {
+                            ElementoRecordatorio recordatorio = new ElementoRecordatorio();
+                            recordatorio.setFechaRecordatorio(rsRecordatorio.getDate("Fecha_Recordatorio").toLocalDate());
+                            elemento = recordatorio;
+                        }
                     }
-                }
 
-                if (elemento != null) {
-                    elemento.setId(idElemento);
-                    elemento.setTitulo(rs.getString("Titulo_Elemento"));
-                    elemento.setDescripcion(rs.getString("Descripcion_Elemento"));
-                    elemento.setPrioridad(Prioridad.valueOf(rs.getString("Prioridad_Elemento")));
-                    elemento.setFechaCreacion(rs.getDate("Fecha_Creacion").toLocalDate());
-                    elemento.setFechaLimite(rs.getDate("Fecha_Limite_Elemento").toLocalDate());
-                    elementos.add(elemento);
-                }
+                    if (elemento != null) {
+                        elemento.setId(idElemento);
+                        elemento.setTitulo(rs.getString("Titulo_Elemento"));
+                        elemento.setDescripcion(rs.getString("Descripcion_Elemento"));
+                        elemento.setPrioridad(Prioridad.valueOf(rs.getString("Prioridad_Elemento")));
+                        elemento.setFechaCreacion(rs.getDate("Fecha_Creacion").toLocalDate());
+                        elemento.setFechaLimite(rs.getDate("Fecha_Limite_Elemento").toLocalDate());
+                        elementos.add(elemento);
+                    }
 
             }
 
@@ -200,5 +190,33 @@ public class ElementoDAO {
     }
 
 
+    public boolean actualizarElemento(Elemento elemento) {
+        String sql = """
+            UPDATE Elemento
+            SET
+                Titulo_Elemento = ?,
+                Descripcion_Elemento = ?,
+                Prioridad_Elemento = ?,
+                Fecha_Limite_Elemento = ?
+            WHERE Id_Elemento = ?
+            """;
 
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, elemento.getTitulo());
+            ps.setString(2, elemento.getDescripcion());
+            ps.setString(3, elemento.getPrioridad().toString());
+            ps.setDate(4,
+                    java.sql.Date.valueOf(elemento.getFechaLimite()));
+            ps.setInt(5, elemento.getId());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

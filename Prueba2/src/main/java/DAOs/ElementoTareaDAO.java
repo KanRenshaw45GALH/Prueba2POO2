@@ -56,4 +56,32 @@ public class ElementoTareaDAO {
 
     }
 
+    public boolean actualizar(ElementoTarea tarea) {
+
+        ElementoDAO elementoDAO = new ElementoDAO();
+        if (!elementoDAO.actualizarElemento(tarea)) {
+            return false;
+        }
+
+        String sql = """
+            UPDATE Elemento_Tarea
+            SET Estado_Elemento = ?
+            WHERE Id_Elemento = ?
+            """;
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+              ps.setString(1, tarea.getEstado().toString());
+              ps.setInt(2, tarea.getId());
+
+                 return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }

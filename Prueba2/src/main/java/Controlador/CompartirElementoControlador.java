@@ -14,8 +14,9 @@ import javafx.stage.Stage;
 import modeloElemento.Elemento;
 import modeloUsuario.ListadoUsuarios;
 import modeloUsuario.Usuario;
-
+import DAOs.CompartidosDAO;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class CompartirElementoControlador {
@@ -87,7 +88,6 @@ public class CompartirElementoControlador {
         }
 
         Usuario usuarioDestino = listadoUsuarios.buscarPorNombre(nombreDestino);
-
         if (usuarioDestino == null) {
             mostrarError("No se encontró un usuario con ese nombre.");
             return;
@@ -99,8 +99,7 @@ public class CompartirElementoControlador {
         }
 
         // Verificar si ya fue compartido
-        boolean yaCompartido = elementoSeleccionado.getColaboradores().stream()
-                .anyMatch(u -> u.getNombreCompleto().equalsIgnoreCase(nombreDestino));
+        boolean yaCompartido = elementoSeleccionado.getColaboradores().stream().anyMatch(u -> u.getNombreCompleto().equalsIgnoreCase(nombreDestino));
         if (yaCompartido) {
             mostrarError("Este elemento ya fue compartido con ese usuario.");
             return;
@@ -126,11 +125,27 @@ public class CompartirElementoControlador {
                 e.printStackTrace();
             }
             Platform.runLater(() -> {
-                lblMensaje.setText("✔ Elemento compartido con " + destinoFinal.getNombreCompleto() + " exitosamente.");
-                lblMensaje.setStyle("-fx-text-fill: #2e7d32;");
+                CompartidosDAO dao = new CompartidosDAO();
+                boolean registrado = dao.insertar(
+                        usuarioActivo.getIdUsuario(),
+                        destinoFinal.getIdUsuario(),
+                        elementoSeleccionado.getId(),
+                        LocalDate.now()
+                );
+
+                if (registrado) {
+                    lblMensaje.setText("✔ Elemento compartido con "
+                            + destinoFinal.getNombreCompleto()
+                            + " exitosamente.");
+
+                    lblMensaje.setStyle("-fx-text-fill: #2e7d32;");
+                    TextNombreDestino.clear();
+                    ComboBoxElementos.getSelectionModel().clearSelection();
+                } else {
+                    lblMensaje.setText("El elemento se compartió en memoria, pero no pudo registrarse en la base de datos.");
+                    lblMensaje.setStyle("-fx-text-fill: #e53935;");
+                }
                 BtnCompartir.setDisable(false);
-                TextNombreDestino.clear();
-                ComboBoxElementos.getSelectionModel().clearSelection();
             });
         }).start();
     }
