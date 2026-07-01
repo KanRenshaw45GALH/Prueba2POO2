@@ -11,6 +11,7 @@ import java.util.Scanner;
 public abstract class Usuario implements AccionesUsuario {
 
     // Atributos
+    private int idUsuario;
     private String nombreCompleto;
     private int edad;
     private String email;
@@ -37,8 +38,10 @@ public abstract class Usuario implements AccionesUsuario {
     }
 
     // Getters y Setters
+    public int getIdUsuario() {return idUsuario;}
+    public void setIdUsuario(int idUsuario) {this.idUsuario = idUsuario;}
+
     public String getNombreCompleto() { return nombreCompleto; }
-    // CORRECCIÓN: el setter ahora asigna el parámetro s correctamente
     public void setNombreCompleto(String s) { this.nombreCompleto = s; }
 
     public int getEdad() { return edad; }

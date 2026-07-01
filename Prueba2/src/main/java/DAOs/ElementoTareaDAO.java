@@ -1,7 +1,7 @@
 package DAOs;
+
 import conexionDB.Conexion;
 import modeloElemento.ElementoTarea;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,9 +12,13 @@ public class ElementoTareaDAO {
 
     public boolean insertar(int idUsuario, ElementoTarea tarea){
 
-        int idElemento =
-                elementoDAO.insertarElementoBase(idUsuario,tarea);
-
+        if (idUsuario <= 0) {
+            return false;
+        }
+        if (tarea.getEstado() == null) {
+            return false;
+        }
+        int idElemento = elementoDAO.insertarElementoBase(idUsuario,tarea);
         if(idElemento==-1){
             return false;
         }

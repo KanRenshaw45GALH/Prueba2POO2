@@ -1,7 +1,7 @@
 package DAOs;
+
 import conexionDB.Conexion;
 import modeloElemento.Elemento;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +24,21 @@ public class ElementoDAO {
                 VALUES (?,?,?,?,?,?)
                 """;
 
+        if (idUsuario <= 0) {
+            return -1;
+        }
+        if (elemento.getPrioridad() == null) {
+            return -1;
+        }
+        if (elemento.getFechaCreacion() == null ||
+                elemento.getFechaLimite() == null) {
+            return -1;
+        }
+        if (elemento.getFechaLimite()
+                .isBefore(elemento.getFechaCreacion())) {
+            return -1;
+        }
+
         try(Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -37,11 +52,12 @@ public class ElementoDAO {
             int filas = ps.executeUpdate();
 
             if(filas > 0){
-
-                ResultSet rs = ps.getGeneratedKeys();
-
-                if(rs.next()){
-                    return rs.getInt(1);
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        int idElemento = rs.getInt(1);
+                        elemento.setId(idElemento);
+                        return idElemento;
+                    }
                 }
             }
 
@@ -59,13 +75,10 @@ public class ElementoDAO {
 
         try(Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)){
-
             ps.setInt(1,idElemento);
-
             return ps.executeUpdate()>0;
 
         }catch(SQLException e){
-
             e.printStackTrace();
 
         }

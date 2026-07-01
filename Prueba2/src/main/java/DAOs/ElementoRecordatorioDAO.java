@@ -1,9 +1,7 @@
 package DAOs;
 
-
 import conexionDB.Conexion;
 import modeloElemento.ElementoRecordatorio;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,14 +10,18 @@ public class ElementoRecordatorioDAO {
 
     private final ElementoDAO elementoDAO = new ElementoDAO();
 
-    public boolean insertar(int idUsuario,
-                            ElementoRecordatorio recordatorio){
+    public boolean insertar(int idUsuario, ElementoRecordatorio recordatorio){
 
-        int idElemento =
-                elementoDAO.insertarElementoBase(
-                        idUsuario,
-                        recordatorio);
-
+        if (idUsuario <= 0) {
+            return false;
+        }
+        if (recordatorio.getFechaRecordatorio() == null) {
+            return false;
+        }
+        if (recordatorio.getFechaRecordatorio().isAfter(recordatorio.getFechaLimite())) {
+            return false;
+        }
+        int idElemento = elementoDAO.insertarElementoBase(idUsuario, recordatorio);
         if(idElemento==-1){
             return false;
         }

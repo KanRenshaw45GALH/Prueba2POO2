@@ -53,8 +53,7 @@ CREATE TABLE Tarjeta(
 	);
 
 CREATE TABLE Bitcoin(
-	Id_Bitcoin INt PRIMARY KEY IDENTITY,
-	Id_Usuario INT FOREIGN KEY (Id_Usuario) REFERENCES Usuario(Id_Usuario),
+    Id_Usuario INT PRIMARY KEY,
 	DUI_Bitcoin NVARCHAR(10)
 	);
 
@@ -63,7 +62,7 @@ CREATE TABLE Pagos(
 	Id_Usuario INT FOREIGN KEY (Id_Usuario) REFERENCES Usuario(Id_Usuario),
 	Id_Tarjeta INT NULL FOREIGN KEY (Id_Tarjeta) REFERENCES Tarjeta(Id_Tarjeta),
 	Monto DECIMAL(10,2) NOT NULL,
-	Metodo_Pago VARCHAR(20) CHECK (Metodo_Pago IN ('TARJETA','PAYPAL')) NOT NULL,
+	Metodo_Pago VARCHAR(20) CHECK (Metodo_Pago IN ('TARJETA','BITCOIN')) NOT NULL,
 	Fecha_Pago DATE NOT NULL
 	);
 
@@ -72,5 +71,5 @@ CREATE TABLE Elementos_Compartidos(
 	Id_Usuario_Origen INT FOREIGN KEY (Id_Usuario_Origen) REFERENCES Usuario(Id_Usuario),
 	Id_Usuario_Destino INT FOREIGN KEY (Id_Usuario_Destino) REFERENCES Usuario(Id_Usuario),
 	Id_Elemento INT FOREIGN KEY (Id_Elemento) REFERENCES Elemento(Id_Elemento),
-	Fecha_Compartido DATE
+	Fecha_Compartido DATE NOT NULL
 	);

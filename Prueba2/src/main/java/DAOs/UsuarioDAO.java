@@ -4,7 +4,6 @@ import modeloUsuario.Usuario;
 import conexionDB.Conexion;
 import modeloUsuario.UsuarioGeneral;
 import modeloUsuario.UsuarioPremium;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class UsuarioDAO {
         String sql = """
                 INSERT INTO Usuario
                 (Nombre_Usuario, Email_Usuario, Password_Usuario, Edad_Usuario)
-                VALUES (?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?)
                 """;
 
         try (Connection con = Conexion.conectar();
@@ -73,19 +72,15 @@ public class UsuarioDAO {
 
             if (rs.next()) {
 
-                Usuario usuario;
-
+                Usuario usuario = new UsuarioGeneral();
+                
                 // Si tiene fecha de suscripción, es Premium
                 if (rs.getDate("Fecha_Suscripcion") != null) {
-
                     UsuarioPremium premium = new UsuarioPremium();
-
                     premium.setFechaSuscripcion(
                             rs.getDate("Fecha_Suscripcion").toLocalDate());
-
                     premium.setFechaLimiteSuscripcion(
                             rs.getDate("Fecha_Limite").toLocalDate());
-
                     usuario = premium;
 
                 } else {
@@ -93,6 +88,8 @@ public class UsuarioDAO {
                     usuario = new UsuarioGeneral();
                 }
 
+
+                usuario.setIdUsuario(rs.getInt("Id_Usuario"));
                 usuario.setNombreCompleto(rs.getString("Nombre_Usuario"));
                 usuario.setEmail(rs.getString("Email_Usuario"));
                 usuario.setPassword(rs.getString("Password_Usuario"));

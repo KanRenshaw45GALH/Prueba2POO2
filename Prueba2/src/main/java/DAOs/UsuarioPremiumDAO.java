@@ -1,7 +1,7 @@
 package DAOs;
+
 import conexionDB.Conexion;
 import modeloUsuario.UsuarioPremium;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,8 +13,17 @@ public class UsuarioPremiumDAO {
     public boolean insertar(UsuarioPremium usuario) {
 
         int idGenerado = usuarioDAO.insertarUsuarioBase(usuario);
-
         if (idGenerado == -1) {
+            return false;
+        }
+        usuario.setIdUsuario(idGenerado);
+
+        if (usuario.getFechaSuscripcion() == null ||
+                usuario.getFechaLimiteSuscripcion() == null) {
+            return false;
+        }
+        if (usuario.getFechaLimiteSuscripcion()
+                .isBefore(usuario.getFechaSuscripcion())) {
             return false;
         }
 
