@@ -15,7 +15,7 @@ public class UsuarioDAO {
 
     /**
      * Inserta los datos comunes del usuario.
-     * Devuelve el Id generado por SQL Server.
+     * Devuelve el Idgenerado por SQL Server.
      */
     public int insertarUsuarioBase(Usuario usuario) {
 

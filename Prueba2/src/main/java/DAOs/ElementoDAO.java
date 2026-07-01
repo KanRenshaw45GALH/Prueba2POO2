@@ -89,23 +89,41 @@ public class ElementoDAO {
         return -1;
     }
 
+
+
     public boolean eliminarElemento(int idElemento){
 
-        String sql =
-                "DELETE FROM Elemento WHERE Id_Elemento=?";
+        try (Connection con = Conexion.conectar()) {
 
-        try(Connection con = Conexion.conectar();
-            PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setInt(1,idElemento);
-            return ps.executeUpdate()>0;
+            String sqlTarea = "DELETE FROM Elemento_Tarea WHERE Id_Elemento=?";
 
-        }catch(SQLException e){
+            try (PreparedStatement ps = con.prepareStatement(sqlTarea)) {
+                ps.setInt(1, idElemento);
+                int filas = ps.executeUpdate();
+            }
+
+            String sqlRecordatorio = "DELETE FROM Elemento_Recordatorio WHERE Id_Elemento=?";
+
+            try (PreparedStatement ps = con.prepareStatement(sqlRecordatorio)) {
+                ps.setInt(1, idElemento);
+                int filas = ps.executeUpdate();
+            }
+
+            String sqlElemento = "DELETE FROM Elemento WHERE Id_Elemento=?";
+
+            try (PreparedStatement ps = con.prepareStatement(sqlElemento)) {
+                ps.setInt(1, idElemento);
+                int filas = ps.executeUpdate();
+                return filas > 0;
+            }
+
+        } catch (SQLException e) {
             e.printStackTrace();
-
         }
 
         return false;
     }
+
 
     public List<Elemento> listarElementos(int idUsuario) {
 

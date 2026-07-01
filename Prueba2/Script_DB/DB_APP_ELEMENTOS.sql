@@ -74,8 +74,7 @@ CREATE TABLE Elementos_Compartidos(
 	Fecha_Compartido DATE NOT NULL
 	);
 
-	SELECT @@SERVERNAME;
-GO
 
-SELECT @@SERVICENAME;
-GO
+
+SELECT * FROM Elemento;
+SELECT * FROM Elemento_Tarea;

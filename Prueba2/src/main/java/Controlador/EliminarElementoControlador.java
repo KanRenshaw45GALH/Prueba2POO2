@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import modeloElemento.Elemento;
 import modeloElemento.ElementoTarea;
 import modeloUsuario.Usuario;
-
+import DAOs.ElementoDAO;
 import java.io.IOException;
 import java.util.List;
 
@@ -62,10 +62,18 @@ public class EliminarElementoControlador {
         }
 
         Elemento eliminado = lista.get(idx);
-        lista.remove(idx);
-        lblMensaje.setText("Eliminado: " + eliminado.getTitulo());
-        lblMensaje.setStyle("-fx-text-fill: #2e7d32;");
-        cargarLista();
+        ElementoDAO elementoDAO = new ElementoDAO();
+
+        if (elementoDAO.eliminarElemento(eliminado.getId())) {
+            lista.remove(idx);
+            lblMensaje.setText("Eliminado: " + eliminado.getTitulo());
+            lblMensaje.setStyle("-fx-text-fill: #2e7d32;");
+            cargarLista();
+        } else {
+            lblMensaje.setText("No fue posible eliminar.");
+            lblMensaje.setStyle("-fx-text-fill: #e53935;");
+        }
+
     }
 
     @FXML
