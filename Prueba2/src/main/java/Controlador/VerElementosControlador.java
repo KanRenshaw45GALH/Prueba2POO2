@@ -17,7 +17,6 @@ import modeloElemento.ElementoRecordatorio;
 import modeloElemento.ElementoTarea;
 import modeloUsuario.ListadoUsuarios;
 import modeloUsuario.Usuario;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +64,7 @@ public class VerElementosControlador {
         ObservableList<String> items = FXCollections.observableArrayList();
 
         List<Elemento> elementos = usuarioActivo.getElemento();
+
         if (elementos == null || elementos.isEmpty()) {
             items.add("No tienes elementos creados.");
             listaElementos.setItems(items);

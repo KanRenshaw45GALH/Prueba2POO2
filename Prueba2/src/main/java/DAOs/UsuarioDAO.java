@@ -4,6 +4,7 @@ import modeloUsuario.Usuario;
 import conexionDB.Conexion;
 import modeloUsuario.UsuarioGeneral;
 import modeloUsuario.UsuarioPremium;
+import DAOs.ElementoDAO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,6 @@ public class UsuarioDAO {
             ps.setInt(4, usuario.getEdad());
 
             int filas = ps.executeUpdate();
-
             if (filas > 0) {
 
                 ResultSet rs = ps.getGeneratedKeys();
@@ -42,6 +42,10 @@ public class UsuarioDAO {
                     return rs.getInt(1);
                 }
             }
+
+            ElementoDAO elementoDAO = new ElementoDAO();
+            usuario.setElemento(elementoDAO.listarElementos(usuario.getIdUsuario()));
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,6 +98,10 @@ public class UsuarioDAO {
                 usuario.setEmail(rs.getString("Email_Usuario"));
                 usuario.setPassword(rs.getString("Password_Usuario"));
                 usuario.setEdad(rs.getInt("Edad_Usuario"));
+
+                ElementoDAO elementoDAO = new ElementoDAO();
+                usuario.setElemento(elementoDAO.listarElementos(usuario.getIdUsuario()));
+
 
                 return usuario;
             }

@@ -12,14 +12,20 @@ public class ElementoTareaDAO {
 
     public boolean insertar(int idUsuario, ElementoTarea tarea){
 
+        System.out.println("Entrando a ElementoTareaDAO");
         if (idUsuario <= 0) {
+            System.out.println("idUsuario incorrecto");
             return false;
         }
         if (tarea.getEstado() == null) {
+            System.out.println("Estado nulo");
             return false;
         }
         int idElemento = elementoDAO.insertarElementoBase(idUsuario,tarea);
-        if(idElemento==-1){
+        System.out.println("idElemento recibido = " + idElemento);
+
+        if (idElemento == -1) {
+            System.out.println("ElementoDAO devolvió -1");
             return false;
         }
 
@@ -36,7 +42,10 @@ public class ElementoTareaDAO {
             ps.setInt(1,idElemento);
             ps.setString(2,tarea.getEstado().toString());
 
-            return ps.executeUpdate()>0;
+            int filas = ps.executeUpdate();
+            System.out.println("Filas insertadas en Elemento_Tarea = " + filas);
+
+            return filas > 0;
 
         }catch(SQLException e){
 

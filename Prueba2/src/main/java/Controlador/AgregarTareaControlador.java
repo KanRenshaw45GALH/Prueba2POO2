@@ -1,5 +1,6 @@
 package Controlador;
 
+import DAOs.ElementoTareaDAO;
 import catalogo.Estado;
 import catalogo.Prioridad;
 import javafx.event.ActionEvent;
@@ -24,6 +25,7 @@ public class AgregarTareaControlador {
     @FXML private DatePicker DatePickerFechaLimite;
     @FXML private Button BtnGuardar;
     @FXML private Button BtnVolver;
+    ElementoTareaDAO dao;
 
     private Usuario usuarioActivo;
 
@@ -98,20 +100,33 @@ public class AgregarTareaControlador {
         tarea.setFechaCreacion(LocalDate.now());
         tarea.setFechaLimite(fecha);
         tarea.setUsuario(usuarioActivo);
-        tarea.setId(usuarioActivo.getElemento().size() + 1);
-        usuarioActivo.getElemento().add(tarea);
 
-        TextTitulo.clear();
-        TextDescripcion.clear();
-        ComboBoxPrioridad.getSelectionModel().clearSelection();
-        ComboBoxEstado.getSelectionModel().clearSelection();
-        DatePickerFechaLimite.setValue(null);
+        System.out.println("ID Usuario = " + usuarioActivo.getIdUsuario());
 
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setHeaderText(null);
-        alerta.setTitle("Éxito");
-        alerta.setContentText("La tarea se creó correctamente.");
-        alerta.showAndWait();
+        ElementoTareaDAO dao = new ElementoTareaDAO();
+        boolean guardado = dao.insertar(usuarioActivo.getIdUsuario(), tarea);
+        if (guardado) {
+            usuarioActivo.getElemento().add(tarea);
+            TextTitulo.clear();
+            TextDescripcion.clear();
+            ComboBoxPrioridad.getSelectionModel().clearSelection();
+            ComboBoxEstado.getSelectionModel().clearSelection();
+            DatePickerFechaLimite.setValue(null);
+
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setHeaderText(null);
+            alerta.setTitle("Éxito");
+            alerta.setContentText("La tarea se creó correctamente.");
+            alerta.showAndWait();
+
+        } else {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setHeaderText(null);
+            alerta.setTitle("Error");
+            alerta.setContentText("No fue posible guardar la tarea.");
+            alerta.showAndWait();
+        }
+
 
     }
     @FXML
