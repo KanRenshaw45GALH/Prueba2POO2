@@ -51,7 +51,7 @@
                   <Label fx:id="lblTipoCuenta" />
                </children>
             </VBox>
-            <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#volver" styleClass="btn-registrar" text="Volver" />
+            <Button fx:id="BtnVolver" maxWidth="20000.0" mnemonicParsing="false" onAction="#volver" styleClass="btn-registrar" text="Volver" />
          </children>
       </VBox>
    </children>
