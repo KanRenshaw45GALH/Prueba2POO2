@@ -1,6 +1,7 @@
 package Controlador;
 
 import DAOs.TarjetaDAO;
+import DAOs.PagosDAO;
 import estrategia.PagoTarjeta;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,15 +64,25 @@ public class PagoTarjetaControlador {
 
         if (estrategia.pagar(monto)) {
             TarjetaDAO tarjetaDAO = new TarjetaDAO();
+            PagosDAO pagosDAO = new PagosDAO();
+
             int idUsuarioActual = controladorPrincipal.getUsuarioActivo().getIdUsuario();
-
-            boolean guardadoExitoso = tarjetaDAO.insertar(idUsuarioActual, estrategia);
-
-            if (guardadoExitoso) {
-                controladorPrincipal.registrarPagoExitoso();
-                cerrarVentana();
+            int idTarjeta = tarjetaDAO.insertar(idUsuarioActual, estrategia);
+            if (idTarjeta != -1) {
+                boolean pagoRegistrado = pagosDAO.insertar(
+                        idUsuarioActual,
+                        idTarjeta,
+                        monto,
+                        "TARJETA",
+                        LocalDate.now());
+                if (pagoRegistrado) {
+                    controladorPrincipal.registrarPagoExitoso();
+                    cerrarVentana();
+                } else {
+                    lblMensaje.setText("No fue posible registrar el pago.");
+                }
             } else {
-                lblMensaje.setText("Fallo en el registro de la base de datos");
+                lblMensaje.setText("Fallo en el registro de la tarjeta.");
             }
         } else {
             lblMensaje.setText("Error: datos de tarjeta rechazados");

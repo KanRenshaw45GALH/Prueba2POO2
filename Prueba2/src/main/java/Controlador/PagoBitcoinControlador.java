@@ -1,7 +1,9 @@
 package Controlador;
 
 import DAOs.BitcoinDAO;
+import DAOs.PagosDAO;
 import estrategia.PagoBitcoin;
+import java.time.LocalDate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -37,13 +39,25 @@ public class PagoBitcoinControlador {
 
         if (estrategia.pagar(monto)) {
             BitcoinDAO bitcoinDAO = new BitcoinDAO();
-            int idUsuarioActual = controladorPrincipal.getUsuarioActivo().getIdUsuario();
+            PagosDAO pagosDAO = new PagosDAO();
 
+            int idUsuarioActual = controladorPrincipal.getUsuarioActivo().getIdUsuario();
             boolean guardadoExitoso = bitcoinDAO.insertar(idUsuarioActual, estrategia);
 
             if (guardadoExitoso) {
-                controladorPrincipal.registrarPagoExitoso();
-                cerrarVentana();
+                boolean pagoRegistrado = pagosDAO.insertar(
+                        idUsuarioActual,
+                        null,
+                        monto,
+                        "BITCOIN",
+                        LocalDate.now());
+
+                if (pagoRegistrado) {
+                    controladorPrincipal.registrarPagoExitoso();
+                    cerrarVentana();
+                } else {
+                    lblMensaje.setText("No fue posible registrar el pago.");
+                }
             } else {
                 lblMensaje.setText("Error de registro en la base de datos");
             }

@@ -1,7 +1,6 @@
 package estrategia;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class PagoTarjeta implements EstrategiaPago {
 
@@ -12,7 +11,7 @@ public class PagoTarjeta implements EstrategiaPago {
     private LocalDate fechaVencimiento;
 
 
-    public int getIdTarjeta() {return idTarjeta;}
+    public int getIdTarjeta() {return this.idTarjeta;}
     public void setIdTarjeta(int idTarjeta) {this.idTarjeta = idTarjeta;}
 
     public String getTitular() {return titular;}
