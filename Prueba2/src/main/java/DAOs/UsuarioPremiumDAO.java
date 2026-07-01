@@ -5,6 +5,7 @@ import modeloUsuario.UsuarioPremium;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class UsuarioPremiumDAO {
 
@@ -47,5 +48,50 @@ public class UsuarioPremiumDAO {
             return false;
         }
     }
+
+    public boolean convertirAPremium(int idUsuario,
+                                     LocalDate fechaSuscripcion,
+                                     LocalDate fechaLimite) {
+
+        String sql = """
+            INSERT INTO UsuarioPremium
+            (Id_Usuario, Fecha_Suscripcion, Fecha_Limite)
+            VALUES (?,?,?)
+            """;
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+            ps.setDate(2, java.sql.Date.valueOf(String.valueOf(fechaSuscripcion)));
+            ps.setDate(3, java.sql.Date.valueOf(String.valueOf(fechaLimite)));
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean cancelarSuscripcion(int idUsuario) {
+        if (idUsuario <= 0) {
+            return false;
+        }
+        String sql = """
+            DELETE FROM UsuarioPremium
+            WHERE Id_Usuario = ?
+            """;
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, idUsuario);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }

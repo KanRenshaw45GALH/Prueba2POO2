@@ -1,5 +1,7 @@
 package Controlador;
 
+import DAOs.UsuarioDAO;
+import DAOs.UsuarioPremiumDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modeloUsuario.Usuario;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class CambiarSuscripcionControlador {
 
@@ -33,7 +36,6 @@ public class CambiarSuscripcionControlador {
     public void setUsuario(Usuario usuario) {
         this.usuarioActivo = usuario;
     }
-
     public Usuario getUsuarioActivo() {
         return this.usuarioActivo;
     }
@@ -42,7 +44,6 @@ public class CambiarSuscripcionControlador {
     void pagarConTarjeta(ActionEvent event) {
         abrirVentanaPago("/PagoTarjeta.fxml", "Pago con Tarjeta", true);
     }
-
     @FXML
     void pagarConBitcoin(ActionEvent event) {
         abrirVentanaPago("/PagoBitcoin.fxml", "Pago con Bitcoin", false);
@@ -74,12 +75,48 @@ public class CambiarSuscripcionControlador {
     }
 
     public void registrarPagoExitoso() {
-        lblMensaje.setText("Pago realizado con exito");
-    }
+        UsuarioPremiumDAO premiumDAO = new UsuarioPremiumDAO();
 
+        LocalDate fechaInicio = LocalDate.now();
+        LocalDate fechaFin = fechaInicio.plusMonths(1);
+
+        boolean convertido = premiumDAO.convertirAPremium(
+                usuarioActivo.getIdUsuario(),
+                fechaInicio,
+                fechaFin);
+
+        if (convertido) {
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            usuarioActivo = usuarioDAO.buscarPorCredenciales(
+                    usuarioActivo.getNombreCompleto(),
+                    usuarioActivo.getPassword());
+            lblFechaSuscripcion.setText(fechaInicio.toString());
+            lblFechaLimite.setText(fechaFin.toString());
+            lblMensaje.setText("Pago realizado con éxito.");
+
+        } else {
+            lblMensaje.setText("No fue posible activar la suscripción.");
+        }
+    }
     @FXML
     void cancelarSuscripcion(ActionEvent event) {
-        lblMensaje.setText("Suscripción cancelada. Eres usuario general de nuevo");
+        UsuarioPremiumDAO premiumDAO = new UsuarioPremiumDAO();
+        boolean cancelada = premiumDAO.cancelarSuscripcion(
+                usuarioActivo.getIdUsuario());
+
+        if (cancelada) {
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+            usuarioActivo = usuarioDAO.buscarPorCredenciales(
+                    usuarioActivo.getNombreCompleto(),
+                    usuarioActivo.getPassword());
+            lblFechaSuscripcion.setText("-");
+            lblFechaLimite.setText("-");
+            lblMensaje.setText("Suscripción cancelada correctamente.");
+        } else {
+            lblMensaje.setText("No fue posible cancelar la suscripción.");
+        }
+
     }
 
     @FXML
