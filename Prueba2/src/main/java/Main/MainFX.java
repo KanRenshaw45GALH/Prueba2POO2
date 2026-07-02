@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 
 public class MainFX extends Application {
 
+
+    //Codigo de InicioFXML:
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(
