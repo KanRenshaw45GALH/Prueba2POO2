@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="500.0" styleClass="root" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.CambiarSuscripcionControlador">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="500.0" style="-fx-background-color: linear-gradient(#F27200,#F2C16C);" styleClass="root" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.CambiarSuscripcionControlador">
     <children>
         <VBox prefHeight="550.0" prefWidth="500.0" spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <children>
@@ -51,8 +48,8 @@
                     </children>
                 </HBox>
 
-                <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#cancelarSuscripcion" styleClass="btn-registrar" style="-fx-background-color: #d9534f;" text="Cancelar Suscripcion" />
-                <Button fx:id="BtnVolver" maxWidth="20000.0" mnemonicParsing="false" onAction="#volver" styleClass="btn-registrar" style="-fx-background-color: #777;" text="Volver" />
+                <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#cancelarSuscripcion" style="-fx-background-color: #d9534f;" styleClass="btn-registrar" text="Cancelar Suscripcion" />
+                <Button fx:id="BtnVolver" maxWidth="20000.0" mnemonicParsing="false" onAction="#volver" style="-fx-background-color: #777;" styleClass="btn-registrar" text="Volver" />
 
                 <Label fx:id="lblMensaje" styleClass="label-campo" wrapText="true" />
             </children>

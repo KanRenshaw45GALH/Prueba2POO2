@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" styleClass="root" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VerPendientesControlador">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#0E7490, #637584);" styleClass="root" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VerPendientesControlador">
    <children>
-      <VBox layoutX="234.0" layoutY="132.0" prefHeight="500.0" prefWidth="600.0" spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <VBox layoutX="234.0" layoutY="132.0" prefHeight="500.0" prefWidth="600.0" spacing="15.0" style="-fx-background-color: linear-gradient(#F27200,#F2C16C);" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Label prefHeight="94.0" prefWidth="217.0" styleClass="titulo" text="Pendientes" />
-            <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <Label alignment="CENTER" prefHeight="94.0" prefWidth="557.0" styleClass="titulo" text="Pendientes">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="31.0" />
+               </font></Label>
+            <ScrollPane fitToWidth="true" prefHeight="213.0" prefWidth="560.0" VBox.vgrow="ALWAYS">
                <content>
                   <VBox fx:id="BtnPendientes" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                      <padding>
@@ -22,7 +22,7 @@
                   </VBox>
                </content>
             </ScrollPane>
-            <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#volver" styleClass="btn-registrar" text="Volver" />
+            <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#volver" prefHeight="57.0" prefWidth="560.0" styleClass="btn-registrar" text="Volver" />
          </children>
       </VBox>
    </children>

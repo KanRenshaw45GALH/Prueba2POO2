@@ -4,67 +4,42 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:controller="Controlador.CompletarTareaControlador"
-      maxHeight="-Infinity" maxWidth="-Infinity"
-      minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="500.0" prefWidth="600.0"
-      style="-fx-background-color: linear-gradient(#ffffff, #455A73);"
-      xmlns="http://javafx.com/javafx/17.0.12"
-      xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#ffffff, #455A73);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.CompletarTareaControlador">
 
     <children>
 
 
-        <Region layoutY="16.0" prefHeight="360.0" prefWidth="600.0"
-                style="-fx-background-color: linear-gradient(#1C72B3, #0B2D5C); -fx-background-radius: 30;" />
+        <Region layoutY="16.0" prefHeight="360.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#F27200,#F2C16C); -fx-background-radius: 30;" />
 
 
-        <Label alignment="CENTER" contentDisplay="CENTER"
-               layoutX="-8.0" prefHeight="52.0" prefWidth="608.0"
-               style="-fx-border-color: #ffffff; -fx-background-color: #ffffff;"
-               text="COMPLETAR TAREA" textAlignment="CENTER">
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" prefHeight="52.0" prefWidth="608.0" style="-fx-border-color: #ffffff; -fx-background-color: #ffffff;" text="COMPLETAR TAREA" textAlignment="CENTER">
             <font>
                 <Font name="Berlin Sans FB Demi Bold" size="28.0" />
             </font>
         </Label>
 
 
-        <Label layoutX="30.0" layoutY="68.0" prefWidth="540.0"
-               text="Selecciona una tarea pendiente y marcala como completada:"
-               textFill="WHITE">
+        <Label layoutX="30.0" layoutY="68.0" prefWidth="540.0" text="Selecciona una tarea pendiente y marcala como completada:" textFill="WHITE">
             <font>
                 <Font name="Berlin Sans FB Demi Bold" size="14.0" />
             </font>
         </Label>
 
 
-        <ListView fx:id="listaTareas"
-                  layoutX="30.0" layoutY="100.0"
-                  prefHeight="200.0" prefWidth="540.0" />
+        <ListView fx:id="listaTareas" layoutX="30.0" layoutY="100.0" prefHeight="200.0" prefWidth="540.0" />
 
 
-        <Label fx:id="lblMensaje"
-               layoutX="30.0" layoutY="310.0"
-               prefWidth="540.0"
-               style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+        <Label fx:id="lblMensaje" layoutX="30.0" layoutY="310.0" prefWidth="540.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
 
-        <Button fx:id="BtnCompletar" onAction="#completarSeleccionada"
-                alignment="CENTER" layoutX="60.0" layoutY="390.0"
-                mnemonicParsing="false" prefHeight="68.0" prefWidth="200.0"
-                style="-fx-background-color: linear-gradient(#2e7d32, #39D353); -fx-background-radius: 20;"
-                text="COMPLETAR" textFill="WHITE">
+        <Button fx:id="BtnCompletar" alignment="CENTER" layoutX="60.0" layoutY="390.0" mnemonicParsing="false" onAction="#completarSeleccionada" prefHeight="68.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(#2e7d32, #39D353); -fx-background-radius: 20;" text="COMPLETAR" textFill="WHITE">
             <font>
                 <Font name="Berlin Sans FB Demi Bold" size="20.0" />
             </font>
         </Button>
 
 
-        <Button fx:id="BtnVolver" onAction="#volver"
-                alignment="CENTER" layoutX="340.0" layoutY="390.0"
-                mnemonicParsing="false" prefHeight="68.0" prefWidth="200.0"
-                style="-fx-background-color: linear-gradient(#0E7490, #1C72B3); -fx-background-radius: 20;"
-                text="VOLVER" textFill="WHITE">
+        <Button fx:id="BtnVolver" alignment="CENTER" layoutX="340.0" layoutY="390.0" mnemonicParsing="false" onAction="#volver" prefHeight="68.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(#F27200,#F2C16C); -fx-background-radius: 20;" text="VOLVER" textFill="WHITE">
             <font>
                 <Font name="Berlin Sans FB Demi Bold" size="20.0" />
             </font>

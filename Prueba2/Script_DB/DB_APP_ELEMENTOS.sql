@@ -85,11 +85,11 @@ CREATE TABLE Elementos_Compartidos(
 
 /** Elemento*/
     INSERT INTO Elemento (id_usuario, titulo_elemento, descripcion_elemento, prioridad_elemento, fecha_creacion, fecha_limite_elemento)
-    VALUES    (19, 'Proyecto de F1',  'Creacion de Cohete propulsado por agua y base de lanzamiento estable para multiples angulos', 'BAJA', '2026-07-03',  '2026-07-24');
+    VALUES    (1, 'Proyecto de F1',  'Creacion de Cohete propulsado por agua y base de lanzamiento estable para multiples angulos', 'BAJA', '2026-07-03',  '2026-07-24');
     INSERT INTO Elemento (id_usuario, titulo_elemento, descripcion_elemento, prioridad_elemento, fecha_creacion, fecha_limite_elemento)
-    VALUES    (18,  'Proyecto de C2',  'Creacion de modelo de recipiente con funciones Trascendentes', 'MEDIA',  '2026-07-23', '2026-09-04');
+    VALUES    (1,  'Proyecto de C2',  'Creacion de modelo de recipiente con funciones Trascendentes', 'MEDIA',  '2026-07-23', '2026-09-04');
     INSERT INTO Elemento (id_usuario, titulo_elemento, descripcion_elemento, prioridad_elemento, fecha_creacion, fecha_limite_elemento)
-    VALUES    (18,'Proyecto de POO', 'Creacion de App para registro de Tareas', 'ALTA','2026-06-11','2026-07-10');
+    VALUES    (2,'Proyecto de POO', 'Creacion de App para registro de Tareas', 'ALTA','2026-06-11','2026-07-10');
 
 
 
@@ -108,7 +108,7 @@ DELETE FROM Elemento;
 DELETE FROM UsuarioPremium;
 DELETE FROM UsuarioGeneral;
 DELETE FROM Usuario;
-
+ 
 /**Revision de Eliminados*/
 SELECT * FROM Elementos_Compartidos;
 SELECT * FROM Pagos;

@@ -6,7 +6,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:controller="Controlador.MenuGeneralControlador" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="584.0" style="-fx-background-color: linear-gradient(#39D353,#ffffff);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="584.0" style="-fx-background-color: linear-gradient(#F27200,#F2C16C);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuGeneralControlador">
    <children>
       <Region layoutY="128.0" prefHeight="331.0" prefWidth="584.0" style="-fx-background-radius: 45; -fx-background-color: linear-gradient(#0B2D5C, #1C72B3);">
          <effect>
@@ -24,7 +24,7 @@
          </font>
       </Label>
 
-      <Button fx:id="BtnSalir" alignment="CENTER" layoutX="152.0" layoutY="485.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="286.0" style="-fx-background-color: linear-gradient(#0E7490, #39D353); -fx-background-radius: 20;" text="SALIR" textAlignment="CENTER" textFill="WHITE" onAction="#salir">
+      <Button fx:id="BtnSalir" alignment="CENTER" layoutX="152.0" layoutY="485.0" mnemonicParsing="false" onAction="#salir" prefHeight="79.0" prefWidth="286.0" style="-fx-background-color: linear-gradient(#0E7490, #637584); -fx-background-radius: 20;" text="SALIR" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Bookman Old Style Bold Italic" size="40.0" />
          </font>
@@ -40,21 +40,21 @@
 
       <HBox alignment="CENTER" layoutX="20.0" layoutY="158.0" prefHeight="63.0" prefWidth="550.0">
          <children>
-            <Button fx:id="BtnTarea" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="AGREGAR TAREA" onAction="#agregarTarea">
+            <Button fx:id="BtnTarea" mnemonicParsing="false" onAction="#agregarTarea" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="AGREGAR TAREA">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font></Button>
 
             <Region prefHeight="100.0" prefWidth="47.0" />
 
-            <Button fx:id="BtnRecordatorio" mnemonicParsing="false" prefHeight="38.0" prefWidth="235.0" style="-fx-background-color: #ffffff;" text="AGREGAR RECORDATORIO" onAction="#agregarRecordatorio">
+            <Button fx:id="BtnRecordatorio" mnemonicParsing="false" onAction="#agregarRecordatorio" prefHeight="38.0" prefWidth="235.0" style="-fx-background-color: #ffffff;" text="AGREGAR RECORDATORIO">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font></Button>
 
             <Region prefHeight="100.0" prefWidth="47.0" />
 
-            <Button fx:id="BtnElementosCreados" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" text="ELEMENTOS CREADOS" onAction="#verTodos">
+            <Button fx:id="BtnElementosCreados" mnemonicParsing="false" onAction="#verTodos" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" text="ELEMENTOS CREADOS">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font></Button>
@@ -63,14 +63,14 @@
 
       <HBox alignment="CENTER" layoutX="95.0" layoutY="228.0" prefHeight="53.0" prefWidth="400.0">
          <children>
-            <Button fx:id="BtnPendientes" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="VER PENDIENTES" onAction="#verPendientes">
+            <Button fx:id="BtnPendientes" mnemonicParsing="false" onAction="#verPendientes" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="VER PENDIENTES">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font></Button>
 
             <Region prefHeight="100.0" prefWidth="47.0" />
 
-            <Button fx:id="BtnCompletarTarea" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="COMPLETAR TAREA" onAction="#completarTareas">
+            <Button fx:id="BtnCompletarTarea" mnemonicParsing="false" onAction="#completarTareas" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="COMPLETAR TAREA">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font></Button>
@@ -79,17 +79,17 @@
 
       <HBox alignment="CENTER" layoutX="27.0" layoutY="298.0" prefHeight="53.0" prefWidth="536.0">
          <children>
-            <Button fx:id="BtnEditar" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="EDITAR ELEMENTO" onAction="#editarElemento">
+            <Button fx:id="BtnEditar" mnemonicParsing="false" onAction="#editarElemento" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #ffffff;" text="EDITAR ELEMENTO">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font></Button>
             <Region prefHeight="100.0" prefWidth="47.0" />
-            <Button fx:id="BtnCompartir" mnemonicParsing="false" prefHeight="38.0" prefWidth="215.0" style="-fx-background-color: #ffffff;" text="COMPARTIR ELEMENTO" onAction="#compartirElemento">
+            <Button fx:id="BtnCompartir" mnemonicParsing="false" onAction="#compartirElemento" prefHeight="38.0" prefWidth="215.0" style="-fx-background-color: #ffffff;" text="COMPARTIR ELEMENTO">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font></Button>
             <Region prefHeight="100.0" prefWidth="47.0" />
-            <Button fx:id="BtnEliminar" mnemonicParsing="false" prefHeight="38.0" prefWidth="217.0" style="-fx-background-color: #ffffff;" text="ELIMINAR ELEMENTO" onAction="#eliminarElemento">
+            <Button fx:id="BtnEliminar" mnemonicParsing="false" onAction="#eliminarElemento" prefHeight="38.0" prefWidth="217.0" style="-fx-background-color: #ffffff;" text="ELIMINAR ELEMENTO">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="15.0" />
                </font></Button>
@@ -99,12 +99,12 @@
       <HBox alignment="CENTER" layoutX="38.0" layoutY="363.0" prefHeight="53.0" prefWidth="494.0">
          <children>
             <Region prefHeight="100.0" prefWidth="47.0" />
-            <Button fx:id="BtnInformacionUsuario" mnemonicParsing="false" prefHeight="38.0" prefWidth="211.0" style="-fx-background-color: #ffffff;" text="INFORMACION DE USUARIO" onAction="#imprimirUsuario">
+            <Button fx:id="BtnInformacionUsuario" mnemonicParsing="false" onAction="#imprimirUsuario" prefHeight="38.0" prefWidth="211.0" style="-fx-background-color: #ffffff;" text="INFORMACION DE USUARIO">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font></Button>
             <Region prefHeight="100.0" prefWidth="47.0" />
-            <Button fx:id="BtnSuscripcion" mnemonicParsing="false" onAction="#cambiarSuscripcion" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: #ffffff;" text="CAMBIAR SUSCRIPCION" >
+            <Button fx:id="BtnSuscripcion" mnemonicParsing="false" onAction="#cambiarSuscripcion" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: #ffffff;" text="CAMBIAR SUSCRIPCION">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font></Button>

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="450.0" styleClass="root" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.PagoTarjetaControlador">
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="450.0" style="-fx-background-color: linear-gradient(#F27200,#F2C16C);" styleClass="root" stylesheets="@css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.PagoTarjetaControlador">
     <children>
         <VBox spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
             <children>
@@ -54,7 +51,7 @@
                 <Label fx:id="lblMensaje" styleClass="label-campo" wrapText="true" />
 
                 <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#pagar" styleClass="btn-registrar" text="Confirmar Pago" />
-                <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#cancelar" styleClass="btn-registrar" style="-fx-background-color: #777;" text="Cancelar" />
+                <Button maxWidth="20000.0" mnemonicParsing="false" onAction="#cancelar" style="-fx-background-color: #777;" styleClass="btn-registrar" text="Cancelar" />
             </children>
         </VBox>
     </children>
