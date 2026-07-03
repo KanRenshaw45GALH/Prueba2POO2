@@ -123,27 +123,29 @@ public class ElementoDAO {
     public List<Elemento> listarElementos(int idUsuario) {
         List<Elemento> elementos = new ArrayList<>();
         String sql = """
-        SELECT *
-        FROM Elemento
-        WHERE Id_Usuario = ?
-        """;
+                        SELECT DISTINCT E.*
+                        FROM Elemento E
+                        LEFT JOIN Elementos_Compartidos C
+                        ON E.Id_Elemento = C.Id_Elemento
+                        WHERE E.Id_Usuario = ?
+                           OR C.Id_Usuario_Destino = ?
+                     """;
 
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
                 ps.setInt(1, idUsuario);
+                ps.setInt(2, idUsuario);
                 ResultSet rs = ps.executeQuery();
 
                 while (rs.next()) {
-
                     int idElemento = rs.getInt("Id_Elemento");
                     Elemento elemento = null;
 
                     String sqlTarea = """
-                                    SELECT Estado_Elemento
-                                    FROM Elemento_Tarea
-                                    WHERE Id_Elemento = ?
-                                    """;
-
+                                            SELECT Estado_Elemento
+                                            FROM Elemento_Tarea
+                                            WHERE Id_Elemento = ?
+                                      """;
                     PreparedStatement psTarea = con.prepareStatement(sqlTarea);
                     psTarea.setInt(1, idElemento);
                     ResultSet rsTarea = psTarea.executeQuery();
@@ -154,11 +156,10 @@ public class ElementoDAO {
                         elemento = tarea;
                     }else{
                         String sqlRecordatorio = """
-                                        SELECT Fecha_Recordatorio
-                                        FROM Elemento_Recordatorio
-                                        WHERE Id_Elemento = ?
-                                        """;
-
+                                                        SELECT Fecha_Recordatorio
+                                                        FROM Elemento_Recordatorio
+                                                        WHERE Id_Elemento = ?
+                                                 """;
                         PreparedStatement psRecordatorio = con.prepareStatement(sqlRecordatorio);
                         psRecordatorio.setInt(1, idElemento);
 
@@ -192,14 +193,13 @@ public class ElementoDAO {
 
     public boolean actualizarElemento(Elemento elemento) {
         String sql = """
-            UPDATE Elemento
-            SET
-                Titulo_Elemento = ?,
-                Descripcion_Elemento = ?,
-                Prioridad_Elemento = ?,
-                Fecha_Limite_Elemento = ?
-            WHERE Id_Elemento = ?
-            """;
+                        UPDATE Elemento SET
+                            Titulo_Elemento = ?,
+                            Descripcion_Elemento = ?,
+                            Prioridad_Elemento = ?,
+                            Fecha_Limite_Elemento = ?
+                        WHERE Id_Elemento = ?
+                    """;
 
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {

@@ -1,5 +1,6 @@
 package Controlador;
 
+import DAOs.UsuarioDAO;
 import hilos.CompartirHilo;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -87,7 +88,8 @@ public class CompartirElementoControlador {
             return;
         }
 
-        Usuario usuarioDestino = listadoUsuarios.buscarPorNombre(nombreDestino);
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        Usuario usuarioDestino = usuarioDAO.buscarPorNombre(nombreDestino);
         if (usuarioDestino == null) {
             mostrarError("No se encontró un usuario con ese nombre.");
             return;

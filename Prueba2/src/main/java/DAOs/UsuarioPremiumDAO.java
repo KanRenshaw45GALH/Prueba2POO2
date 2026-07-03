@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class UsuarioPremiumDAO {
-
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     public boolean insertar(UsuarioPremium usuario) {
@@ -40,7 +39,6 @@ public class UsuarioPremiumDAO {
             ps.setInt(1, idGenerado);
             ps.setDate(2, java.sql.Date.valueOf(usuario.getFechaSuscripcion()));
             ps.setDate(3, java.sql.Date.valueOf(usuario.getFechaLimiteSuscripcion()));
-
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -65,7 +63,6 @@ public class UsuarioPremiumDAO {
             ps.setInt(1, idUsuario);
             ps.setDate(2, java.sql.Date.valueOf(String.valueOf(fechaSuscripcion)));
             ps.setDate(3, java.sql.Date.valueOf(String.valueOf(fechaLimite)));
-
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {

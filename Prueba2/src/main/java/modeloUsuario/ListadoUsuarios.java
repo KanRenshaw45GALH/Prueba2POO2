@@ -11,7 +11,6 @@ public class ListadoUsuarios {
     public Usuario iniciarSesion(String nombre, String password) {
 
         UsuarioDAO dao = new UsuarioDAO();
-
         return dao.buscarPorCredenciales(nombre, password);
 
     }
@@ -21,23 +20,5 @@ public class ListadoUsuarios {
         System.out.println("Usuarios registrados: " + usuarios.size());
     }
 
-    public void BuscarUsuario(String nombre) {
-        for (Usuario u : usuarios) {
-            if (u.getNombreCompleto().equalsIgnoreCase(nombre)) {
-                System.out.println("Usuario encontrado: " + u.getNombreCompleto());
-                return;
-            }
-        }
-    }
-
-
-    public Usuario buscarPorNombre(String nombre) {
-        for (Usuario u : usuarios) {
-            if (u.getNombreCompleto().equalsIgnoreCase(nombre)) {
-                return u;
-            }
-        }
-        return null;
-    }
 
 }
