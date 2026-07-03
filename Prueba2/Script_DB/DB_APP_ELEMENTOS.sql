@@ -75,6 +75,27 @@ CREATE TABLE Elementos_Compartidos(
 	);
 
 
+/**Codigos de Prueba*/
+/** Usuarioa*/
+    INSERT INTO Usuario (NOMBRE_USUARIO, EMAIL_USUARIO, PASSWORD_USUARIO, EDAD_USUARIO)
+    VALUES('Carlos ', 'Carlos@gmail.com', '1234', 25)
+    INSERT INTO Usuario (NOMBRE_USUARIO, EMAIL_USUARIO, PASSWORD_USUARIO, EDAD_USUARIO)
+    VALUES('Maria ', 'Mary@gmail.com', '1234', 22)
+
+
+/** Elemento*/
+    INSERT INTO Elemento (id_usuario, titulo_elemento, descripcion_elemento, prioridad_elemento, fecha_creacion, fecha_limite_elemento)
+    VALUES    (19, 'Proyecto de F1',  'Creacion de Cohete propulsado por agua y base de lanzamiento estable para multiples angulos', 'BAJA', '2026-07-03',  '2026-07-24');
+    INSERT INTO Elemento (id_usuario, titulo_elemento, descripcion_elemento, prioridad_elemento, fecha_creacion, fecha_limite_elemento)
+    VALUES    (18,  'Proyecto de C2',  'Creacion de modelo de recipiente con funciones Trascendentes', 'MEDIA',  '2026-07-23', '2026-09-04');
+    INSERT INTO Elemento (id_usuario, titulo_elemento, descripcion_elemento, prioridad_elemento, fecha_creacion, fecha_limite_elemento)
+    VALUES    (18,'Proyecto de POO', 'Creacion de App para registro de Tareas', 'ALTA','2026-06-11','2026-07-10');
+
+
+
+
+
+
 
 /**Elimicacion de Limpieza */
 DELETE FROM Elementos_Compartidos;
