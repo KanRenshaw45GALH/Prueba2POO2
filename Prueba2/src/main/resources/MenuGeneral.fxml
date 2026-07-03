@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.image.Image?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="584.0" style="-fx-background-color: linear-gradient(#F27200,#F2C16C);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuGeneralControlador">
    <children>
       <Region layoutY="128.0" prefHeight="331.0" prefWidth="584.0" style="-fx-background-radius: 45; -fx-background-color: linear-gradient(#0B2D5C, #1C72B3);">
@@ -50,7 +53,15 @@
             <Button fx:id="BtnRecordatorio" mnemonicParsing="false" onAction="#agregarRecordatorio" prefHeight="38.0" prefWidth="235.0" style="-fx-background-color: #ffffff;" text="AGREGAR RECORDATORIO">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
-               </font></Button>
+               </font>
+               <graphic>
+                  <ImageView fitHeight="18" fitWidth="18">
+                     <image>
+                        <Image url="css/Reloj.png"/>
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
 
             <Region prefHeight="100.0" prefWidth="47.0" />
 
