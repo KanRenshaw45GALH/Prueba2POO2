@@ -2,6 +2,7 @@
 
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
@@ -54,6 +55,7 @@
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font>
+               //////
                <graphic>
                   <ImageView fitHeight="18" fitWidth="18">
                      <image>
@@ -61,6 +63,7 @@
                      </image>
                   </ImageView>
                </graphic>
+               ////////
             </Button>
 
             <Region prefHeight="100.0" prefWidth="47.0" />
