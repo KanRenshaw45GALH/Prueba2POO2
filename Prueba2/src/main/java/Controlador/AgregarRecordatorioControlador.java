@@ -12,6 +12,8 @@ import modeloElemento.ElementoRecordatorio;
 import modeloUsuario.Usuario;
 import java.io.IOException;
 import java.time.LocalDate;
+import DAOs.ElementoRecordatorioDAO;
+import DAOs.UsuarioDAO;
 
 
 public class AgregarRecordatorioControlador {
@@ -84,21 +86,39 @@ public class AgregarRecordatorioControlador {
         recordatorio.setDescripcion(descripcion);
         recordatorio.setPrioridad(prioridad);
         recordatorio.setFechaCreacion(LocalDate.now());
+        recordatorio.setFechaLimite(fecha);      // Importante
         recordatorio.setFechaRecordatorio(fecha);
         recordatorio.setUsuario(usuarioActivo);
-        recordatorio.setId(usuarioActivo.getElemento().size() + 1);
-        usuarioActivo.getElemento().add(recordatorio);
 
-        TextTitulo.clear();
-        TextDescripcion.clear();
-        ComboBoxPrioridad.getSelectionModel().clearSelection();
-        DatePickerFechaLimite.setValue(null);
+        ElementoRecordatorioDAO dao = new ElementoRecordatorioDAO();
 
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setHeaderText(null);
-        alerta.setTitle("Éxito");
-        alerta.setContentText("El recordatorio se creó correctamente.");
-        alerta.showAndWait();
+        boolean guardado = dao.insertar(usuarioActivo.getIdUsuario(), recordatorio);
+
+        if (guardado) {
+
+            // Solo si seguís usando la lista en memoria
+            usuarioActivo.getElemento().add(recordatorio);
+
+            TextTitulo.clear();
+            TextDescripcion.clear();
+            ComboBoxPrioridad.getSelectionModel().clearSelection();
+            DatePickerFechaLimite.setValue(null);
+
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setHeaderText(null);
+            alerta.setTitle("Éxito");
+            alerta.setContentText("El recordatorio se creó correctamente.");
+            alerta.showAndWait();
+
+        } else {
+
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setHeaderText(null);
+            alerta.setTitle("Error");
+            alerta.setContentText("No se pudo guardar el recordatorio en la base de datos.");
+            alerta.showAndWait();
+
+        }
 
     }
     @FXML

@@ -13,10 +13,7 @@ import java.sql.SQLException;
 
 public class UsuarioDAO {
 
-    /**
-     * Inserta los datos comunes del usuario.
-     * Devuelve el Idgenerado por SQL Server.
-     */
+
     public int insertarUsuarioBase(Usuario usuario) {
 
         String sql = """

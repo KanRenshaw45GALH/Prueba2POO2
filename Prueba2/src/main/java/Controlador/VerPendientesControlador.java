@@ -72,10 +72,27 @@ public class VerPendientesControlador {
                         color
                 );
 
+
                 BtnPendientes.getChildren().add(card);
                 hay = true;
 
             } else if (e instanceof ElementoRecordatorio r) {
+
+                String color;
+
+                switch (r.getPrioridad()) {
+                    case ALTA:
+                        color = "#E53935";
+                        break;
+                    case MEDIA:
+                        color = "#FDD835";
+                        break;
+                    case BAJA:
+                        color = "#43A047";
+                        break;
+                    default:
+                        color = "#1565C0";
+                }
 
                 String fecha = r.getFechaLimite() != null
                         ? r.getFechaLimite().format(fmt)
@@ -85,7 +102,7 @@ public class VerPendientesControlador {
                         "RECORDATORIO",
                         r.getTitulo(),
                         "Vence: " + fecha,
-                        "#1565C0"
+                        color
                 );
 
                 BtnPendientes.getChildren().add(card);
