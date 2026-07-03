@@ -48,9 +48,7 @@ public class VerPendientesControlador {
             if (e instanceof ElementoTarea t
                     && t.getEstado() != Estado.COMPLETADO
                     && t.getEstado() != Estado.CANCELADA) {
-
                 String color;
-
                 switch (t.getPrioridad()) {
                     case ALTA:
                         color = "#E53935";
@@ -77,9 +75,7 @@ public class VerPendientesControlador {
                 hay = true;
 
             } else if (e instanceof ElementoRecordatorio r) {
-
                 String color;
-
                 switch (r.getPrioridad()) {
                     case ALTA:
                         color = "#E53935";

@@ -75,15 +75,15 @@ public class VerElementosControlador {
         for (Elemento e : elementos) {
             if (e instanceof ElementoTarea) {
                 listaOrdenada.add(e);
-                items.add("[TAREA] " + e.getTitulo());
+                items.add("📝 " + e.getTitulo());
             }
         }
 
-        // Luego recordatorios
+// Luego recordatorios
         for (Elemento e : elementos) {
             if (e instanceof ElementoRecordatorio) {
                 listaOrdenada.add(e);
-                items.add("[RECORDATORIO] " + e.getTitulo());
+                items.add("⏰ " + e.getTitulo());
             }
         }
 
